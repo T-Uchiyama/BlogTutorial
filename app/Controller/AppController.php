@@ -30,29 +30,39 @@ App::uses('Controller', 'Controller');
  * @package		app.Controller
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
+
+
 class AppController extends Controller {
     public $components = array(
-	'Flash',
-	'Auth' => array(
-	    'loginRedirect' => array(
-		'controller' => 'posts',
-		'action' => 'index'
-	    ),
-	    'logoutRedirect' => array(
-		'controller' => 'pages',
-		'action' => 'display',
-		'home'
-	    ),
-	    'authenticate' => array(
-		'Form' => array(
-		    'passwordHasher' => 'Blowfish'
-		)
-	    )
+        'Flash',
+        'Auth' => array(
+            'loginRedirect' => array(
+                'controller' => 'posts',
+                'action' => 'index'
+            ),
+            'logoutRedirect' => array(
+                'controller' => 'posts',
+                'action' => 'index',
+            ),
+            'authenticate' => array(
+                'Form' => array(
+                    'passwordHasher' => 'Blowfish'
+                )
+            ),
+			'authorize' => array('Controller');
         )
     );
 
-    public function beforeFilter() {
-	$this->Auth->allow('index', 'view');
-    }
+	public function isAuthorized($user) {
+		// Admin can access every action
+		if (isset($user['role'] && $user['role'] == 'admin')) {
+			return true;
+		}
+		// デフォルトは拒否
+		return false;
+	}
 
+    public function beforeFilter() {
+        $this->Auth->allow('index', 'view', 'display');
+    }
 }

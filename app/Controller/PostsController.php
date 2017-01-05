@@ -22,16 +22,18 @@ class PostsController extends AppController {
     }
 
     public function add() {
-	if ($this->request->is('post')) {
-	    $this->Post->create();
-
-	    if ($this->Post->save($this->request->data)) {
-	        $this->Flash->success(__('Your post has been saved.'));
-		return $this->redirect(array('action' => 'index'));
-	    }
+		if ($this->request->is('post')) {
+	   		/* 26,35は承認の項目変更にて記載がなかったため一応コメントアウト  */
+			//$this->Post->create();
+			//Add this line
+			$this->request->data['Post']['user_id'] = $this->Auth->user('id');
 	    
-            $this->Flash->error(__('Unable to add your post.'));
-	}    
+			if ($this->Post->save($this->request->data)) {
+	        	$this->Flash->success(__('Your post has been saved.'));
+				return $this->redirect(array('action' => 'index'));
+	    	}
+            //$this->Flash->error(__('Unable to add your post.'));
+		}    
     }
 
     public function edit($id = null) {
@@ -75,5 +77,22 @@ class PostsController extends AppController {
 
 	return $this->redirect(array('action' => 'index'));
     }
+
+	public function isAuthorized($user) {
+		// 登録済みユーザーは投稿可能に
+		if ($this->action === 'add') {
+			return true;
+		}
+
+		// 投稿のオーナーは編集・削除が可能
+		if (in_array($this->action, array('edit', 'delete'))) {
+			$postId = (int)$this->request->params['pass'][0];
+
+			if ($this->Post->isOwnedBy($postId, $user['id'])) {
+				return  true;
+			}
+		}
+		return parent::isAuthorized($user);
+	}
 }
 
