@@ -49,13 +49,13 @@ class AppController extends Controller {
                     'passwordHasher' => 'Blowfish'
                 )
             ),
-			'authorize' => array('Controller');
+			'authorize' => array('Controller')
         )
     );
 
 	public function isAuthorized($user) {
 		// Admin can access every action
-		if (isset($user['role'] && $user['role'] == 'admin')) {
+		if (isset($user['role']) && $user['role'] === 'admin') {
 			return true;
 		}
 		// デフォルトは拒否
