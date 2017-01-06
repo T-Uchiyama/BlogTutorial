@@ -4,7 +4,15 @@ class PostsController extends AppController {
     public $components = array('Flash');
 
     public function index() {
-	$this->set('posts', $this->Post->find('all'));
+	    $this->set('posts', $this->Post->find('all'));
+    }
+
+    public function getList() {
+        $categoryList = $this->Post->Category->find('list', array(
+            'fields' => array('id', 'name')
+            )
+        );
+        return $categoryList;
     }
 
     public function view($id = null) {
@@ -23,43 +31,47 @@ class PostsController extends AppController {
 
     public function add() {
 		if ($this->request->is('post')) {
-	   		/* 26,35は承認の項目変更にて記載がなかったため一応コメントアウト  */
-			$this->Post->create();
+	   		/* コメントアウト行は承認の項目変更にて記載がなかったため一応コメントアウト  */
+			//$this->Post->create();
 			//Add this line
 			$this->request->data['Post']['user_id'] = $this->Auth->user('id');
-	    
+            	    
 			if ($this->Post->save($this->request->data)) {
 	        	$this->Flash->success(__('Your post has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 	    	}
-            $this->Flash->error(__('Unable to add your post.'));
+            //$this->Flash->error(__('Unable to add your post.'));
 		}    
+            $list = $this->getList();
+	        $this->set('list', $list);
     }
 
     public function edit($id = null) {
-	if (!$id) {
-	   throw new NotfoundException(__('Invalid post'));
-	}
+        
+        if (!$id) {
+	        throw new NotfoundException(__('Invalid post'));
+	    }
+        $list = $this->getList();
+	    $this->set('list', $list);
+        $post = $this->Post->findById($id);
 
-	$post = $this->Post->findById($id);
+	    if (!$post) {
+  	        throw new NotFoundException(__('Invalid post'));
+	    }
 
-	if (!$post) {
-  	   throw new NotFoundException(__('Invalid post'));
-	}
+	    if ($this->request->is(array('post', 'put'))) {
+            $this->Post->id = $id;
+            
+	        if ($this->Post->save($this->request->data)) {
+	            $this->Flash->success(__('Your post has been updated.'));
+	            return $this->redirect(array('action' => 'index'));
+	            } 
+	        $this->Flash->error(__('Unable to update your post.'));
+	    }
 
-	if ($this->request->is(array('post', 'put'))) {
-	    $this->Post->id = $id;
-
-	    if ($this->Post->save($this->request->data)) {
-	        $this->Flash->success(__('Your post has been updated.'));
-	        return $this->redirect(array('action' => 'index'));
-	    } 
-	    $this->Flash->error(__('Unable to update your post.'));
-	}
-
-	if (!$this->request->data) {
-	    $this->request->data = $post;
-	}
+	    if (!$this->request->data) {
+	        $this->request->data = $post;
+	    }
     }
 
     public function delete($id) {

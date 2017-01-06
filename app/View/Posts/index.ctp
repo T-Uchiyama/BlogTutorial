@@ -12,6 +12,7 @@
 	<th>Title</th>
 	<th>Action</th>
 	<th>Created</th>
+    <th>Category</th>
     <tr>
 
     <!-- ここから$posts配列をループさせ投稿記事の情報表示 -->
@@ -33,27 +34,32 @@
 	</td>
 
 	<td>
-
-            <?php
-	      echo $this->Form->postLink(
-		  'Delete',
-		  array('action' => 'delete', $post['Post']['id']),
-		  array('confirm' => 'Are you sure?')
-	      );
-	    ?>
+         <?php
+            echo $this->Form->postLink(
+		    'Delete',
+            array('action' => 'delete', $post['Post']['id']),
+            array('confirm' => 'Are you sure?')
+	        );
+	     ?>
 
 	    <?php
-	      echo $this->Html->link(
-		  'Edit',
-		  array('action' => 'edit', $post['Post']['id']));
+            echo $this->Html->link(
+		    'Edit',
+		    array('action' => 'edit', $post['Post']['id']));
 	    ?>
 	</td>
 
 	<td>
 	    <?php
-	      echo $post['Post']['created'];
+            echo $post['Post']['created'];
 	    ?>
 	</td>
+
+    <td>
+        <?php
+            echo $post['Category']['name'];  
+        ?>
+    </td>
     </tr>
     <?php endforeach; ?>
 

@@ -3,8 +3,7 @@
         public $hasMany = array (
             'Post' => array (
                 'className' => 'Post',
-                'foreignKey' => 'category_id',
-                'dependent' => true
+                'foreignKey' => 'category_id' 
             )
         );
     }
