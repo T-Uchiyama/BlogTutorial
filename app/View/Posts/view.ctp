@@ -23,3 +23,12 @@
         echo h($post['Post']['body'])
     ?>
 </p>
+
+<p>
+    <small>
+        Tag: <?php foreach($post['Tag'] as $tag): ?>
+             <?php echo $tag['title']; ?>
+             <?php endforeach; ?>
+
+    </small>
+</p>

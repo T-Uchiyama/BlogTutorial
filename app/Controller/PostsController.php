@@ -15,11 +15,20 @@ class PostsController extends AppController {
         return $categoryList;
     }
 
+    public function getTag() {
+        $tagList = $this->Post->PostsTag->Tag->find('list', array(
+            'fields' => array ('id', 'title')
+            )
+        );
+        return $tagList;
+    }   
+
     public function view($id = null) {
 	if (!$id) {
 	    throw new NotFoundException(__('Invalid post'));
 	}
 
+    debug($this->Post->findById($id));   
 	$post = $this->Post->findById($id);
 
 	if (!$post) {
@@ -42,17 +51,24 @@ class PostsController extends AppController {
 	    	}
             //$this->Flash->error(__('Unable to add your post.'));
 		}    
-            $list = $this->getList();
-	        $this->set('list', $list);
+        $list = $this->getList();
+	    $this->set('list', $list);
+        
+        $tag = $this->getTag();
+        $this->set('tag', $tag);
     }
 
     public function edit($id = null) {
-        
+        debug($this->Post->findById(1));   
         if (!$id) {
 	        throw new NotfoundException(__('Invalid post'));
 	    }
         $list = $this->getList();
 	    $this->set('list', $list);
+
+        $tag = $this->getTag();
+        $this->set('tag', $tag);
+
         $post = $this->Post->findById($id);
 
 	    if (!$post) {
@@ -61,8 +77,9 @@ class PostsController extends AppController {
 
 	    if ($this->request->is(array('post', 'put'))) {
             $this->Post->id = $id;
-            
-	        if ($this->Post->save($this->request->data)) {
+            debug($this->request->data); 
+            $postData = $this->request->data; 
+	        if ($this->Post->saveAll($postData)) {
 	            $this->Flash->success(__('Your post has been updated.'));
 	            return $this->redirect(array('action' => 'index'));
 	            } 

@@ -1,6 +1,7 @@
 <?php
     class CategoriesController extends AppController {
         public function index() {
-            $this->Category->find('all');
+            $categories = $this->Category->find('all');
+            $this->set('categories', $categories);
         }    
     }

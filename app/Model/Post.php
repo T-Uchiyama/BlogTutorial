@@ -16,6 +16,25 @@
             )
         );
 
+        public $hasAndBelongsToMany = array(
+            'Tag' => array (
+                'className' => 'Tag',
+                'joinTable' => 'posts_tags',
+                'foreignKey' => 'post_id',
+                'associationForeignKey' => 'tag_id',
+                'unique' => false,
+                'conditions' => '',
+                'fields' => '',
+                'order'  => '',
+                'limit'  => '',
+                'offset' => '',
+                'finderQuery' => '',
+                'deleteQuery' => '',
+                'insertQuery' => '',
+                'with' => 'PostsTag'
+            )
+        );
+
 		public function isOwnedBy($post, $user) {
 			return $this->field('id', array('id' => $post, 'user_id' => $user)) !== false;
 		}

@@ -12,5 +12,12 @@
             'options' => $list
             )
     );
+    echo $this->Form->input('Tag', array(
+            'label' => 'Tag',
+            'type' => 'select',
+            'multiple' => 'checkbox',
+            'options' => $tag
+            )
+    );
     echo $this->Form->end('Save Post');
 ?>
