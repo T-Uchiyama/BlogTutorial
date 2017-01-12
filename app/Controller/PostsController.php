@@ -28,7 +28,6 @@ class PostsController extends AppController {
 	    throw new NotFoundException(__('Invalid post'));
 	}
 
-    debug($this->Post->findById($id));   
 	$post = $this->Post->findById($id);
 
 	if (!$post) {
@@ -40,12 +39,12 @@ class PostsController extends AppController {
 
     public function add() {
 		if ($this->request->is('post')) {
-	   		/* コメントアウト行は承認の項目変更にて記載がなかったため一応コメントアウト  */
+            /* コメントアウト行は承認の項目変更にて記載がなかったため一応コメントアウト  */
 			//$this->Post->create();
 			//Add this line
 			$this->request->data['Post']['user_id'] = $this->Auth->user('id');
             	    
-			if ($this->Post->save($this->request->data)) {
+			if ($this->Post->saveAll($this->request->data)) {
 	        	$this->Flash->success(__('Your post has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 	    	}
@@ -59,7 +58,6 @@ class PostsController extends AppController {
     }
 
     public function edit($id = null) {
-        debug($this->Post->findById(1));   
         if (!$id) {
 	        throw new NotfoundException(__('Invalid post'));
 	    }
@@ -77,9 +75,7 @@ class PostsController extends AppController {
 
 	    if ($this->request->is(array('post', 'put'))) {
             $this->Post->id = $id;
-            debug($this->request->data); 
-            $postData = $this->request->data; 
-	        if ($this->Post->saveAll($postData)) {
+	        if ($this->Post->saveAll($this->request->data)) {
 	            $this->Flash->success(__('Your post has been updated.'));
 	            return $this->redirect(array('action' => 'index'));
 	            } 

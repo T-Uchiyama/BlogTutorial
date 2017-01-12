@@ -6,7 +6,7 @@
                 'joinTable' => 'posts_tags',
                 'foreignKey' => 'tag_id',
                 'associationForeignKey' => 'post_id',
-                'unique' => false,
+                'unique' => true,
                 'conditions' => '',
                 'fields' => '',
                 'order'  => '',

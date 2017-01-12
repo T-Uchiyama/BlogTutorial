@@ -32,3 +32,15 @@
 
     </small>
 </p>
+
+<p>
+    <small>
+        <?php
+            $base = $this->Html->url('/files/attachment/photo/');
+            
+            foreach($post['Attachment'] as $attachment):
+                echo $this->Html->image( $base . $attachment['dir'] . '/' . $attachment['photo']);
+            endforeach;
+        ?>
+    <small>
+</p>

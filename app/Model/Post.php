@@ -22,7 +22,7 @@
                 'joinTable' => 'posts_tags',
                 'foreignKey' => 'post_id',
                 'associationForeignKey' => 'tag_id',
-                'unique' => false,
+                'unique' => true,
                 'conditions' => '',
                 'fields' => '',
                 'order'  => '',
@@ -33,6 +33,16 @@
                 'insertQuery' => '',
                 'with' => 'PostsTag'
             )
+        );
+
+        public $hasMany = array(
+            'Attachment' => array(
+                'className' => 'Attachment',
+                'foreignKey' => 'foreign_key',
+                'conditions' => array(
+                    'Attachment.model' => 'Post',    
+                ),
+            ),
         );
 
 		public function isOwnedBy($post, $user) {
