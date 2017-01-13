@@ -20,7 +20,7 @@
             'options' => $tag, 
         )
     );
-
+    
     echo ('<div class="input-group">');
     echo $this->Form->input('image',
                 array(
@@ -31,7 +31,7 @@
                 'placeholder' => 'select file...'
                 )
                     
-    ); 
+    );
     echo $this->Form->button('ファイル選択', array(
             'div' => false,
             'type' => 'button',
@@ -41,15 +41,32 @@
     );
     echo ('</div>');    
     
-    echo $this->Form->input('Attachment.0.photo', array('type' => 'file', 'label' => 'Image'));
+    echo $this->Form->input('Attachment.0.photo', array(
+            'type' => 'file', 
+            'label' => false,
+            'style' => 'display:none',
+            )
+    );
+
     echo $this->Form->input('Attachment.0.model', array('type' => 'hidden', 'value' => 'Post'));
     echo $this->Form->end('Save Post');
 ?>
 
-<script>
+<script type="text/javascript">
     $(function () { 
-        $(".btn-info#btn_link").click(function () {
-            $("#Attachment0Photo").click();
+        $(".btn-info#btn_link").on( 
+        {
+            'click' : function()
+            {
+                $("#Attachment0Photo").click();
+                
+                $('#Attachment0Photo').change(function() {
+                    //placeHolderの削除
+                    $('.form-control#photoCover').removeAttr('placeholder');
+                    //TextAreaに名称表示
+                    $('#photoCover').val($(this).val().replace("C:\\fakepath\\", ""));
+                });
+            }
         });         
     });
 </script>
