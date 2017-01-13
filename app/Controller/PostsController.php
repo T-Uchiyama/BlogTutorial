@@ -17,10 +17,18 @@ class PostsController extends AppController {
 
     public function getTag() {
         $tagList = $this->Post->PostsTag->Tag->find('list', array(
-            'fields' => array ('id', 'title')
+            'fields' => array('id', 'title')
             )
         );
         return $tagList;
+    }
+
+    public function getPhoto() {
+        $photoList = $this->Post->Attachment->find('list', array(
+            'fields' => array('id', 'foreign_key', 'photo') 
+            )
+        );
+        return $photoList;
     }   
 
     public function view($id = null) {
@@ -41,7 +49,6 @@ class PostsController extends AppController {
 		if ($this->request->is('post')) {
             /* コメントアウト行は承認の項目変更にて記載がなかったため一応コメントアウト  */
 			//$this->Post->create();
-			//Add this line
 			$this->request->data['Post']['user_id'] = $this->Auth->user('id');
             	    
 			if ($this->Post->saveAll($this->request->data)) {
@@ -67,11 +74,20 @@ class PostsController extends AppController {
         $tag = $this->getTag();
         $this->set('tag', $tag);
 
-        $post = $this->Post->findById($id);
+        $photo = $this->getPhoto();
+        $this->set('photo', $photo);
 
+
+        $post = $this->Post->findById($id);
+        
 	    if (!$post) {
   	        throw new NotFoundException(__('Invalid post'));
 	    }
+        
+        //debug($post);
+        //exit;
+        $this->set('posts', $post);
+        
 
 	    if ($this->request->is(array('post', 'put'))) {
             $this->Post->id = $id;
