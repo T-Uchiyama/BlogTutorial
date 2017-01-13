@@ -22,49 +22,72 @@
     );
     
     echo ('<div class="input-group">');
-    echo $this->Form->input('image',
-                array(
+
+    $i = 0;
+    for ($i; $i < 3; $i++) {
+        echo ('<div class= "File">');
+        
+        echo $this->Form->input('image', array(
                 'div' => false,
                 'type' => 'text',
-                'id' => 'photoCover',
+                'id' => 'photoCover'.$i,
                 'class' => 'form-control',
-                'placeholder' => 'select file...'
-                )
-                    
-    );
-    echo $this->Form->button('ファイル選択', array(
-            'div' => false,
-            'type' => 'button',
-            'id' => 'btn_link',
-            'class' => 'btn-info',
-        )
-    );
-    echo ('</div>');    
-    
-    echo $this->Form->input('Attachment.0.photo', array(
-            'type' => 'file', 
-            'label' => false,
-            'style' => 'display:none',
+                'placeholder' => 'select file...',     
             )
-    );
+        );
+    
+        echo $this->Form->button('ファイル選択', array(
+                'div' => false,
+                'type' => 'button',
+                'id' => 'btn_link'.$i,
+                'class' => 'btn-info',
+                'elementNumber' => $i,
+            )
+        );
 
-    echo $this->Form->input('Attachment.0.model', array('type' => 'hidden', 'value' => 'Post'));
+        echo $this->Form->input('Attachment'.$i.'photo', array(
+                'type' => 'file',
+                'label' => false,
+                'id' => 'Attachment'.$i.'Photo',
+                'name' => 'data[Attachment]['.$i.'][photo]', 
+                'style' => 'display:none',
+                )
+        );
+
+        echo $this->Form->input('Attachment'.$i.'model', array(
+                 'type' => 'hidden',
+                 'id' => 'Attachment'.$i.'Model',
+                 'name' => 'data[Attachment]['.$i.'][model]', 
+                 'value' => 'Post',
+                )
+        );
+
+        echo ('</div>');
+    }
+
+    echo ('</div>');    
+   
     echo $this->Form->end('Save Post');
 ?>
 
 <script type="text/javascript">
     $(function () { 
-        $(".btn-info#btn_link").on( 
+        $("[id^=btn_link]").on( 
         {
             'click' : function()
             {
-                $("#Attachment0Photo").click();
-                
-                $('#Attachment0Photo').change(function() {
-                    //placeHolderの削除
-                    $('.form-control#photoCover').removeAttr('placeholder');
-                    //TextAreaに名称表示
-                    $('#photoCover').val($(this).val().replace("C:\\fakepath\\", ""));
+                var id = $(this).attr('id');
+                var columnNum = document.getElementById(id).getAttribute('elementNumber');
+                $('#Attachment' + columnNum  + 'Photo').click();
+
+                $('#Attachment' + columnNum  + 'Photo').change(function() {
+                    if ($('#photoCover' + columnNum).attr('placeholder') != null)
+                    {
+                        //placeHolderの削除
+                        $('#photoCover' + columnNum).removeAttr('placeholder');
+                        //TextAreaに名称表示
+                        $('#photoCover' + columnNum).val($(this).val().replace("C:\\fakepath\\", ""));
+                    }
                 });
             }
         });         
