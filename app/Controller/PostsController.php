@@ -64,7 +64,8 @@ class PostsController extends AppController {
         $this->set('tag', $tag);
     }
 
-    public function edit($id = null) {
+    public function edit($id = null) 
+    {
         if (!$id) {
 	        throw new NotfoundException(__('Invalid post'));
 	    }
@@ -84,8 +85,6 @@ class PostsController extends AppController {
   	        throw new NotFoundException(__('Invalid post'));
 	    }
         
-        //debug($post);
-        //exit;
         $this->set('posts', $post);
         
 
@@ -98,28 +97,43 @@ class PostsController extends AppController {
 	        $this->Flash->error(__('Unable to update your post.'));
 	    }
 
-	    if (!$this->request->data) {
+	    if (!$this->request->data) 
+        {
 	        $this->request->data = $post;
 	    }
     }
 
-    public function delete($id) {
-	if ($this->request->is('get')) {
-	    throw new MethodNotAllowedException();
-	}
+    public function delete($id) 
+    {
+	    if ($this->request->is('get')) 
+        {
+	        throw new MethodNotAllowedException();
+	    }
 
-	if ($this->Post->delete($id)) {
-	    $this->Flash->success(
-		__('The post with id: %s has been deleted.', h($id)));
-	} else {
-	    $this->Flash->error(
-		__('The post with id: %s could not be deleted.', h($id)));
-	}
+	    if ($this->Post->delete($id)) 
+        {
+	        $this->Flash->success(
+		    __('The post with id: %s has been deleted.', h($id)));
+	    } else {
+	        $this->Flash->error(
+		    __('The post with id: %s could not be deleted.', h($id)));
+    	}
 
-	return $this->redirect(array('action' => 'index'));
+	    return $this->redirect(array('action' => 'index'));
+    }
+    
+    public function imageDelete()
+    {
+        //var_dump($id);
+        $post = $this->request;
+        var_dump($post['data']['id']);
+        //var_dump($this->request->data());
+        echo $this->Post->Attachment->delete($post['data']['id'], true);
+        exit();
     }
 
-	public function isAuthorized($user) {
+	public function isAuthorized($user) 
+    {
 		// 登録済みユーザーは投稿可能に
 		if ($this->action === 'add') {
 			return true;

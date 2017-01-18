@@ -20,27 +20,44 @@
             )
     );
     foreach ($posts['Attachment'] as $attachment): 
+        echo '<div class="image_div">';
         echo $this->Html->image('../files/attachment/photo/'.$attachment['dir'].'/'.$attachment['photo'],
                     array('alt' => 'baz'));
+    
+        echo $this->Form->button('削除', array(
+            'id' => 'photo_link',
+            'element' => $attachment['id'],
+            'type' => 'button',
+            )
+        );
+        echo '</div>';
     endforeach;
  
     echo $this->Form->end('Save Post');
 ?>
 
 <script type="text/javascript">
-    //削除用のJQuery記載の可能性あり
     $(function () { 
-        $(".btn-info#btn_link").on( 
+        $("#photo_link").on( 
         {
-            'click' : function()
+            'click' : function(e)
             {
-                $("#Attachment0Photo").click();
-                
-                $('#Attachment0Photo').change(function() {
-                    //placeHolderの削除
-                    $('.form-control#photoCover').removeAttr('placeholder');
-                    //TextAreaに名称表示
-                    $('#photoCover').val($(this).val().replace("C:\\fakepath\\", ""));
+                var id = $(this).attr('id');
+                var columnNum = document.getElementById(id).getAttribute('element');
+   
+                $.ajax({
+                    type: "POST",
+                    url: "/posts/imageDelete",
+                    data: {'id':columnNum},
+                    success: function(msg)
+                    {
+                        if(msg)
+                        {
+                            alert('削除しました。');
+                            // 写真の状態をhiddenに
+                            $(e.target).parent('.image_div').find('img').remove();               
+                        }
+                    }
                 });
             }
         });         
