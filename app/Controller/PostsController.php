@@ -1,13 +1,39 @@
 <?php
 class PostsController extends AppController {
     public $helpers = array('Html', 'Form', 'Flash');
-    public $components = array('Flash');
+    
+    public $components = array('Flash', 'Search.Prg');
+    public $presetVars = true;
 
-    public function index() {
-	    $this->set('posts', $this->Post->find('all'));
-    }
 
-    public function getList() {
+    public function index() 
+    {
+        unset($this->Post->validate['title']);   
+        $this->set('posts', $this->Post->find('all'));
+        // Search Plugin用の設定
+        $this->Prg->commonProcess();
+        $this->paginate = array(
+            'conditions' => array(
+                $this->Post->parseCriteria($this->passedArgs),
+            )   
+        );  
+        $this->set('posts', $this->paginate());
+    
+        // Category
+        $categories = $this->getList();
+        $this->set(compact('categories'));
+    
+        // Tag
+        $tags = $this->getTag();
+        $this->set(compact('tags'));
+    
+        // Title        
+        $titles = $this->Post->find('list');
+        $this->set(compact('titles'));
+    }   
+
+    public function getList()
+     {
         $categoryList = $this->Post->Category->find('list', array(
             'fields' => array('id', 'name')
             )
@@ -15,7 +41,8 @@ class PostsController extends AppController {
         return $categoryList;
     }
 
-    public function getTag() {
+    public function getTag()
+     {
         $tagList = $this->Post->PostsTag->Tag->find('list', array(
             'fields' => array('id', 'title')
             )
@@ -23,7 +50,8 @@ class PostsController extends AppController {
         return $tagList;
     }
 
-    public function getPhoto() {
+    public function getPhoto()
+    {
         $photoList = $this->Post->Attachment->find('list', array(
             'fields' => array('id', 'foreign_key', 'photo') 
             )
@@ -31,21 +59,24 @@ class PostsController extends AppController {
         return $photoList;
     }   
 
-    public function view($id = null) {
-	if (!$id) {
-	    throw new NotFoundException(__('Invalid post'));
-	}
+    public function view($id = null)
+    {
+	    if (!$id) 
+        {
+	        throw new NotFoundException(__('Invalid post'));
+	    }
 
-	$post = $this->Post->findById($id);
+	    $post = $this->Post->findById($id);
 
-	if (!$post) {
-	   throw new NotFoundException(__('Invalid post'));
+	    if (!$post)
+        {
+	        throw new NotFoundException(__('Invalid post'));
         }
-	
-	$this->set('post', $post);
+	    $this->set('post', $post);
     }
 
-    public function add() {
+    public function add()
+    {
 		if ($this->request->is('post')) {
             /* コメントアウト行は承認の項目変更にて記載がなかったため一応コメントアウト  */
 			//$this->Post->create();
@@ -88,7 +119,8 @@ class PostsController extends AppController {
         $this->set('posts', $post);
         
 
-	    if ($this->request->is(array('post', 'put'))) {
+	    if ($this->request->is(array('post', 'put'))) 
+        {
             $this->Post->id = $id;
 	        if ($this->Post->saveAll($this->request->data)) {
 	            $this->Flash->success(__('Your post has been updated.'));
@@ -124,10 +156,6 @@ class PostsController extends AppController {
     
     public function imageDelete()
     {
-        //var_dump($id);
-        $post = $this->request;
-        var_dump($post['data']['id']);
-        //var_dump($this->request->data());
         echo $this->Post->Attachment->delete($post['data']['id'], true);
         exit();
     }

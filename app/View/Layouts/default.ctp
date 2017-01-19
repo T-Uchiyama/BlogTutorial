@@ -53,9 +53,9 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
                         $username = 'Guest';
                       	echo "ログイン名 : ", $username;
                   	} 
-             	?>	
+             	?>
 			</h1>		
-</div>
+    </div>
 		<div id="content">
 
 			<?php echo $this->Flash->render(); ?>

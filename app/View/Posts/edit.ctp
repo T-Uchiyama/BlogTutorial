@@ -55,7 +55,8 @@
                         {
                             alert('削除しました。');
                             // 写真の状態をhiddenに
-                            $(e.target).parent('.image_div').find('img').remove();               
+                            $(e.target).parent('.image_div').find('img').remove();
+                            $(e.target).parent('.image_div').find('button').remove();
                         }
                     }
                 });

@@ -2,10 +2,68 @@
 
 <h1>Blog posts</h1>
 <?php 
-  echo $this->Html->link(
-    'Add Post',
-    array ('controller' => 'posts', 'action' => 'add'));
+    echo $this->Form->Create('Post', array(
+            'url' => array_merge(array(
+                'action' => 'index'
+                ), $this->params['pass']
+            )
+        )
+    ); 
+?>
+<fieldset>
+    <div id="searchFuncPush">
+        <legend>検索</legend>
+    </div>
+
+    <div id="searchLink">
+        <!-- Category  -->
+        <?php 
+            echo $this->Form->input('category_id', array(
+            'label' => 'カテゴリ',
+            'id' => 'search_category',
+            'class' => 'category', 
+            'empty' => true,
+            )
+        ); 
+    ?>
+    <!-- Tag  -->
+    <?php 
+        echo $this->Form->input('tag_id', array(
+            'label' => 'タグ',
+            'id' => 'search_tag',
+            'class' => 'tag', 
+            'empty' => true,
+            )
+        ); 
+    ?>
+    <!-- Title  -->
+    <?php 
+        echo $this->Form->input('title', array(
+            'label' => 'タイトル',
+            'type' => 'text',
+            'id' => 'search_title',
+            'class' => 'title', 
+            'empty' => true,
+            'placeholder' => 'キーワードを入力してください。',
+            )
+        ); 
+    ?>
+  
+    <?php 
+        echo $this->Form->Submit('検索'); 
+    ?>
+    </div>
+<?php 
+    echo $this->Form->End(); 
+?>
+</fieldset>
+
+<?php 
+    echo $this->Html->link(
+        'Add Post',
+        array ('controller' => 'posts', 'action' => 'add'));
  ?>
+	
 <table>
     <tr>
 	<th>Id</th>
@@ -64,3 +122,18 @@
     <?php endforeach; ?>
 
 </table>
+
+
+<script>
+    $(function () {
+
+        // 検索エリアの非表示
+        $('#searchLink').css('display', 'none');        
+ 
+        // div要素をクリックされたら切り替えの実施
+        $('#searchFuncPush').click(function() 
+        {
+            $('#searchLink').toggle(); 
+        });         
+    });
+</script>
