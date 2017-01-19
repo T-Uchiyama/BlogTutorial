@@ -22,7 +22,12 @@
     foreach ($posts['Attachment'] as $attachment): 
         echo '<div class="image_div">';
         echo $this->Html->image('../files/attachment/photo/'.$attachment['dir'].'/'.$attachment['photo'],
-                    array('alt' => 'baz'));
+            array(
+                'alt' => 'baz',
+                'width' => 100,
+                'height' => 100
+            )
+        );
     
         echo $this->Form->button('削除', array(
             'id' => 'photo_link',

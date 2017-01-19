@@ -25,7 +25,25 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
   <![endif]-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="../../app/webroot/bootstrap/js/bootstrap.min.js"></script>
-<html>
+<!-- ポップアップ用背景CSSの追加  -->
+<style type="text/css">
+<!--
+    #defaultImg
+    {
+        display: none;
+    }
+
+
+    #back-curtain
+    {
+        background: rgba(0, 0, 0, 0.5); //
+        display: none;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+-->
+</style><html>
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title>
