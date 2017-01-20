@@ -81,7 +81,17 @@ class PostsController extends AppController {
             /* コメントアウト行は承認の項目変更にて記載がなかったため一応コメントアウト  */
 			//$this->Post->create();
 			$this->request->data['Post']['user_id'] = $this->Auth->user('id');
-            	    
+            foreach ($this->request->data['Attachment'] as $idx=>$a)
+            {
+                if ($a['photo']['error'])
+                {
+                    /* 
+                     * 写真を複数枚送る場合に一つでも空箱があるとエラーになるために
+                     * 空箱をController側で削除。
+                     */
+                    unset($this->request->data['Attachment'][$idx]);
+                }
+            }
 			if ($this->Post->saveAll($this->request->data)) {
 	        	$this->Flash->success(__('Your post has been saved.'));
 				return $this->redirect(array('action' => 'index'));
