@@ -42,6 +42,30 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
         left: 0;
         top: 0;
     }
+    
+    <!-- 以下スライドショー用CSS  -->
+    #slide
+    {
+        position:relative;
+    }
+
+    #slide.defaultImgCls
+    {
+        position:absolute;
+        left:0;
+        top:0;
+    }
+
+    #nav-r
+    {
+        position:relative;
+    }
+
+    #nav-l
+    {
+        position:relative;
+    }
+
 -->
 </style><html>
 <head>
