@@ -28,42 +28,48 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
 <!-- ポップアップ用背景CSSの追加  -->
 <style type="text/css">
 <!--
-    #defaultImg
+    #container
     {
-        display: none;
+        z-index: 0;
     }
-
 
     #back-curtain
     {
-        background: rgba(0, 0, 0, 0.5); //
+        background: rgba(0, 0, 0, 0.5);
         display: none;
-        position: absolute;
+        position: fixed;
         left: 0;
         top: 0;
-    }
-    
-    <!-- 以下スライドショー用CSS  -->
-    #slide
-    {
-        position:relative;
+        width: 100%;
+        height: 120%;
+        z-index: 1;
     }
 
-    #slide.defaultImgCls
+    <!-- 以下スライドショー用  -->
+    #slide
     {
-        position:absolute;
-        left:0;
-        top:0;
+        position: relative;
+    }
+
+    .defaultImgCls
+    {
+        margin: 0;
+        padding: 10px 20px;
+        position: fixed;
+        display: none;
+        z-index: 2;
     }
 
     #nav-r
     {
-        position:relative;
+        position : relative;
+        display : none;
     }
 
     #nav-l
     {
-        position:relative;
+        position : relative;
+        display : none;
     }
 
 -->
@@ -94,9 +100,9 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
                     } else {
                         $username = 'Guest';
                       	echo "ログイン名 : ", $username;
-                  	} 
+                  	}
              	?>
-			</h1>		
+			</h1>
     </div>
 		<div id="content">
 
