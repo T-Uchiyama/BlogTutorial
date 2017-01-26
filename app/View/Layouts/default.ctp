@@ -38,8 +38,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
         background: rgba(0, 0, 0, 0.5);
         display: none;
         position: fixed;
-        left: 0;
-        top: 0;
+        left: 0px;
+        top: 0px;
         width: 100%;
         height: 120%;
         z-index: 1;
@@ -54,22 +54,34 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
     .defaultImgCls
     {
         margin: 0;
-        padding: 10px 20px;
+        padding: 10px 10px;
         position: fixed;
         display: none;
         z-index: 2;
     }
 
-    #nav-r
+    .tempImg
     {
-        position : relative;
-        display : none;
+        position: fixed;
     }
 
-    #nav-l
+    .nav-r
     {
-        position : relative;
-        display : none;
+        position: fixed;
+        top: 470px;
+        left: 1268px;
+        padding: 20px 50px;
+        font-size: 1.2em;
+
+    }
+
+    .nav-l
+    {
+        position: fixed;
+        top: 470px;
+        left: 500px;
+        padding: 20px 50px;
+        font-size: 1.2em;
     }
 
 -->

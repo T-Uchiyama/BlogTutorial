@@ -1,36 +1,36 @@
 <?php
 class PostsController extends AppController {
     public $helpers = array('Html', 'Form', 'Flash');
-    
+
     public $components = array('Flash', 'Search.Prg');
     public $presetVars = true;
 
 
-    public function index() 
+    public function index()
     {
-        unset($this->Post->validate['title']);   
+        unset($this->Post->validate['title']);
         $this->set('posts', $this->Post->find('all'));
         // Search Plugin用の設定
         $this->Prg->commonProcess();
         $this->paginate = array(
             'conditions' => array(
                 $this->Post->parseCriteria($this->passedArgs),
-            )   
-        );  
+            )
+        );
         $this->set('posts', $this->paginate());
-    
+
         // Category
         $categories = $this->getList();
         $this->set(compact('categories'));
-    
+
         // Tag
         $tags = $this->getTag();
         $this->set(compact('tags'));
-    
-        // Title        
+
+        // Title
         $titles = $this->Post->find('list');
         $this->set(compact('titles'));
-    }   
+    }
 
     public function getList()
      {
@@ -53,21 +53,20 @@ class PostsController extends AppController {
     public function getPhoto()
     {
         $photoList = $this->Post->Attachment->find('list', array(
-            'fields' => array('id', 'foreign_key', 'photo') 
+            'fields' => array('id', 'foreign_key', 'photo')
             )
         );
         return $photoList;
-    }   
+    }
 
     public function view($id = null)
     {
-	    if (!$id) 
+	    if (!$id)
         {
 	        throw new NotFoundException(__('Invalid post'));
 	    }
 
 	    $post = $this->Post->findById($id);
-
 	    if (!$post)
         {
 	        throw new NotFoundException(__('Invalid post'));
@@ -85,7 +84,7 @@ class PostsController extends AppController {
             {
                 if ($a['photo']['error'])
                 {
-                    /* 
+                    /*
                      * 写真を複数枚送る場合に一つでも空箱があるとエラーになるために
                      * 空箱をController側で削除。
                      */
@@ -97,15 +96,15 @@ class PostsController extends AppController {
 				return $this->redirect(array('action' => 'index'));
 	    	}
             //$this->Flash->error(__('Unable to add your post.'));
-		}    
+		}
         $list = $this->getList();
 	    $this->set('list', $list);
-        
+
         $tag = $this->getTag();
         $this->set('tag', $tag);
     }
 
-    public function edit($id = null) 
+    public function edit($id = null)
     {
         if (!$id) {
 	        throw new NotfoundException(__('Invalid post'));
@@ -121,38 +120,38 @@ class PostsController extends AppController {
 
 
         $post = $this->Post->findById($id);
-        
+
 	    if (!$post) {
   	        throw new NotFoundException(__('Invalid post'));
 	    }
-        
-        $this->set('posts', $post);
-        
 
-	    if ($this->request->is(array('post', 'put'))) 
+        $this->set('posts', $post);
+
+
+	    if ($this->request->is(array('post', 'put')))
         {
             $this->Post->id = $id;
 	        if ($this->Post->saveAll($this->request->data)) {
 	            $this->Flash->success(__('Your post has been updated.'));
 	            return $this->redirect(array('action' => 'index'));
-	            } 
+	            }
 	        $this->Flash->error(__('Unable to update your post.'));
 	    }
 
-	    if (!$this->request->data) 
+	    if (!$this->request->data)
         {
 	        $this->request->data = $post;
 	    }
     }
 
-    public function delete($id) 
+    public function delete($id)
     {
-	    if ($this->request->is('get')) 
+	    if ($this->request->is('get'))
         {
 	        throw new MethodNotAllowedException();
 	    }
 
-	    if ($this->Post->delete($id)) 
+	    if ($this->Post->delete($id))
         {
 	        $this->Flash->success(
 		    __('The post with id: %s has been deleted.', h($id)));
@@ -163,14 +162,14 @@ class PostsController extends AppController {
 
 	    return $this->redirect(array('action' => 'index'));
     }
-    
+
     public function imageDelete()
     {
         echo $this->Post->Attachment->delete($post['data']['id'], true);
         exit();
     }
 
-	public function isAuthorized($user) 
+	public function isAuthorized($user)
     {
 		// 登録済みユーザーは投稿可能に
 		if ($this->action === 'add') {
@@ -188,4 +187,3 @@ class PostsController extends AppController {
 		return parent::isAuthorized($user);
 	}
 }
-

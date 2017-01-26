@@ -42,7 +42,6 @@
 
             // スライドショー向けdiv追加
             echo('<div id="slide">');
-            //echo('<div id="back-curtain"></div>');
 
             foreach($post['Attachment'] as $attachment):
                 echo('<div id="image_id'.$cnt.'">');
@@ -51,6 +50,7 @@
                         'class' => 'thumbnail',
                         'width' => 200,
                         'height' => 200,
+                        'pageNum' => $cnt,
                     )
                 );
                 echo('<div class="image_div">');
@@ -69,11 +69,6 @@
 
             endforeach;
             echo('</div>');
-
-            // TODO : ボタンの場所配置
-            //        画像を中心としてその両左右へ配置する。
-            echo ('<p id="nav-r"><a href="#">次へ</a></p>');
-            echo ('<p id="nav-l"><a href="#">戻る</a></p>');
         ?>
     <small>
 </p>
@@ -83,23 +78,21 @@
    /*
     *  サムネイルをクリックすると元画像で表示されスライドショーを実施する関数
     *  TODO
-    *      1. モーダルウインドウの完成
-    *      2. 画像の中央表示
-    *      3. 画像の両サイドにボタン配置しスライドショーの実行
+    *      1. 画像の両サイドにボタン配置しスライドショーの実行
     */
     $(function ()
     {
-        // 元画像を非表示
-        $('[id^=defaultImg]').css('display', 'none');
+        // サムネイルよりelementを入手する用の変数
         var id;
         var idStr;
-        var columnNum;
+
         // スライドショー向け変数
         var page;
         var lastPage;
         var timer;
         var sX_syncerModal = 0;
         var sY_syncerModal = 0;
+        var img_src
 
         $('.thumbnail').on(
         {
@@ -123,17 +116,10 @@
                 // サムネイルをクリックし元画像の情報取得。
                 id = $(this).parents('div').attr('id');
                 idStr = "#" + id;
-                columnNum = $(idStr).find('.defaultImgCls').attr('element');
                 page = $(idStr).find('.defaultImgCls').attr('element');
 
                 // イメージ総数を最後のページ数として定義化
-                lastPage = parseInt($('.defaultImgCls').length-1);
-
-
-
-                // 暗幕内にボタンを表示
-                $('#nav-r').show();
-                $('#nav-l').show();
+                lastPage = parseInt($('.defaultImgCls').length - 1);
 
                 // 同時発火を抑える。
                 if ($(e.target).attr('id') == "back-curtain")
@@ -141,50 +127,36 @@
                     return;
                 }
 
-                // 暗幕の出現
-                $('#container').append('<div id="back-curtain"></div>');
-                // back-curtainに対してappend
-                $('#back-curtain').fadeIn('slow');
-
-                // 画像のフェードイン
-                $('#defaultImg' + columnNum).css(
+                // 暗幕やスライドショー用の画像等の出現
+                $('#slide').append('<div id="back-curtain"></div>');
+                img_src = $(this).attr('src');
+                $('#back-curtain').append('<img class=tempImg src='+ img_src+ '>');
+                $('.tempImg').css(
                 {
                     'left' : Math.floor(($(window).width() -
-                            $('#defaultImg' + columnNum).width()) / 2) + 'px',
+                            $('#defaultImg' + page).width()) / 2) + 'px',
                     'top' : Math.floor(($(window).height() -
-                            $('#defaultImg' + columnNum).height()) / 2) + 'px',
-                }).fadeIn('slow');
+                            $('#defaultImg' + page).height()) / 2) + 'px',
+                });
+                $('#back-curtain').append('<button class="nav-r btn-primary btn-lg">次へ</button>');
+                $('#back-curtain').append('<button class="nav-l btn-primary btn-lg">戻る</button>');
+                $('#back-curtain').fadeIn('slow');
+
                 /*
                  * 暗幕非表示関数
                  */
-                $('#back-curtain, #defaultImg' + columnNum).on('click', function(e)
+                $('#slide').on('click', '#back-curtain , #defaultImg' + page, function(e)
                 {
-                    // スクロール位置を元に戻す。
-                    window.scrollTo(sX_syncerModal, sY_syncerModal);
+                        // スクロール位置を元に戻す。
+                        window.scrollTo(sX_syncerModal, sY_syncerModal);
 
-                    /* 元々は#defaultImg + columnNumのみ */
-                    $('#back-curtain , #defaultImg' + columnNum).fadeOut('slow', function()
-                    {
-                        //$('#back-curtain').hide();
-                        $('#back-curtain').remove();
-                    });
+                        /* 元々は#defaultImg + pageのみ */
+                        $('#back-curtain , #defaultImg' + page).fadeOut('slow', function()
+                        {
+                            //$('#back-curtain').hide();
+                            $('#back-curtain').remove();
+                        });
                 });
-                /*
-                $('#back-curtain').css(
-                {
-                    'width' : $(window).width(),
-                    'height' : $(window).height()
-                }).show();
-
-                $('#defaultImg' + columnNum).css(
-                {
-                    'left' : Math.floor(($(window).width() -
-                            $('#defaultImg' + columnNum).width()) / 2) + 'px',
-                    'top' : Math.floor(($(window).height() -
-                            $('#defaultImg' + columnNum).height()) / 2) + 'px',
-                    'opicity' : 1
-                }).fadeIn();
-                */
             }
         });
 
@@ -203,30 +175,53 @@
             var height = $(window).height();
 
             // 画像側の幅と高さの取得
-            var imageWidth = $('#defaultImg' + columnNum).outerWidth();
-            var imageHeight = $('#defaultImg' + columnNum).outerHeight();
+            var imageWidth = $('#defaultImg' + page).outerWidth();
+            var imageHeight = $('#defaultImg' + page).outerHeight();
 
         }
 
        /*
         * 次へまたは戻るを押下した際にはページカウントを増加し次の画像の表示
         */
-        $('#nav-r', '#nav-l').click(function()
+        $('#slide').on('click', '.nav-r , .nav-l', function(e)
         {
+            // イベント伝播のキャンセル
+            e.stopPropagation();
+
             // 一度タイマーを停止しスタート
             stopTimer();
             startTimer();
 
-            var direction;
-
             // 最終ページの場合には最初に戻るようにする。
-            if ($(this).attr('id') == 'nav-r')
+            if ($(this).attr('class') == 'nav-r')
             {
-                direction = 1;
+                if (page == lastPage)
+                {
+                    page = 0;
+                } else {
+                    page ++;
+                }
+
             } else {
-                direction = -1;
+                if (page == 0)
+                {
+                    page = lastPage;
+                } else {
+                    page --;
+                }
             }
-            page = page % (lastPage + direction)
+
+            for (var cnt = 0; cnt <= lastPage; cnt++)
+            {
+                if ($(this).parents('div').find('#image_id' + cnt)
+                    .find('.defaultImgCls').attr('element') == page)
+                    {
+                        img_src = $(this).parents('div').find('#image_id' + cnt)
+                                .find('.defaultImgCls').attr('src');
+
+                    }
+            }
+
             changePage();
 
             stopTimer();
@@ -237,9 +232,16 @@
         */
         function changePage()
         {
-            $('.defaultImgCls').fadeOut(1000),
-            $('.defaultImgCls').eq(page).fadeIn(1000)
-        };
+            $('#back-curtain img').remove();
+            $('#back-curtain').append('<img class=tempImg src='+ img_src+ '>');
+            $('.tempImg').css(
+            {
+                'left' : Math.floor(($(window).width() -
+                        $('#defaultImg' + page).width()) / 2) + 'px',
+                'top' : Math.floor(($(window).height() -
+                        $('#defaultImg' + page).height()) / 2) + 'px',
+            });
+        }
 
        /*
         * ~秒間隔でイメージ切替用のタイマー関数
