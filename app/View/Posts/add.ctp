@@ -11,31 +11,32 @@
             'label' => 'Category',
             'type' => 'select',
             'options' => $list,
+            'empty' => true,
             )
     );
     echo $this->Form->input('Tag', array(
             'label' => 'Tag',
             'type' => 'select',
             'multiple' => 'checkbox',
-            'options' => $tag, 
+            'options' => $tag,
         )
     );
-    
+
     echo ('<div class="input-group">');
 
     $i = 0;
     for ($i; $i < 3; $i++) {
         echo ('<div class= "File">');
-        
+
         echo $this->Form->input('image', array(
                 'div' => false,
                 'type' => 'text',
                 'id' => 'photoCover'.$i,
                 'class' => 'form-control',
-                'placeholder' => 'select file...',     
+                'placeholder' => 'select file...',
             )
         );
-    
+
         echo $this->Form->button('ファイル選択', array(
                 'div' => false,
                 'type' => 'button',
@@ -49,7 +50,7 @@
                 'type' => 'file',
                 'label' => false,
                 'id' => 'Attachment'.$i.'Photo',
-                'name' => 'data[Attachment]['.$i.'][photo]', 
+                'name' => 'data[Attachment]['.$i.'][photo]',
                 'style' => 'display:none',
                 )
         );
@@ -57,7 +58,7 @@
         echo $this->Form->input('Attachment'.$i.'model', array(
                  'type' => 'hidden',
                  'id' => 'Attachment'.$i.'Model',
-                 'name' => 'data[Attachment]['.$i.'][model]', 
+                 'name' => 'data[Attachment]['.$i.'][model]',
                  'value' => 'Post',
                 )
         );
@@ -65,14 +66,14 @@
         echo ('</div>');
     }
 
-    echo ('</div>');    
-   
+    echo ('</div>');
+
     echo $this->Form->end('Save Post');
 ?>
 
 <script type="text/javascript">
-    $(function () { 
-        $("[id^=btn_link]").on( 
+    $(function () {
+        $("[id^=btn_link]").on(
         {
             'click' : function()
             {
@@ -90,6 +91,6 @@
                     }
                 });
             }
-        });         
+        });
     });
 </script>
