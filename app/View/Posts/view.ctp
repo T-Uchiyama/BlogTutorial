@@ -150,10 +150,8 @@
                         // スクロール位置を元に戻す。
                         window.scrollTo(sX_syncerModal, sY_syncerModal);
 
-                        /* 元々は#defaultImg + pageのみ */
                         $('#back-curtain , #defaultImg' + page).fadeOut('slow', function()
                         {
-                            //$('#back-curtain').hide();
                             $('#back-curtain').remove();
                         });
                 });

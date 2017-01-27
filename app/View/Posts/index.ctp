@@ -1,14 +1,14 @@
 <!-- File: /app/View/Posts/index.ctp -->
 
 <h1>Blog posts</h1>
-<?php 
+<?php
     echo $this->Form->Create('Post', array(
             'url' => array_merge(array(
                 'action' => 'index'
                 ), $this->params['pass']
             )
         )
-    ); 
+    );
 ?>
 <fieldset>
     <div id="searchFuncPush">
@@ -17,53 +17,56 @@
 
     <div id="searchLink">
         <!-- Category  -->
-        <?php 
+        <?php
             echo $this->Form->input('category_id', array(
             'label' => 'カテゴリ',
             'id' => 'search_category',
-            'class' => 'category', 
+            'class' => 'category',
             'empty' => true,
             )
-        ); 
+        );
     ?>
     <!-- Tag  -->
-    <?php 
+    <?php
         echo $this->Form->input('tag_id', array(
             'label' => 'タグ',
-            'id' => 'search_tag',
-            'class' => 'tag', 
-            'empty' => true,
+            'type' => 'select',
+            'multiple' => 'checkbox',
+            'options' => $tags,
+            // 'id' => 'search_tag',
+            // 'class' => 'tag',
+            // 'empty' => true,
             )
-        ); 
+        );
     ?>
     <!-- Title  -->
-    <?php 
+    <?php
         echo $this->Form->input('title', array(
             'label' => 'タイトル',
             'type' => 'text',
             'id' => 'search_title',
-            'class' => 'title', 
+            'class' => 'title',
             'empty' => true,
             'placeholder' => 'キーワードを入力してください。',
             )
-        ); 
+        );
     ?>
-  
-    <?php 
-        echo $this->Form->Submit('検索'); 
+
+    <?php
+        echo $this->Form->Submit('検索');
     ?>
     </div>
-<?php 
-    echo $this->Form->End(); 
+<?php
+    echo $this->Form->End();
 ?>
 </fieldset>
 
-<?php 
+<?php
     echo $this->Html->link(
         'Add Post',
         array ('controller' => 'posts', 'action' => 'add'));
  ?>
-	
+
 <table>
     <tr>
 	<th>Id</th>
@@ -78,7 +81,7 @@
     <?php foreach ($posts as $post): ?>
     <tr>
 	<td>
-	    <?php 
+	    <?php
 	      echo $post['Post']['id'];
             ?>
 	</td>
@@ -87,7 +90,7 @@
 	    <?php
               echo $this->Html->link(
       		  $post['Post']['title'],
-	          array('action' => 'view', $post['Post']['id'])); 
+	          array('action' => 'view', $post['Post']['id']));
 	    ?>
 	</td>
 
@@ -115,7 +118,7 @@
 
     <td>
         <?php
-            echo $post['Category']['name'];  
+            echo $post['Category']['name'];
         ?>
     </td>
     </tr>
@@ -128,12 +131,12 @@
     $(function () {
 
         // 検索エリアの非表示
-        $('#searchLink').css('display', 'none');        
- 
+        $('#searchLink').css('display', 'none');
+
         // div要素をクリックされたら切り替えの実施
-        $('#searchFuncPush').click(function() 
+        $('#searchFuncPush').click(function()
         {
-            $('#searchLink').toggle(); 
-        });         
+            $('#searchLink').toggle();
+        });
     });
 </script>

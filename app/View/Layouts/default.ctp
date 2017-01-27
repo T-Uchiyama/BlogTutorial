@@ -79,7 +79,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
     {
         position: fixed;
         top: 470px;
-        left: 500px;
+        left: 510px;
         padding: 20px 50px;
         font-size: 1.2em;
     }
