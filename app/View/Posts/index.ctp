@@ -125,8 +125,32 @@
     <?php endforeach; ?>
 
 </table>
+<?php
+    if ($this->Paginator->hasPrev())
+    {
+        echo $this->Paginator->prev(
+            '< 前へ  ',
+            array(),
+            null,
+            array('class' => 'prev disabled')
+        );
+    }
 
-
+    echo $this->Paginator->numbers(
+        array(
+            'separator' => '  '
+        )
+    );
+    if ($this->Paginator->hasNext())
+    {
+        echo $this->Paginator->next(
+            '  次へ >',
+            array(),
+            null,
+            array('class' => 'next disabled')
+        );
+    }
+?>
 <script>
     $(function () {
 

@@ -5,20 +5,26 @@ class PostsController extends AppController {
     public $components = array('Flash', 'Search.Prg');
     public $presetVars = true;
 
+    // ページネーション用
+    // index.ctpに10件かつID順に表示するように設定
+    public $paginate = array(
+        'Post' => array(
+            'limit' => 10,
+            'sort' => 'id',
+        ),
+    );
 
     public function index()
     {
+        // Addで設定しているバリデーションを検索では不必要なので停止
         unset($this->Post->validate['title']);
-        $this->set('posts', $this->Post->find('all'));
+        unset($this->Post->validate['category_id']);
+
         // Search Plugin用の設定
         $this->Prg->commonProcess();
-        $this->paginate = array(
-            'conditions' => array(
-                $this->Post->parseCriteria($this->passedArgs),
-            )
-        );
+        $this->paginate['Post']['conditions'][] =
+                $this->Post->parseCriteria($this->passedArgs);
         $this->set('posts', $this->paginate());
-
         // Category
         $categories = $this->getList();
         $this->set(compact('categories'));
@@ -30,6 +36,7 @@ class PostsController extends AppController {
         // Title
         $titles = $this->Post->find('list');
         $this->set(compact('titles'));
+
     }
 
     public function getList()
