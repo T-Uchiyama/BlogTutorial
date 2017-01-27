@@ -19,7 +19,7 @@
             'options' => $tag
             )
     );
-    foreach ($posts['Attachment'] as $attachment): 
+    foreach ($posts['Attachment'] as $attachment):
         echo '<div class="image_div">';
         echo $this->Html->image('../files/attachment/photo/'.$attachment['dir'].'/'.$attachment['photo'],
             array(
@@ -28,7 +28,7 @@
                 'height' => 100
             )
         );
-    
+
         echo $this->Form->button('削除', array(
             'id' => 'photo_link',
             'element' => $attachment['id'],
@@ -37,19 +37,19 @@
         );
         echo '</div>';
     endforeach;
- 
+
     echo $this->Form->end('Save Post');
 ?>
 
 <script type="text/javascript">
-    $(function () { 
-        $("#photo_link").on( 
+    $(function () {
+        $("#photo_link").on(
         {
             'click' : function(e)
             {
                 var id = $(this).attr('id');
                 var columnNum = document.getElementById(id).getAttribute('element');
-   
+
                 $.ajax({
                     type: "POST",
                     url: "/posts/imageDelete",
@@ -59,13 +59,13 @@
                         if(msg)
                         {
                             alert('削除しました。');
-                            // 写真の状態をhiddenに
+                            // 写真とボタンの状態をhiddenに
                             $(e.target).parent('.image_div').find('img').remove();
                             $(e.target).parent('.image_div').find('button').remove();
                         }
                     }
                 });
             }
-        });         
+        });
     });
 </script>
