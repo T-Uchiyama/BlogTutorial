@@ -20,7 +20,7 @@
 
 <p>
     <?php
-        echo h($post['Post']['body'])
+        echo nl2br(h($post['Post']['body']))
     ?>
 </p>
 
