@@ -206,10 +206,7 @@
 
     $('#zipCord').on('click', '#search_Button', function ()
     {
-
         // テキストエリアから郵便番号を取得
-        // テキストエリアに文字数制限をつけておく。
-
         var zipNum =  $('#zipText').val();
 
         $.ajax({
@@ -221,8 +218,6 @@
             {
                 if(msg)
                 {
-                    // console.log(msg);
-                    // alert(msg['city']);
                     $('#zip_pref').val(msg['pref']);
                     $('#zip_city').val(msg['city']);
                     $('#zip_town').val(msg['town']);

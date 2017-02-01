@@ -29,8 +29,6 @@
             ));
 
             $zipData = $response['Zip'];
-            // echo ('指定された市区町村は'. $zipData['pref'].$zipData['city'].
-            //         $zipData['town'].'です。');
             $array = array(
                 'pref' => $zipData['pref'],
                 'city' => $zipData['city'],
