@@ -61,6 +61,46 @@
 ?>
 </fieldset>
 
+<div id="zipCord">
+<?php
+    // 郵便番号検索用
+    echo $this->Form->input('郵便番号', array(
+        'type' => 'text',
+        'id' => 'zipText',
+        'placeholder' => '郵便番号を入力してください。'
+        )
+    );
+
+    echo $this->Form->button('検索', array(
+        'type' => 'button',
+        'id' => 'search_Button',
+        )
+    );
+
+    echo $this->Form->input('都道府県', array(
+        'type' => 'text',
+        'id' => 'zip_pref',
+        // 'style' => 'display:none',
+        )
+    );
+
+    echo $this->Form->input('市区町村', array(
+        'type' => 'text',
+        'id' => 'zip_city',
+        // 'style' => 'display:none',
+        )
+    );
+
+    echo $this->Form->input('町域', array(
+        'type' => 'text',
+        'id' => 'zip_town',
+        // 'style' => 'display:none',
+        )
+    );
+?>
+
+</div>
+
 <?php
     echo $this->Html->link(
         'Add Post',
@@ -152,8 +192,8 @@
     }
 ?>
 <script>
-    $(function () {
-
+    $(function ()
+    {
         // 検索エリアの非表示
         $('#searchLink').css('display', 'none');
 
@@ -161,6 +201,33 @@
         $('#searchFuncPush').click(function()
         {
             $('#searchLink').toggle();
+        });
+    });
+
+    $('#zipCord').on('click', '#search_Button', function ()
+    {
+
+        // テキストエリアから郵便番号を取得
+        // テキストエリアに文字数制限をつけておく。
+
+        var zipNum =  $('#zipText').val();
+
+        $.ajax({
+            type: "POST",
+            url: "/zips/searchCity",
+            data: {'id':zipNum},
+            dataType: "json",
+            success: function(msg)
+            {
+                if(msg)
+                {
+                    // console.log(msg);
+                    // alert(msg['city']);
+                    $('#zip_pref').val(msg['pref']);
+                    $('#zip_city').val(msg['city']);
+                    $('#zip_town').val(msg['town']);
+                }
+            }
         });
     });
 </script>

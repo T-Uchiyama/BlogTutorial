@@ -40,7 +40,7 @@ class PostsController extends AppController {
     }
 
     public function getList()
-     {
+    {
         $categoryList = $this->Post->Category->find('list', array(
             'fields' => array('id', 'name')
             )
@@ -49,7 +49,7 @@ class PostsController extends AppController {
     }
 
     public function getTag()
-     {
+    {
         $tagList = $this->Post->PostsTag->Tag->find('list', array(
             'fields' => array('id', 'title')
             )

@@ -16,13 +16,14 @@
             )
    		);
 
+        // Category
         public $belongsTo = array (
             'Category' => array(
                 'className' => 'Category',
                 'foreignKey' => 'category_id'
             )
         );
-
+        // PostsTag
         public $hasAndBelongsToMany = array(
             'Tag' => array (
                 'className' => 'Tag',
