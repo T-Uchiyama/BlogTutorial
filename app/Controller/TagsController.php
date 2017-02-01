@@ -40,7 +40,8 @@
     	    if ($this->request->is(array('post', 'put')))
             {
                 $this->Tag->id = $id;
-    	        if ($this->Tag->saveAll($this->request->data)) {
+
+    	        if ($this->Tag->save($this->request->data)) {
     	            $this->Flash->success(__('Your Tag has been updated.'));
     	            return $this->redirect(array('action' => 'index'));
     	            }

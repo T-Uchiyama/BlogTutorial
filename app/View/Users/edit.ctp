@@ -1,6 +1,6 @@
 <!-- File: /app/View/Users/edit.ctp -->
 
-<h1>Edit Post</h1>
+<h1>Edit User</h1>
 <?php
     echo $this->Form->create('User');
     echo $this->Form->input('username');
