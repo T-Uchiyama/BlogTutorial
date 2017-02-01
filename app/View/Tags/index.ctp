@@ -10,8 +10,8 @@
 <table>
     <tr>
     <th>Id</th>
-    <th>Action</th>
     <th>Tagname</th>
+    <th>Action</th>
     </tr>
 
  <!-- ここから$tag配列をループさせ投稿記事の情報表示 -->
@@ -21,6 +21,12 @@
         <td>
             <?php
                 echo $tag['Tag']['id'];
+            ?>
+        </td>
+
+        <td>
+            <?php
+                echo $tag['Tag']['title'];
             ?>
         </td>
 
@@ -39,12 +45,6 @@
     		    array('action' => 'edit', $tag['Tag']['id']));
     	    ?>
     	</td>
-
-        <td>
-            <?php
-                echo $tag['Tag']['title'];
-            ?>
-        </td>
         </tr>
     <?php endforeach;  ?>
 </table>
