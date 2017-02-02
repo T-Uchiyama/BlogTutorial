@@ -80,21 +80,18 @@
     echo $this->Form->input('都道府県', array(
         'type' => 'text',
         'id' => 'zip_pref',
-        // 'style' => 'display:none',
         )
     );
 
     echo $this->Form->input('市区町村', array(
         'type' => 'text',
         'id' => 'zip_city',
-        // 'style' => 'display:none',
         )
     );
 
     echo $this->Form->input('町域', array(
         'type' => 'text',
         'id' => 'zip_town',
-        // 'style' => 'display:none',
         )
     );
 ?>
@@ -134,23 +131,25 @@
 	    ?>
 	</td>
 
-	<td>
-         <?php
-            echo $this->Form->postLink(
-		    'Delete',
-            array('action' => 'delete', $post['Post']['id']),
-            array('confirm' => 'Are you sure?')
-	        );
-	     ?>
+    <td>
+        <?php
+            if ($post['Post']['user_id'] == AuthComponent::user('id')
+                || AuthComponent::user('group_id') == 1):
 
-	    <?php
-            echo $this->Html->link(
-		    'Edit',
-		    array('action' => 'edit', $post['Post']['id']));
-	    ?>
+                echo $this->Form->postLink(
+    		    'Delete',
+                array('action' => 'delete', $post['Post']['id']),
+                array('confirm' => 'Are you sure?')
+    	        );
+                echo('&nbsp&nbsp');
+                echo $this->Html->link(
+    		    'Edit',
+    		    array('action' => 'edit', $post['Post']['id']));
+            endif;
+    ?>
 	</td>
 
-	<td>
+    <td>
 	    <?php
             echo $post['Post']['created'];
 	    ?>
@@ -222,7 +221,12 @@
                     $('#zip_city').val(msg['city']);
                     $('#zip_town').val(msg['town']);
                 }
+            },
+            error: function(msg)
+            {
+                alert('Ajax通信失敗');
             }
         });
     });
+
 </script>

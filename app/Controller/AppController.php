@@ -32,37 +32,52 @@ App::uses('Controller', 'Controller');
  */
 
 
-class AppController extends Controller {
+class AppController extends Controller
+{
+    // ACL用のコンポーネント指定
     public $components = array(
         'Flash',
+        'Acl',
         'Auth' => array(
-            'loginRedirect' => array(
-                'controller' => 'posts',
-                'action' => 'index'
-            ),
-            'logoutRedirect' => array(
-                'controller' => 'posts',
-                'action' => 'index',
-            ),
-            'authenticate' => array(
-                'Form' => array(
-                    'passwordHasher' => 'Blowfish'
+            'authorize' => array(
+                'Actions' => array(
+                    'actionPath' => 'controllers'
                 )
-            ),
-			'authorize' => array('Controller')
-        )
+            )
+        ),
+        'Session'
     );
 
-	public function isAuthorized($user) {
-		// Admin can access every action
-		if (isset($user['role']) && $user['role'] === 'admin') {
-			return true;
-		}
-		// デフォルトは拒否
-		return false;
-	}
+    // 使用ヘルパーの指定
+    public $helpers = array('Html', 'Form', 'Session');
 
-    public function beforeFilter() {
-        $this->Auth->allow('index', 'view', 'display');
+	// public function isAuthorized($user)
+    // {
+	// 	// Admin can access every action
+	// 	if (isset($user['role']) && $user['role'] === 'admin') {
+	// 		return true;
+	// 	}
+	// 	// デフォルトは拒否
+	// 	return false;
+	// }
+
+    public function beforeFilter()
+    {
+        // AuthComponentの設定
+        $this->Auth->loginAction = array(
+            'controller' => 'users',
+            'action' => 'login',
+        );
+
+        $this->Auth->logoutRedirect = array(
+            'controller' => 'users',
+            'action' => 'login',
+        );
+        $this->Auth->loginRedirect = array(
+            'controller' => 'users',
+            'action' => 'index',
+        );
+
+        $this->Auth->allow('display');
     }
 }

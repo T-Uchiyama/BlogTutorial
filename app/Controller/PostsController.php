@@ -1,5 +1,6 @@
 <?php
-class PostsController extends AppController {
+class PostsController extends AppController
+{
     public $helpers = array('Html', 'Form', 'Flash');
 
     public $components = array('Flash', 'Search.Prg');
@@ -13,6 +14,13 @@ class PostsController extends AppController {
             'sort' => 'id',
         ),
     );
+
+    public function beforeFilter()
+    {
+        parent::beforeFilter();
+        // どの権限であってもindexと記事の閲覧は可能に
+        $this->Auth->allow('index', 'view');
+    }
 
     public function index()
     {
@@ -176,22 +184,4 @@ class PostsController extends AppController {
         echo $this->Post->Attachment->delete($post['data']['id'], true);
         exit();
     }
-
-	public function isAuthorized($user)
-    {
-		// 登録済みユーザーは投稿可能に
-		if ($this->action === 'add') {
-			return true;
-		}
-
-		// 投稿のオーナーは編集・削除が可能
-		if (in_array($this->action, array('edit', 'delete'))) {
-			$postId = (int) $this->request->params['pass'][0];
-
-			if ($this->Post->isOwnedBy($postId, $user['id'])) {
-				return  true;
-			}
-		}
-		return parent::isAuthorized($user);
-	}
 }

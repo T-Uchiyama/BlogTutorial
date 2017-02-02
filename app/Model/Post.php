@@ -17,15 +17,16 @@
    		);
 
         // Category
-        public $belongsTo = array (
+        public $belongsTo = array(
             'Category' => array(
                 'className' => 'Category',
                 'foreignKey' => 'category_id'
             )
         );
+        
         // PostsTag
         public $hasAndBelongsToMany = array(
-            'Tag' => array (
+            'Tag' => array(
                 'className' => 'Tag',
                 'joinTable' => 'posts_tags',
                 'foreignKey' => 'post_id',

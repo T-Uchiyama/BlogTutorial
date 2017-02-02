@@ -221,7 +221,13 @@
 	Configure::write('Session', array(
 		'defaults' => 'php'
 	));
-
+	// 参考程度に貼り付け。後に上記を変更
+	// Configure::write('Session', array(
+	//  'defaults' => 'database',
+	//  'cookie' => 'SID',
+	//  //セッションの保持時間（秒数）
+	//  'timeout' => 86400,
+	//  ));
 /**
  * A random string used in security hashing methods.
  */
@@ -386,4 +392,9 @@ Cache::config('_cake_model_', array(
 	'path' => CACHE . 'models' . DS,
 	'serialize' => ($engine === 'File'),
 	'duration' => $duration
+));
+
+Cache::config('default', array(
+   'engine' => 'File', //[required]
+   'mask' => 0666, //[optional]
 ));

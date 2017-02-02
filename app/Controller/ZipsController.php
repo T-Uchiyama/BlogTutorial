@@ -36,7 +36,6 @@
             );
             return json_encode($array);
             exit();
-
         }
     }
  ?>
