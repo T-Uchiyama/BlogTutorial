@@ -87,6 +87,42 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
 -->
 </style><html>
 <head>
+    <!-- ナビゲーションバー -->
+    <nav class="navbar navbar-inverse">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#gnavi">
+                <span class="sr-only">メニュー</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="#" class="navbar-brand">CakeBlog Menu</a>
+        </div>
+
+        <div id="gnavi" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/posts">Post</a></li>
+                <li><a href="/users">User</a></li>
+                <?php
+                    if (AuthComponent::user('group_id') == 1)
+                    {
+                        echo('<li><a href="/categories">Category</a></li>');
+                        echo('<li><a href="tags">Tag</a></li>');
+                    }
+                ?>
+
+                <?php
+                        if (AuthComponent::user('id') != null)
+                        {
+                            echo('<li><a href="/users/logout">Logout</a></li>');
+                        } else {
+                            echo('<li><a href="users/login">Login</a></li>');
+                      	}
+                 	?>
+            </ul>
+        </div>
+    </nav>
+
 	<?php echo $this->Html->charset(); ?>
 	<title>
 		<?php echo $cakeDescription; ?>

@@ -80,18 +80,21 @@
     echo $this->Form->input('都道府県', array(
         'type' => 'text',
         'id' => 'zip_pref',
+        'disabled' => 'disabled',
         )
     );
 
     echo $this->Form->input('市区町村', array(
         'type' => 'text',
         'id' => 'zip_city',
+        'disabled' => 'disabled',
         )
     );
 
     echo $this->Form->input('町域', array(
         'type' => 'text',
         'id' => 'zip_town',
+        'disabled' => 'disabled',
         )
     );
 ?>
@@ -217,9 +220,9 @@
             {
                 if(msg)
                 {
-                    $('#zip_pref').val(msg['pref']);
-                    $('#zip_city').val(msg['city']);
-                    $('#zip_town').val(msg['town']);
+                    $('#zip_pref').prop('disabled', false).val(msg['pref']);
+                    $('#zip_city').prop('disabled', false).val(msg['city']);
+                    $('#zip_town').prop('disabled', false).val(msg['town']);
                 }
             },
             error: function(msg)
