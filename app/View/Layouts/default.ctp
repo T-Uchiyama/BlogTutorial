@@ -25,66 +25,6 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
   <![endif]-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="/app/webroot/bootstrap/js/bootstrap.min.js"></script>
-<!-- ポップアップ用背景CSSの追加  -->
-<style type="text/css">
-<!--
-    #container
-    {
-        z-index: 0;
-    }
-
-    #back-curtain
-    {
-        background: rgba(0, 0, 0, 0.5);
-        display: none;
-        position: fixed;
-        left: 0px;
-        top: 0px;
-        width: 100%;
-        height: 120%;
-        z-index: 1;
-    }
-
-    <!-- 以下スライドショー用  -->
-    #slide
-    {
-        position: relative;
-    }
-
-    .defaultImgCls
-    {
-        margin: 0;
-        padding: 10px 10px;
-        position: fixed;
-        display: none;
-        z-index: 2;
-    }
-
-    .tempImg
-    {
-        position: fixed;
-    }
-
-    .nav-r
-    {
-        position: fixed;
-        top: 470px;
-        left: 1268px;
-        padding: 20px 50px;
-        font-size: 1.2em;
-
-    }
-
-    .nav-l
-    {
-        position: fixed;
-        top: 470px;
-        left: 510px;
-        padding: 20px 50px;
-        font-size: 1.2em;
-    }
-
--->
 </style><html>
 <head>
     <!-- ナビゲーションバー -->
@@ -132,6 +72,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
 		echo $this->Html->meta('icon');
 
 		echo $this->Html->css('cake.generic');
+        echo $this->Html->css('blogModule');
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
