@@ -98,11 +98,10 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
 		<div id="header">
         </div>
 		<div id="content">
-
 			<?php echo $this->Flash->render(); ?>
-
-			<?php echo $this->fetch('content'); ?>
+            <?php echo $this->fetch('content'); ?>
 		</div>
+
 		<div id="footer">
 			<?php echo $this->Html->link(
 					$this->Html->image('cake.power.gif', array('alt' => $cakeDescription, 'border' => '0')),
@@ -120,6 +119,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
 </html>
 
 <script type="text/javascript">
+
+
     $('#zipCord').on('click', '#search_Button', function ()
     {
         // テキストエリアから郵便番号を取得

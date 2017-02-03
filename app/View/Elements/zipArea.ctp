@@ -1,4 +1,4 @@
-<!-- File: /app/Vendor/module/zipArea.ctp -->
+<!-- File: /app/Vendor/zipArea.ctp -->
 
 <div id="zipCord">
 <?php
