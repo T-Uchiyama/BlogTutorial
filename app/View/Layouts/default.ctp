@@ -54,10 +54,24 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
                 <?php
                         if (AuthComponent::user('id') != null)
                         {
-                            echo('<li><a href="/users/logout">Logout</a></li>');
+                            $username = AuthComponent::user('username');
+                            echo('<li><a href="#" class="dropdown-toggle"
+                                data-toggle="dropdown">ログイン名 : '
+                                    .$username. '<b class="caret"></b></a>');
+                            echo('<ul class="dropdown-menu">');
+                            echo('<li><center><a href="/users/logout">Logout</a></center></li>');
+                            echo('</ul>');
+                            echo('</li>');
                         } else {
-                            echo('<li><a href="users/login">Login</a></li>');
-                      	}
+                            $username = 'Guest';
+                            echo('<li><a href="#" class="dropdown-toggle"
+                                data-toggle="dropdown">ログイン名 : '
+                                    .$username. '<b class="caret"></b></a>');
+                            echo('<ul class="dropdown-menu">');
+                            echo('<li><center><a href="/users/login">Login</a></center></li>');
+                            echo('</ul>');
+                            echo('</li>');
+                        }
                  	?>
             </ul>
         </div>
@@ -82,17 +96,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
 <body>
 	<div id="container">
 		<div id="header">
-			<h1><?php
-                    if (AuthComponent::user('id') != null) {
-                        $username = AuthComponent::user('username');
-                        echo "ログイン名 : ", $username;
-                    } else {
-                        $username = 'Guest';
-                      	echo "ログイン名 : ", $username;
-                  	}
-             	?>
-			</h1>
-    </div>
+        </div>
 		<div id="content">
 
 			<?php echo $this->Flash->render(); ?>
