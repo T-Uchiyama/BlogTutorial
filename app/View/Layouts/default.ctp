@@ -47,7 +47,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
                     if (AuthComponent::user('group_id') == 1)
                     {
                         echo('<li><a href="/categories">Category</a></li>');
-                        echo('<li><a href="tags">Tag</a></li>');
+                        echo('<li><a href="/tags">Tag</a></li>');
                     }
                 ?>
 
@@ -142,6 +142,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
             },
             error: function(msg)
             {
+                alert(msg);
                 alert('Ajax通信失敗');
             }
         });
