@@ -91,7 +91,9 @@ class PostsController extends AppController
 
     public function add()
     {
-		if ($this->request->is('post')) {
+
+		if ($this->request->is('post'))
+        {
             /* コメントアウト行は承認の項目変更にて記載がなかったため一応コメントアウト  */
 			//$this->Post->create();
 			$this->request->data['Post']['user_id'] = $this->Auth->user('id');
@@ -111,6 +113,7 @@ class PostsController extends AppController
 	        	$this->Flash->success(__('Your post has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 	    	}
+            $this->set('validationError', $this->Post->Attachment->validationErrors);
             //$this->Flash->error(__('Unable to add your post.'));
 		}
         $list = $this->getList();

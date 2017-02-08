@@ -7,17 +7,31 @@ class User extends AppModel
 	public $validate = array(
 		'username' => array(
 			'notBlank' => array(
-				'rule' => array('notBlank'),
+				'rule' => 'notBlank',
+				'message' => 'ユーザー名を入力してください。',
 			),
+			'maxLength' => array(
+				'rule' => array('maxLength', 15),
+				'message' => 'ユーザー名は15文字以内で入力してください。'
+			)
 		),
 		'password' => array(
 			'notBlank' => array(
-				'rule' => array('notBlank'),
+				'rule' => 'notBlank',
+				'message' => 'パスワードを入力してください。',
+			),
+			'maxLength' => array(
+				'rule' => array('between', 6, 16),
+				'message' => 'パスワードは6文字以上, 16文字以下で入力してください。'
+			),
+			'alphaNumeric' => array(
+				'rule' => 'alphaNumeric',
+				'message' => 'パスワードには文字と数字しか使用できません。'
 			),
 		),
 		'group_id' => array(
 			'numeric' => array(
-				'rule' => array('numeric'),
+				'rule' => 'numeric',
 			),
 		),
 	);

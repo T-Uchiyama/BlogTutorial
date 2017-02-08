@@ -3,16 +3,30 @@
     {
         public $validate = array(
 			'title' => array(
-                'rule' => 'notBlank',
-                'message' => 'タイトルを入力してください。',
+                'notBlank' => array(
+                    'rule' => 'notBlank',
+                    'message' => 'タイトルを入力してください。',
+                ),
+                'maxLength' => array(
+                    'rule' => array('maxLength', 30),
+                    'message' => 'タイトルは30文字以内で入力してください。'
+                )
 			),
 			'body' => array(
-                'rule' => 'notBlank',
-                'message' => '本文を入力してください。',
+                'notBlank' => array(
+                    'rule' => 'notBlank',
+                    'message' => '本文を入力してください。',
+                ),
+                'maxLength' => array(
+                    'rule' => array('maxLength', 1000),
+                    'message' => '本文は1000文字以内で入力してください。'
+                )
             ) ,
             'category_id' => array(
-                'rule' => 'notBlank',
-                'message' => 'カテゴリを選択してください。',
+                'notBlank' => array(
+                    'rule' => 'notBlank',
+                    'message' => 'カテゴリを選択してください。',
+                )
             )
    		);
 
@@ -23,7 +37,7 @@
                 'foreignKey' => 'category_id'
             )
         );
-        
+
         // PostsTag
         public $hasAndBelongsToMany = array(
             'Tag' => array(

@@ -1,5 +1,6 @@
 <?php
-    class Tag extends AppModel {
+    class Tag extends AppModel
+    {
         public $hasAndBelongsToMany = array(
             'Post' => array (
                 'className' => 'Post',
@@ -18,4 +19,14 @@
                 'with' => 'PostsTag'
             )
         );
+
+        public $validate = array(
+            'title' => array(
+                'notBlank' => array(
+                    'rule' => 'notBlank',
+                    'message' => '本文を入力してください。',
+                ),
+            )
+        );
     }
+?>

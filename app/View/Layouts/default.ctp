@@ -120,13 +120,42 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
 
 <script type="text/javascript">
 
+    /* TODO window.resizeをContainerに実施してみたが画面サイズが半分で固定されてしまっている */
+    $(document).ready(function ()
+    {
+        width = $(window).width();
+        height = $(window).height();
+        $("#container").css("width", width + "px");
+        $("#container").css("height", height + "px");
+    });
+
+    $(window).resize(function ()
+    {
+        width = $(window).width();
+        height = $(window).height();
+        $("#container").css("width", width + "px");
+        $("#container").css("height", height + "px");
+    });
 
     $('#zipCord').on('click', '#search_Button', function ()
     {
         // テキストエリアから郵便番号を取得
         var zipNum =  $('#zipText').val();
 
-        $.ajax({
+        // 全角数字を半角数字に変換
+        zipNum = zipNum.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(s)
+        {
+          return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+        });
+
+        if (!(zipNum.length > 6 || zipNum.length < 8))
+        {
+            alert('郵便番号は７桁で入力してください。');
+            return;
+        }
+
+        $.ajax(
+        {
             type: "POST",
             url: "/zips/searchCity",
             data: {'id':zipNum},
@@ -142,7 +171,6 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
             },
             error: function(msg)
             {
-                alert(msg);
                 alert('Ajax通信失敗');
             }
         });

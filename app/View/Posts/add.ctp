@@ -4,6 +4,8 @@
 <h1>Add Post</h1>
 
 <?php
+    // debug($this->validationErrors);
+    // exit;
     echo $this->Form->create('Post', array('type' => 'file'));
     echo $this->Form->input('title');
     echo $this->Form->input('body', array('rows' => '3'));
@@ -34,6 +36,7 @@
                 'id' => 'photoCover'.$i,
                 'class' => 'form-control',
                 'placeholder' => 'select file...',
+                'readonly' => true,
             )
         );
 
@@ -45,7 +48,15 @@
                 'elementNumber' => $i,
             )
         );
-
+        // TODO 画像用のバリデーションエラー出力に成功したが記載方法かスマートかが不明･･･
+        if (isset($validationError[$i]))
+        {
+            echo $validationError[$i]['photo'][0];
+        }
+        // if ($this->Form->isFieldError('Attachment'.$i.'photo'))
+        // {
+        //     echo $this->Form->error('Attachment'.$i.'photo');
+        // }
         echo $this->Form->input('Attachment'.$i.'photo', array(
                 'type' => 'file',
                 'label' => false,

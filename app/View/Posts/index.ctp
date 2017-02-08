@@ -43,9 +43,6 @@
                 'type' => 'select',
                 'multiple' => 'checkbox',
                 'options' => $tags,
-                // 'id' => 'search_tag',
-                // 'class' => 'tag',
-                // 'empty' => true,
                 )
             );
         ?>
@@ -178,31 +175,4 @@
             $('#searchLink').toggle();
         });
     });
-
-    $('#zipCord').on('click', '#search_Button', function ()
-    {
-        // テキストエリアから郵便番号を取得
-        var zipNum =  $('#zipText').val();
-
-        $.ajax({
-            type: "POST",
-            url: "/zips/searchCity",
-            data: {'id':zipNum},
-            dataType: "json",
-            success: function(msg)
-            {
-                if(msg)
-                {
-                    $('#zip_pref').prop('disabled', false).val(msg['pref']);
-                    $('#zip_city').prop('disabled', false).val(msg['city']);
-                    $('#zip_town').prop('disabled', false).val(msg['town']);
-                }
-            },
-            error: function(msg)
-            {
-                alert('Ajax通信失敗');
-            }
-        });
-    });
-
 </script>

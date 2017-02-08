@@ -28,6 +28,15 @@
                  'fields' => array('town', 'city', 'pref'),
             ));
 
+            // 複数項目拡張
+            // $response = $this->Zip->find('list',array(
+            //     'conditions' => array(
+            //         'zip' => $zipNum
+            //     ),
+            //      'fields' => array('town', 'city', 'pref'),
+            // ));
+
+
             $zipData = $response['Zip'];
             $array = array(
                 'pref' => $zipData['pref'],
