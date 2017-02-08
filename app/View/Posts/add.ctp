@@ -26,11 +26,12 @@
 
     echo ('<div class="input-group">');
 
-    $i = 0;
-    for ($i; $i < 3; $i++) {
+    echo('<label>Image</label>');
+    for ($i = 0; $i < 3; $i++) {
         echo ('<div class= "File">');
 
         echo $this->Form->input('image', array(
+                'label' => false,
                 'div' => false,
                 'type' => 'text',
                 'id' => 'photoCover'.$i,
@@ -83,25 +84,39 @@
 ?>
 
 <script type="text/javascript">
-    $(function () {
+    $(function ()
+    {
+        var id;
+        var columnNum;
+
         $("[id^=btn_link]").on(
         {
             'click' : function()
             {
-                var id = $(this).attr('id');
-                var columnNum = document.getElementById(id).getAttribute('elementNumber');
+                id = $(this).attr('id');
+                columnNum = document.getElementById(id).getAttribute('elementNumber');
                 $('#Attachment' + columnNum  + 'Photo').click();
 
-                $('#Attachment' + columnNum  + 'Photo').change(function() {
-                    if ($('#photoCover' + columnNum).attr('placeholder') != null)
+                $('#Attachment' + columnNum  + 'Photo').change(function()
+                {
+                    // placeHolderが何も選択されていない状態かで判別
+                    if ($('#photoCover' + columnNum).attr('placeholder') == 'select file...')
                     {
-                        //placeHolderの削除
-                        $('#photoCover' + columnNum).removeAttr('placeholder');
                         //TextAreaに名称表示
                         $('#photoCover' + columnNum).val($(this).val().replace("C:\\fakepath\\", ""));
+
+                    } else {
+                        if ($(this).val())
+                        {
+                            // 名称を上書きし、TextAreaに名称表示
+                            $('#photoCover' + columnNum).val($(this).val().replace("C:\\fakepath\\", ""));
+                        } else {
+                            // elseの場合には
+                        }
                     }
                 });
-            }
+            },
+
         });
     });
 </script>

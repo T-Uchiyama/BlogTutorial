@@ -25,7 +25,7 @@
         public $validate = array(
             'photo' => array(
                 'filesizeCheck' => array(
-                    'rule' => array('isBelowMaxSize', 1000, false),
+                    'rule' => array('isBelowMaxSize', 2097152, false),
                     'message' => 'File is larger than the maximum filesize',
                 ),
 
