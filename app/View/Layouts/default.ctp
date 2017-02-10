@@ -27,8 +27,27 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
 <script src="/app/webroot/bootstrap/js/bootstrap.min.js"></script>
 </style><html>
 <head>
+
+
+	<?php echo $this->Html->charset(); ?>
+	<title>
+		<?php echo $cakeDescription; ?>
+		<?php echo $this->fetch('title'); ?>
+	</title>
+	<?php
+		echo $this->Html->meta('icon');
+
+		echo $this->Html->css('cake.generic');
+        echo $this->Html->css('blogModule');
+
+		echo $this->fetch('meta');
+		echo $this->fetch('css');
+		echo $this->fetch('script');
+	?>
+</head>
+<body>
     <!-- ナビゲーションバー -->
-    <nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#gnavi">
                 <span class="sr-only">メニュー</span>
@@ -36,7 +55,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="#" class="navbar-brand">CakeBlog Menu</a>
+            <a href="/" class="navbar-brand">CakeBlog Menu</a>
         </div>
 
         <div id="gnavi" class="collapse navbar-collapse">
@@ -76,27 +95,10 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
             </ul>
         </div>
     </nav>
-
-	<?php echo $this->Html->charset(); ?>
-	<title>
-		<?php echo $cakeDescription; ?>
-		<?php echo $this->fetch('title'); ?>
-	</title>
-	<?php
-		echo $this->Html->meta('icon');
-
-		echo $this->Html->css('cake.generic');
-        echo $this->Html->css('blogModule');
-
-		echo $this->fetch('meta');
-		echo $this->fetch('css');
-		echo $this->fetch('script');
-	?>
-</head>
-<body>
 	<div id="container">
 		<div id="header">
         </div>
+
 		<div id="content">
 			<?php echo $this->Flash->render(); ?>
             <?php echo $this->fetch('content'); ?>
@@ -114,6 +116,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
 			</p>
 		</div>
 	</div>
+
 	<?php echo $this->element('sql_dump'); ?>
 </body>
 </html>

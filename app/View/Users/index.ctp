@@ -2,19 +2,18 @@
 
 <div class="row">
     <div class="clearfix"></div>
-    <div class="sidebar col-sm-3 col-md-2 ">
-        <?php
-            echo $this->element('zipArea');
-         ?>
+
+    <div class="heading">
+        <center>
+            <h5>Users List</h5>
+        </center>
     </div>
-
-
 <div class="main col-sm-9  col-md-10 ">
-	<h1>Users List</h1>
+
 
 	<?php
 		echo $this->Html->link(
-			'Add User',
+			__('Add User'),
 			array ('controller' => 'users', 'action' => 'add'));
 	 ?>
 	<table>
@@ -68,4 +67,10 @@
 			echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
 		?>
 	</div>
+</div>
+
+<div class="sidebar col-sm-3 col-md-2 ">
+    <?php
+        echo $this->element('zipArea');
+     ?>
 </div>

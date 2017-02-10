@@ -2,16 +2,15 @@
 
 <div class="row">
     <div class="clearfix"></div>
-    <div class="sidebar col-sm-3 col-md-2 ">
-        <?php
-            echo $this->element('zipArea');
-         ?>
-    </div>
 
+    <div class="heading">
+        <center>
+            <h5>Tags List</h5>
+        </center>
+    </div>
 
 <div class="main col-sm-9  col-md-10 ">
 
-    <h1>Tags List</h1>
     <?php
         echo $this->Html->link(
             'Add Tag',
@@ -46,7 +45,7 @@
                     echo $this->Form->postLink(
         		    'Delete',
                     array('action' => 'delete', $tag['Tag']['id']),
-                    array('confirm' => 'Are you sure?')
+                    array('confirm' => __('Are you sure?'))
         	        );
         	     ?>
 
@@ -59,4 +58,10 @@
             </tr>
         <?php endforeach;  ?>
     </table>
+</div>
+
+<div class="sidebar col-sm-3 col-md-2 ">
+    <?php
+        echo $this->element('zipArea');
+     ?>
 </div>

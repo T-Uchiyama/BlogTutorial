@@ -30,11 +30,15 @@
             )
    		);
 
-        // Category
+        // Category & User
         public $belongsTo = array(
             'Category' => array(
                 'className' => 'Category',
                 'foreignKey' => 'category_id'
+            ),
+            'User' => array(
+                'className' => 'User',
+                'foreignKey' => 'user_id'
             )
         );
 
@@ -68,6 +72,7 @@
                 ),
             ),
         );
+
 
         // Search Plugin
         public $actsAs = array('Search.Searchable', 'Containable');

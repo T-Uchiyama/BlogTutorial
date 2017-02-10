@@ -55,3 +55,96 @@
     padding: 20px 50px;
     font-size: 1.2em;
 }
+
+body
+{
+	padding-top: 30px;
+}
+
+.heading
+{
+  font-weight: bold;
+  font-size: 20px;
+  padding: 10px 10px;
+  margin: 15px;
+  background-color: #d6ffea;
+  position: relative;
+  padding-bottom: .5em;
+  border-bottom: 4px solid #ccc;
+}
+
+.heading::after
+{
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  z-index: 2;
+  content: '';
+  width: 20%;
+  height: 4px;
+  background-color: #3498db;
+}
+
+.blog_article
+{
+    width: 330px;
+    height: 320px;
+}
+
+#area_article
+{
+    width: 257px;
+    height: 300px;
+    border-top: 3px solid #DDD;
+	border-left: 3px solid #DDD;
+	border-right: 3px solid #BBB;
+	border-bottom: 3px solid #BBB;
+}
+.label_Novel
+{
+    width: 250px;
+    height: 20px;
+    background-color: #99ffcc;
+    text-align: center;
+}
+
+.label_Music
+{
+    width: 250px;
+    height: 20px;
+    background-color: #99ffff;
+    text-align: center;
+}
+
+.label_Trip
+{
+    width: 250px;
+    height: 20px;
+    background-color: #ff99ff;
+    text-align: center;
+}
+
+.label_Hobby
+{
+    width: 250px;
+    height: 20px;
+    background-color: #ff9999;
+    text-align: center;
+}
+
+.label_Computers
+{
+    width: 250px;
+    height: 20px;
+    background-color: #ffff99;
+    text-align: center;
+}
+
+.post_title
+{
+    width: 250px;
+    height: 40px;
+    position: relative;
+    text-align: center;
+
+}

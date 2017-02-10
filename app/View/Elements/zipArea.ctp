@@ -1,5 +1,7 @@
 <!-- File: /app/Vendor/zipArea.ctp -->
 
+<div style="width:100px;height:20px;background:#fff;"></div>
+
 <div id="zipCord">
 <?php
     // 郵便番号検索用
@@ -15,7 +17,7 @@
         'id' => 'search_Button',
         )
     );
-
+    echo "<br>";
     echo $this->Form->input('都道府県', array(
         'type' => 'text',
         'id' => 'zip_pref',

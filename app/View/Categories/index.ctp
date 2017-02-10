@@ -2,23 +2,14 @@
 
 <div class="row">
     <div class="clearfix"></div>
-    <div class="sidebar col-sm-3 col-md-2 ">
-        <?php
-            echo $this->element('zipArea');
-         ?>
+
+    <div class="heading">
+        <center>
+            <h5>Categories List</h5>
+        </center>
     </div>
-
-
 <div class="main col-sm-9  col-md-10 ">
-    <h1>Categories List</h1>
-
     <?php
-
-        // echo('<pre>');
-        // var_dump($categories);
-        // echo('</pre>');
-        // exit();
-
         echo $this->Html->link(
             'Add Category',
             array ('controller' => 'categories', 'action' => 'add'));
@@ -52,7 +43,7 @@
                     echo $this->Form->postLink(
         		    'Delete',
                     array('action' => 'delete', $category['Category']['id']),
-                    array('confirm' => 'Are you sure?')
+                    array('confirm' => __('Are you sure?'))
         	        );
         	     ?>
 
@@ -65,4 +56,10 @@
             </tr>
         <?php endforeach;  ?>
     </table>
+</div>
+
+<div class="sidebar col-sm-3 col-md-2 ">
+    <?php
+        echo $this->element('zipArea');
+     ?>
 </div>

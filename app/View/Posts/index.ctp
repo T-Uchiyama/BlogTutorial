@@ -2,15 +2,16 @@
 
 <div class="row">
     <div class="clearfix"></div>
-    <div class="sidebar col-sm-3 col-md-2 ">
-        <?php
-            echo $this->element('zipArea');
-         ?>
-    </div>
 
 
-<div class="main col-sm-9  col-md-10 ">
-    <h1>Blog posts</h1>
+<div class="heading">
+    <center>
+        <h5>Blog Posts</h5>
+    </center>
+</div>
+
+<div class="main col-sm-9  col-md-10">
+
     <?php
         echo $this->Form->Create('Post', array(
                 'url' => array_merge(array(
@@ -60,7 +61,7 @@
         ?>
 
         <?php
-            echo $this->Form->Submit('検索');
+            echo $this->Form->Submit(__('検索'));
         ?>
         </div>
     <?php
@@ -76,93 +77,71 @@
             array ('controller' => 'posts', 'action' => 'add'));
      ?>
 
-    <table>
-        <tr>
-    	<th>Id</th>
-    	<th>Title</th>
-    	<th>Action</th>
-    	<th>Created</th>
-        <th>Category</th>
-        <tr>
-
         <!-- ここから$posts配列をループさせ投稿記事の情報表示 -->
+        <?php
+            // debug($posts);
+            // exit;
+            for ($idx = 0; $idx < count($posts); $idx++)
+            {
+                if ($idx % 4 == 0)
+                {
+                    echo '<div class="row">';
+                }
+                echo ('<div class="col-sm-6 col-md-3">');
+                echo ('<div class="blog_article">');
+                echo ('<article id="area_article">');
+                echo ('<a href="/posts/view/'.$posts[$idx]['Post']['id'].'">');
+                echo ('<figure class="post_img">');
+                echo ('<img width="250" height="170" src=""  alt="各カテゴリ用の画像"/>');
+                echo ('<p class="label_'.$posts[$idx]['Category']['name'].'">'.$posts[$idx]['Category']['name'].'</p>');
+                echo ('</figure>');
+                echo ('<div class="post_title">');
+                echo ('<time>'.$posts[$idx]['Post']['created'].'</time>');
+                echo ('<h2>'.$posts[$idx]['Post']['title'].'</h2>');
+                echo ('<h1>Author : '.$posts[$idx]['User']['username'].'</h1>');
+                echo ('</div>');
+                echo ('</a>');
+                echo ('</article>');
 
-        <?php foreach ($posts as $post): ?>
-        <tr>
-    	<td>
-    	    <?php
-    	      echo $post['Post']['id'];
-                ?>
-    	</td>
-
-    	<td>
-    	    <?php
-                  echo $this->Html->link(
-          		  $post['Post']['title'],
-    	          array('action' => 'view', $post['Post']['id']));
-    	    ?>
-    	</td>
-
-        <td>
-            <?php
-                if ($post['Post']['user_id'] == AuthComponent::user('id')
+                if ($posts[$idx]['Post']['user_id'] == AuthComponent::user('id')
                     || AuthComponent::user('group_id') == 1):
 
                     echo $this->Form->postLink(
-        		    'Delete',
-                    array('action' => 'delete', $post['Post']['id']),
+                    'Delete',
+                    array('action' => 'delete', $posts[$idx]['Post']['id']),
                     array('confirm' => 'Are you sure?')
-        	        );
+                    );
                     echo('&nbsp&nbsp');
                     echo $this->Html->link(
-        		    'Edit',
-        		    array('action' => 'edit', $post['Post']['id']));
+                    'Edit',
+                    array('action' => 'edit', $posts[$idx]['Post']['id']));
                 endif;
+                echo ('</div>');
+                echo ('</div>');
+                if ($idx % 4 == 3 || $idx == count($posts) -1)
+                {
+                    echo ('</div>');
+                }
+            }
+
         ?>
-    	</td>
+    </div>
 
-        <td>
-    	    <?php
-                echo $post['Post']['created'];
-    	    ?>
-    	</td>
+    <div class="sidebar col-sm-3 col-md-2">
+        <?php
+            echo $this->element('zipArea');
+         ?>
+    </div>
 
-        <td>
-            <?php
-                echo $post['Category']['name'];
-            ?>
-        </td>
-        </tr>
-        <?php endforeach; ?>
-
-    </table>
-    <?php
-        if ($this->Paginator->hasPrev())
-        {
-            echo $this->Paginator->prev(
-                '< 前へ  ',
-                array(),
-                null,
-                array('class' => 'prev disabled')
-            );
-        }
-
-        echo $this->Paginator->numbers(
-            array(
-                'separator' => '  '
-            )
-        );
-        if ($this->Paginator->hasNext())
-        {
-            echo $this->Paginator->next(
-                '  次へ >',
-                array(),
-                null,
-                array('class' => 'next disabled')
-            );
-        }
-    ?>
+    <div class="paging">
+		<?php
+			echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
+			echo $this->Paginator->numbers(array('separator' => ''));
+			echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+		?>
+	</div>
 </div>
+
 <script>
     $(function ()
     {

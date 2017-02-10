@@ -29,7 +29,7 @@
             )
         );
 
-        echo $this->Form->button('削除', array(
+        echo $this->Form->button(__('delete'), array(
             'id' => 'photo_link',
             'element' => $attachment['id'],
             'type' => 'button',
@@ -38,7 +38,7 @@
         echo '</div>';
     endforeach;
 
-    echo $this->Form->end('Save Post');
+    echo $this->Form->end(__('Save Post'));
 ?>
 
 <script type="text/javascript">

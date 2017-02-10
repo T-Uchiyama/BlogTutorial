@@ -4,8 +4,6 @@
 <h1>Add Post</h1>
 
 <?php
-    // debug($this->validationErrors);
-    // exit;
     echo $this->Form->create('Post', array('type' => 'file'));
     echo $this->Form->input('title');
     echo $this->Form->input('body', array('rows' => '3'));
@@ -80,7 +78,7 @@
 
     echo ('</div>');
 
-    echo $this->Form->end('Save Post');
+    echo $this->Form->end(__('Save Post'));
 ?>
 
 <script type="text/javascript">
