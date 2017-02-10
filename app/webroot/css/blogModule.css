@@ -7,7 +7,7 @@
 
 #back-curtain
 {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.2);
     display: none;
     position: fixed;
     left: 0px;
@@ -58,7 +58,18 @@
 
 body
 {
-	padding-top: 30px;
+	padding-top: 10px;
+}
+
+a.btn.btn-info
+{
+    margin: 10px;
+}
+
+.main_wrap
+{
+    background-color: #f5f5f5;
+    padding: 10px;
 }
 
 .heading
@@ -66,13 +77,20 @@ body
   font-weight: bold;
   font-size: 20px;
   padding: 10px 10px;
-  margin: 15px;
   background-color: #d6ffea;
   position: relative;
   padding-bottom: .5em;
   border-bottom: 4px solid #ccc;
 }
 
+.heading h1
+{
+    background-color: #d6ffea;
+    font-size: 30px;
+    color: rgba(0,0,0,0.6);
+    text-shadow: 2px 8px 6px rgba(0,0,0,0.2),
+             0px -5px 16px rgba(255,255,255,0.3);
+}
 .heading::after
 {
   position: absolute;
@@ -85,66 +103,90 @@ body
   background-color: #3498db;
 }
 
+
+.box_indent
+{
+    width: 100px;
+    height: 20px;
+    background-color: transparent;
+}
 .blog_article
 {
-    width: 330px;
-    height: 320px;
+    width: 307px;
+    height: 350px;
+    padding: 5px 10px;
 }
 
 #area_article
 {
-    width: 257px;
-    height: 300px;
-    border-top: 3px solid #DDD;
-	border-left: 3px solid #DDD;
-	border-right: 3px solid #BBB;
-	border-bottom: 3px solid #BBB;
+    width: 300px;
+    height: 340px;
+    background-color: #ffffff;
+    text-decoration: none;
+
 }
+
+a.post_link
+{
+    text-decoration: none;
+}
+
 .label_Novel
 {
-    width: 250px;
+    width: 300px;
     height: 20px;
+    font-size: 12px;
     background-color: #99ffcc;
+    border-left: 8px solid #2ad2ac;
     text-align: center;
 }
 
 .label_Music
 {
-    width: 250px;
+    width: 300px;
     height: 20px;
+    font-size: 12px;
     background-color: #99ffff;
+    border-left: 8px solid #2ab4d2;
     text-align: center;
 }
 
 .label_Trip
 {
-    width: 250px;
+    width: 300px;
     height: 20px;
+    font-size: 12px;
     background-color: #ff99ff;
+    border-left: 8px solid #c92ad2;
     text-align: center;
 }
 
 .label_Hobby
 {
-    width: 250px;
+    width: 300px;
     height: 20px;
+    font-size: 12px;
     background-color: #ff9999;
+    border-left: 8px solid #d22a2a;
     text-align: center;
 }
 
 .label_Computers
 {
-    width: 250px;
+    width: 300px;
     height: 20px;
+    font-size: 12px;
     background-color: #ffff99;
+    border-left: 8px solid #c8d22a;
     text-align: center;
 }
 
 .post_title
 {
-    width: 250px;
+    width: 300px;
     height: 40px;
+    font-weight: bold;
+    font-size: 14px;
     position: relative;
     text-align: center;
-
 }

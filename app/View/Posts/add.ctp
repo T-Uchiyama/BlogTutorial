@@ -8,7 +8,7 @@
     echo $this->Form->input('title');
     echo $this->Form->input('body', array('rows' => '3'));
     echo $this->Form->input('category_id', array(
-            'label' => 'Category',
+            'label' => __('Category'),
             'type' => 'select',
             'options' => $list,
             'empty' => true,

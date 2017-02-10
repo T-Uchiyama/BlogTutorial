@@ -1,6 +1,6 @@
 <!-- File: /app/Vendor/zipArea.ctp -->
 
-<div style="width:100px;height:20px;background:#fff;"></div>
+<div class="box_indent"></div>
 
 <div id="zipCord">
 <?php

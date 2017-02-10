@@ -10,7 +10,7 @@ class PostsController extends AppController
     // index.ctpに10件かつID順に表示するように設定
     public $paginate = array(
         'Post' => array(
-            'limit' => 10,
+            'limit' => 8,
             'sort' => 'id',
         ),
     );
