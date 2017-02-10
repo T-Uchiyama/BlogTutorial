@@ -5,8 +5,15 @@
 
 <?php
     echo $this->Form->create('Post', array('type' => 'file'));
-    echo $this->Form->input('title');
-    echo $this->Form->input('body', array('rows' => '3'));
+    echo $this->Form->input('title', array(
+            'label' => __('Title'),
+        )
+    );
+    echo $this->Form->input('body', array(
+            'rows' => 3,
+            'label' => __('Body'),
+        )
+    );
     echo $this->Form->input('category_id', array(
             'label' => __('Category'),
             'type' => 'select',
@@ -15,7 +22,7 @@
             )
     );
     echo $this->Form->input('Tag', array(
-            'label' => 'Tag',
+            'label' => __('Tag'),
             'type' => 'select',
             'multiple' => 'checkbox',
             'options' => $tag,
@@ -24,7 +31,9 @@
 
     echo ('<div class="input-group">');
 
-    echo('<label>Image</label>');
+    echo('<label>');
+    echo __('Image');
+    echo('</label>');
     for ($i = 0; $i < 3; $i++) {
         echo ('<div class= "File">');
 
@@ -39,7 +48,7 @@
             )
         );
 
-        echo $this->Form->button('ファイル選択', array(
+        echo $this->Form->button(__('Choice File'), array(
                 'div' => false,
                 'type' => 'button',
                 'id' => 'btn_link'.$i,

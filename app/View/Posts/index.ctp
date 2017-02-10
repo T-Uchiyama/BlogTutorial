@@ -2,7 +2,7 @@
 
 <div class="heading">
     <center>
-        <h1 class="postsIndex">Blog Posts</h1>
+        <h1><?php echo __('Blog Posts'); ?></h1>
     </center>
 </div>
 
@@ -23,14 +23,14 @@
             ?>
             <fieldset>
                 <div id="searchFuncPush">
-                    <legend>検索</legend>
+                    <legend><?php echo __('Search'); ?></legend>
                 </div>
 
                 <div id="searchLink">
                     <!-- Category  -->
                     <?php
                         echo $this->Form->input('category_id', array(
-                        'label' => 'カテゴリ',
+                        'label' => __('Category'),
                         'id' => 'search_category',
                         'class' => 'category',
                         'empty' => true,
@@ -40,7 +40,7 @@
                 <!-- Tag  -->
                 <?php
                     echo $this->Form->input('tag_id', array(
-                        'label' => 'タグ',
+                        'label' => __('Tag'),
                         'type' => 'select',
                         'multiple' => 'checkbox',
                         'options' => $tags,
@@ -50,18 +50,18 @@
                 <!-- Title  -->
                 <?php
                     echo $this->Form->input('title', array(
-                        'label' => 'タイトル',
+                        'label' => __('Title'),
                         'type' => 'text',
                         'id' => 'search_title',
                         'class' => 'title',
                         'empty' => true,
-                        'placeholder' => 'キーワードを入力してください。',
+                        'placeholder' => __('Enter the keyword'),
                         )
                     );
                 ?>
 
                 <?php
-                    echo $this->Form->Submit(__('検索'));
+                    echo $this->Form->Submit(__('Search'));
                 ?>
                 </div>
             <?php
@@ -73,7 +73,7 @@
 
             <?php
                 echo $this->Html->link(
-                    'Add Post',
+                    __('Add Post'),
                     array('controller' => 'posts', 'action' => 'add'),
                     array('class' => 'btn btn-info', 'role' => 'button')
                 );
@@ -96,9 +96,13 @@
                     {
                         echo ('<img width="300" height="170"
                             src="/files/attachment/photo/' . $posts[$idx]['Attachment'][0]['dir'] . '/' .$posts[$idx]['Attachment'][0]['photo'].'"
-                                alt="ブログに保存されている最初の画像"/>');
+                                alt="');
+                        echo __('the first Image the blog saved');
+                        echo ('"/>');
                     } else {
-                        echo ('<img width="300" height="170" src="" alt="記事に画像が登録されてありません。"/>');
+                        echo ('<img width="300" height="170" src="" alt="');
+                        echo __('Image is not saved in the posts');
+                        echo ('"/>');
                     }
 
                     echo ('<p class="label_'.$posts[$idx]['Category']['name'].'">'.$posts[$idx]['Category']['name'].'</p>');
@@ -114,7 +118,7 @@
                         || AuthComponent::user('group_id') == 1):
 
                         echo $this->Form->postLink(
-                        __('Delete'),
+                            __('Delete'),
                             array('action' => 'delete', $posts[$idx]['Post']['id']),
                             array('class' => 'btn btn-warning', 'confirm' => 'Are you sure?')
                         );

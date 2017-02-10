@@ -4,6 +4,9 @@
 
 <?php
     echo $this->Form->create('Category');
-    echo $this->Form->input('name');
+    echo $this->Form->input('name', array(
+            'label' => __('Categoryname'),
+        )
+    );
     echo $this->Form->end(__('Save Category'));
 ?>

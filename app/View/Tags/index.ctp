@@ -13,7 +13,7 @@
 
     <?php
         echo $this->Html->link(
-            'Add Tag',
+            __('Add Tag'),
             array ('controller' => 'tags', 'action' => 'add'));
      ?>
 
@@ -43,16 +43,17 @@
             <td>
                  <?php
                     echo $this->Form->postLink(
-        		    'Delete',
-                    array('action' => 'delete', $tag['Tag']['id']),
-                    array('confirm' => __('Are you sure?'))
+            		    __('Delete'),
+                        array('action' => 'delete', $tag['Tag']['id']),
+                        array('confirm' => __('Are you sure?'))
         	        );
         	     ?>
 
         	    <?php
                     echo $this->Html->link(
-        		    'Edit',
-        		    array('action' => 'edit', $tag['Tag']['id']));
+            		    __('Edit'),
+            		    array('action' => 'edit', $tag['Tag']['id'])
+                    );
         	    ?>
         	</td>
             </tr>

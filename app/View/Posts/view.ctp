@@ -8,13 +8,15 @@
 
 <p>
     <small>
-        Category: <?php echo $post['Category']['name']?>
+        <?php echo __('Category'); ?>
+        : <?php echo $post['Category']['name']?>
     </small>
 </p>
 
 <p>
     <small>
-        Created: <?php echo $post['Post']['created']?>
+        <?php echo __('Created'); ?>
+        : <?php echo $post['Post']['created']?>
     </small>
 </p>
 

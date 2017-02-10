@@ -5,13 +5,13 @@
 
     <div class="heading">
         <center>
-            <h5>Categories List</h5>
+            <h5><?php echo __('Categories List'); ?></h5>
         </center>
     </div>
 <div class="main col-sm-9  col-md-10 ">
     <?php
         echo $this->Html->link(
-            'Add Category',
+            __('Add Category'),
             array ('controller' => 'categories', 'action' => 'add'));
      ?>
 
@@ -41,7 +41,7 @@
             <td>
                  <?php
                     echo $this->Form->postLink(
-        		    'Delete',
+        		    __('Delete'),
                     array('action' => 'delete', $category['Category']['id']),
                     array('confirm' => __('Are you sure?'))
         	        );
@@ -49,7 +49,7 @@
 
         	    <?php
                     echo $this->Html->link(
-        		    'Edit',
+        		    __('Edit'),
         		    array('action' => 'edit', $category['Category']['id']));
         	    ?>
         	</td>
