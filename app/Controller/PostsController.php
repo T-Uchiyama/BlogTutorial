@@ -7,7 +7,7 @@ class PostsController extends AppController
     public $presetVars = true;
 
     // ページネーション用
-    // index.ctpに10件かつID順に表示するように設定
+    // index.ctpに8件かつID順に表示するように設定
     public $paginate = array(
         'Post' => array(
             'limit' => 8,

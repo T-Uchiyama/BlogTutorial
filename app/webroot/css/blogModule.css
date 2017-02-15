@@ -91,6 +91,59 @@ a.btn.btn-info
     text-shadow: 2px 8px 6px rgba(0,0,0,0.2),
              0px -5px 16px rgba(255,255,255,0.3);
 }
+
+.heading_edit
+{
+    border-bottom: 1px solid #0066cc;
+    border-left: 10px solid #0066cc;
+    text-align: left;
+    background-color: #fff;
+    font-size: 24px;
+    color: #000;
+    margin-bottom: 10px;
+    padding: 4px 4px 4px 30px;
+    width: 1786px;
+
+}
+
+.heading_add
+{
+    border-bottom: 1px solid #00CCCC;
+    border-left: 10px solid #00CCCC;
+    text-align: left;
+    background-color: #fff;
+    font-size: 24px;
+    color: #000;
+    margin-bottom: 10px;
+    padding: 4px 4px 4px 30px;
+    width: 1786px;
+}
+
+.heading_view
+{
+    border-bottom: 1px solid #000;
+    border-left: 10px solid #000;
+    text-align: left;
+    background-color: #fff;
+    font-size: 24px;
+    color: #000;
+    margin-bottom: 10px;
+    padding: 4px 4px 4px 30px;
+    width: 1786px;
+}
+
+.text_main
+{
+    line-height: 180%;
+    font-size: 16px;
+}
+
+.text_info
+{
+    line-height: 180%;
+    font-size: 12px;
+}
+
 .heading::after
 {
   position: absolute;

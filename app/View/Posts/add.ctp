@@ -1,7 +1,6 @@
 <!-- File: /app/View/Posts/add.ctp -->
 
-
-<h1><?php echo __('Add Post'); ?></h1>
+<h1 class="heading_add"><?php echo __('Add Post'); ?></h1>
 
 <?php
     echo $this->Form->create('Post', array('type' => 'file'));

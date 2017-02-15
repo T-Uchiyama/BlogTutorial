@@ -1,39 +1,29 @@
 <!-- File: /app/View/Posts/view.ctp -->
 
-<h1>
+<h1 class="heading_view">
     <?php
         echo h($post['Post']['title']);
     ?>
 </h1>
 
-<p>
+<p class="text_info">
     <small>
         <?php echo __('Category'); ?>
         : <?php echo $post['Category']['name']?>
     </small>
 </p>
 
-<p>
+<p class="text_info">
     <small>
         <?php echo __('Created'); ?>
         : <?php echo $post['Post']['created']?>
     </small>
 </p>
 
-<p>
+<p class="text_main">
     <?php
         echo nl2br(h($post['Post']['body']))
     ?>
-</p>
-
-<p>
-    <small>
-        <?php echo __('Tag'); ?>
-        : <?php foreach($post['Tag'] as $tag): ?>
-          <?php echo $tag['title']; ?>
-          <?php endforeach; ?>
-
-    </small>
 </p>
 
 <p>
@@ -76,6 +66,15 @@
     <small>
 </p>
 
+<p class="text_info">
+    <small>
+        <?php echo __('Tag'); ?>
+        : <?php foreach($post['Tag'] as $tag): ?>
+          <?php echo $tag['title']; ?>
+          <?php endforeach; ?>
+
+    </small>
+</p>
 <script>
 
    /*
@@ -139,8 +138,8 @@
                     'top' : Math.floor(($(window).height() -
                             $('#defaultImg' + page).height()) / 2) + 'px',
                 });
-                $('#back-curtain').append('<button class="nav-r btn-primary btn-lg">次へ</button>');
-                $('#back-curtain').append('<button class="nav-l btn-primary btn-lg">戻る</button>');
+                $('#back-curtain').append('<button class="nav-r btn-info btn-lg">次へ</button>');
+                $('#back-curtain').append('<button class="nav-l btn-info btn-lg">戻る</button>');
                 $('#back-curtain').fadeIn('slow');
 
                 /*

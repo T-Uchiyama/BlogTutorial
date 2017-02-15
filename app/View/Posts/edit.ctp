@@ -1,6 +1,7 @@
 <!-- File: /app/View/Posts/edit.ctp -->
 
-<h1><?php echo __('Edit Post'); ?></h1>
+<h1 class="heading_edit"><?php echo __('Edit Post'); ?></h1>
+
 <?php
     echo $this->Form->create('Post', array('type' => 'file'));
     echo $this->Form->input('title', array(
