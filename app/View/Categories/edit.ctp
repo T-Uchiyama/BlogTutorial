@@ -1,6 +1,6 @@
 <!-- File: /app/View/Categories/edit.ctp -->
 
-<h1>Edit Category</h1>
+<h1><?php echo __('Edit Category'); ?></h1>
 
 <?php
     echo $this->Form->create('Category');

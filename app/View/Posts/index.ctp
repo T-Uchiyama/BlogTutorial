@@ -120,7 +120,7 @@
                         echo $this->Form->postLink(
                             __('Delete'),
                             array('action' => 'delete', $posts[$idx]['Post']['id']),
-                            array('class' => 'btn btn-warning', 'confirm' => 'Are you sure?')
+                            array('class' => 'btn btn-warning', 'confirm' => __('Are you sure?'))
                         );
                         echo('&nbsp&nbsp');
                         echo $this->Html->link(
@@ -146,11 +146,11 @@
             ?>
         </div>
 
-            <div class="sidebar col-sm-3 col-md-2">
-                <?php
-                    echo $this->element('zipArea');
-                 ?>
-            </div>
+        <div class="sidebar col-sm-3 col-md-2">
+            <?php
+                echo $this->element('zipArea');
+             ?>
+        </div>
     </div>
 </div>
 

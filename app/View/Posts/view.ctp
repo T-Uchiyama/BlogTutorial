@@ -28,9 +28,10 @@
 
 <p>
     <small>
-        Tag: <?php foreach($post['Tag'] as $tag): ?>
-             <?php echo $tag['title']; ?>
-             <?php endforeach; ?>
+        <?php echo __('Tag'); ?>
+        : <?php foreach($post['Tag'] as $tag): ?>
+          <?php echo $tag['title']; ?>
+          <?php endforeach; ?>
 
     </small>
 </p>

@@ -225,6 +225,11 @@ msgstr ""
 msgid "No filename after parsing. Function %s returned an invalid filename"
 msgstr ""
 
+#: View/Categories/add.ctp:3
+#: View/Categories/index.ctp:14
+msgid "Add Category"
+msgstr "新規カテゴリ追加"
+
 #: View/Categories/add.ctp:8
 #: View/Categories/edit.ctp:8
 #: View/Categories/index.ctp:23
@@ -238,12 +243,7 @@ msgstr "保存"
 
 #: View/Categories/index.ctp:8
 msgid "Categories List"
-msgstr "カテゴリ一覧"
-
-#: View/Categories/index.ctp:14
-msgid "Add Category"
-msgstr "新規カテゴリ作成"
-
+msgstr "カテゴリ一覧"Ÿ
 #: View/Categories/index.ctp:22
 #: View/Tags/index.ctp:24
 msgid "Id"
@@ -266,6 +266,7 @@ msgid "Delete"
 msgstr "削除"
 
 #: View/Categories/index.ctp:48
+#: View/Posts/index.ctp:123
 #: View/Tags/index.ctp:50
 msgid "Are you sure?"
 msgstr "本当によろしいですか？"
@@ -387,6 +388,7 @@ msgstr "カテゴリ"
 #: View/Posts/add.ctp:25
 #: View/Posts/edit.ctp:23
 #: View/Posts/index.ctp:43
+#: View/Posts/view.ctp:31
 msgid "Tag"
 msgstr "タグ"
 
@@ -402,6 +404,11 @@ msgstr "ログアウト"
 #: View/Users/login.ctp:2;14
 msgid "Login"
 msgstr "ログイン"
+
+#: View/Posts/add.ctp:4
+#: View/Posts/index.ctp:76
+msgid "Add Post"
+msgstr "新規作成"
 
 #: View/Posts/add.ctp:9
 #: View/Posts/edit.ctp:7
@@ -428,6 +435,10 @@ msgstr "画像を選択してください。"
 #: View/Posts/edit.ctp:48
 msgid "Save Post"
 msgstr "保存"
+
+#: View/Posts/edit.ctp:3
+msgid "Edit Post"
+msgstr "編集"
 
 #: View/Posts/edit.ctp:39
 msgid "delete"
@@ -586,4 +597,4 @@ msgstr "パスワードには文字と数字しか使用できません。"
 
 #: Model/User.php:validation for field group_id
 msgid "numeric"
-msgstr "数値"
+msgstr "数値で入力してください。"

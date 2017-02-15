@@ -225,6 +225,11 @@ msgstr ""
 msgid "No filename after parsing. Function %s returned an invalid filename"
 msgstr ""
 
+#: View/Categories/add.ctp:3
+#: View/Categories/index.ctp:14
+msgid "Add Category"
+msgstr ""
+
 #: View/Categories/add.ctp:8
 #: View/Categories/edit.ctp:8
 #: View/Categories/index.ctp:23
@@ -236,12 +241,12 @@ msgstr ""
 msgid "Save Category"
 msgstr ""
 
-#: View/Categories/index.ctp:8
-msgid "Categories List"
+#: View/Categories/edit.ctp:3
+msgid "Edit Category"
 msgstr ""
 
-#: View/Categories/index.ctp:14
-msgid "Add Category"
+#: View/Categories/index.ctp:8
+msgid "Categories List"
 msgstr ""
 
 #: View/Categories/index.ctp:22
@@ -266,6 +271,7 @@ msgid "Delete"
 msgstr ""
 
 #: View/Categories/index.ctp:48
+#: View/Posts/index.ctp:123
 #: View/Tags/index.ctp:50
 msgid "Are you sure?"
 msgstr ""
@@ -381,6 +387,7 @@ msgstr ""
 #: View/Posts/add.ctp:25
 #: View/Posts/edit.ctp:23
 #: View/Posts/index.ctp:43
+#: View/Posts/view.ctp:31
 msgid "Tag"
 msgstr ""
 
@@ -395,6 +402,11 @@ msgstr ""
 #: View/Layouts/default.ctp:99
 #: View/Users/login.ctp:2;14
 msgid "Login"
+msgstr ""
+
+#: View/Posts/add.ctp:4
+#: View/Posts/index.ctp:76
+msgid "Add Post"
 msgstr ""
 
 #: View/Posts/add.ctp:9
@@ -423,6 +435,10 @@ msgstr ""
 msgid "Save Post"
 msgstr ""
 
+#: View/Posts/edit.ctp:3
+msgid "Edit Post"
+msgstr ""
+
 #: View/Posts/edit.ctp:39
 msgid "delete"
 msgstr ""
@@ -433,10 +449,6 @@ msgstr ""
 
 #: View/Posts/index.ctp:58
 msgid "Enter the keyword"
-msgstr ""
-
-#: View/Posts/index.ctp:76
-msgid "Add Post"
 msgstr ""
 
 #: View/Posts/index.ctp:100
@@ -451,17 +463,22 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
+#: View/Tags/add.ctp:2
+#: View/Tags/index.ctp:16
+msgid "Add Tag"
+msgstr ""
+
 #: View/Tags/add.ctp:10
 #: View/Tags/edit.ctp:10
 msgid "Save Tag"
 msgstr ""
 
-#: View/Tags/index.ctp:8
-msgid "Tags List"
+#: View/Tags/edit.ctp:3
+msgid "Edit Tag"
 msgstr ""
 
-#: View/Tags/index.ctp:16
-msgid "Add Tag"
+#: View/Tags/index.ctp:8
+msgid "Tags List"
 msgstr ""
 
 #: View/Tags/index.ctp:25

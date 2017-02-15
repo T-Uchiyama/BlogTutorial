@@ -1,6 +1,6 @@
 <!-- File: /app/View/Categories/add.ctp -->
 
-<h1>Add Category</h1>
+<h1><?php echo __('Add Category'); ?></h1>
 
 <?php
     echo $this->Form->create('Category');
