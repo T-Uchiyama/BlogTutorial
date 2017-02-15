@@ -27,6 +27,13 @@
                     'rule' => 'notBlank',
                     'message' => 'カテゴリを選択してください。',
                 )
+            ),
+            'Tag' => array(
+                'multiple' => array(
+                    'rule' => array('multiple', array('min' => 1)),
+                    'required' => true,
+                    'message'  => 'タグを１つ以上選択してください。',
+                )
             )
    		);
 
@@ -115,4 +122,10 @@
         {
 			return $this->field('id', array('id' => $post, 'user_id' => $user)) !== false;
 		}
+
+        public function beforeSave($data = array())
+        {
+            debug($this->data);
+            // exit;
+        }
 	}

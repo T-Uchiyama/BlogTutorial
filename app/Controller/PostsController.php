@@ -91,6 +91,8 @@ class PostsController extends AppController
 
     public function add()
     {
+        // debug($this->Post->validate);
+        // exit;
 
 		if ($this->request->is('post'))
         {
@@ -108,13 +110,13 @@ class PostsController extends AppController
                     unset($this->request->data['Attachment'][$idx]);
                 }
             }
-			if ($this->Post->saveAll($this->request->data))
+            // deep => trueを記載することでPostに関連するテーブルも保存可能に
+			if ($this->Post->saveAll($this->request->data, array('deep' => true)))
             {
 	        	$this->Flash->success(__('Your post has been saved.'));
 				return $this->redirect(array('action' => 'index'));
-	    	}
+            }
             $this->set('validationError', $this->Post->Attachment->validationErrors);
-            //$this->Flash->error(__('Unable to add your post.'));
 		}
         $list = $this->getList();
 	    $this->set('list', $list);

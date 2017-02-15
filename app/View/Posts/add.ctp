@@ -20,13 +20,19 @@
             'empty' => true,
             )
     );
-    echo $this->Form->input('Tag', array(
+    echo $this->Form->input('Post.Tag', array(
             'label' => __('Tag'),
             'type' => 'select',
             'multiple' => 'checkbox',
             'options' => $tag,
         )
     );
+    if(!empty ($tagerror))
+    {
+        echo ('<div class="error-message">');
+        print_r($tagerror);
+        echo ('</div>');
+    }
 
     echo ('<div class="input-group">');
 
@@ -44,6 +50,7 @@
                 'class' => 'form-control',
                 'placeholder' => 'select file...',
                 'readonly' => true,
+                // requiredをfalseに
             )
         );
 

@@ -57,8 +57,6 @@
             							'action' => 'edit', $user['User']['id']),
                                         array('class' => 'btn btn-primary', 'role' => 'button')
                                     );
-
-
             				endif;
             			?>
             			</td>
