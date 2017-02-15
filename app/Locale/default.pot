@@ -1,0 +1,584 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: Controller/CategoriesController.php:18
+msgid "The category has been saved"
+msgstr ""
+
+#: Controller/CategoriesController.php:21
+msgid "The category could not be saved. Please, try again."
+msgstr ""
+
+#: Controller/CategoriesController.php:28;34
+msgid "Invalid Category"
+msgstr ""
+
+#: Controller/CategoriesController.php:45
+msgid "Your Category has been updated."
+msgstr ""
+
+#: Controller/CategoriesController.php:48
+msgid "Unable to update your Category."
+msgstr ""
+
+#: Controller/CategoriesController.php:67
+msgid "The category with id: %s has been deleted."
+msgstr ""
+
+#: Controller/CategoriesController.php:70
+msgid "The category with id: %s could not be deleted."
+msgstr ""
+
+#: Controller/GroupsController.php:21;39
+msgid "The group has been saved."
+msgstr ""
+
+#: Controller/GroupsController.php:24;42
+msgid "The group could not be saved. Please, try again."
+msgstr ""
+
+#: Controller/GroupsController.php:33;55
+msgid "Invalid group"
+msgstr ""
+
+#: Controller/GroupsController.php:60
+msgid "The group has been deleted."
+msgstr ""
+
+#: Controller/GroupsController.php:62
+msgid "The group could not be deleted. Please, try again."
+msgstr ""
+
+#: Controller/PostsController.php:81;87;129;144
+msgid "Invalid post"
+msgstr ""
+
+#: Controller/PostsController.php:113
+msgid "Your post has been saved."
+msgstr ""
+
+#: Controller/PostsController.php:154
+msgid "Your post has been updated."
+msgstr ""
+
+#: Controller/PostsController.php:157
+msgid "Unable to update your post."
+msgstr ""
+
+#: Controller/PostsController.php:176
+msgid "The post with id: %s has been deleted."
+msgstr ""
+
+#: Controller/PostsController.php:179
+msgid "The post with id: %s could not be deleted."
+msgstr ""
+
+#: Controller/TagsController.php:18
+msgid "The tag has been saved"
+msgstr ""
+
+#: Controller/TagsController.php:21
+msgid "The tag could not be saved. Please, try again."
+msgstr ""
+
+#: Controller/TagsController.php:28;34
+msgid "Invalid Tag"
+msgstr ""
+
+#: Controller/TagsController.php:45
+msgid "Your Tag has been updated."
+msgstr ""
+
+#: Controller/TagsController.php:48
+msgid "Unable to update your Tag."
+msgstr ""
+
+#: Controller/TagsController.php:67
+msgid "The tag with id: %s has been deleted."
+msgstr ""
+
+#: Controller/TagsController.php:70
+msgid "The tag with id: %s could not be deleted."
+msgstr ""
+
+#: Controller/UsersController.php:18;45;69
+msgid "Invalid user"
+msgstr ""
+
+#: Controller/UsersController.php:31;51
+msgid "The user has been saved."
+msgstr ""
+
+#: Controller/UsersController.php:34;54
+msgid "The user could not be saved. Please, try again."
+msgstr ""
+
+#: Controller/UsersController.php:74
+msgid "The user has been deleted."
+msgstr ""
+
+#: Controller/UsersController.php:76
+msgid "The user could not be deleted. Please, try again."
+msgstr ""
+
+#: Controller/UsersController.php:85
+msgid "You are logged in!"
+msgstr ""
+
+#: Controller/UsersController.php:95
+msgid "Your username or password was incorrect."
+msgstr ""
+
+#: Controller/UsersController.php:101
+msgid "Good-Bye"
+msgstr ""
+
+#: Plugin/AclExtras/Console/Command/AclExtrasShell.php:80
+msgid "Plugin to process"
+msgstr ""
+
+#: Plugin/AclExtras/Console/Command/AclExtrasShell.php:83
+msgid "Better manage, and easily synchronize you application's ACO tree"
+msgstr ""
+
+#: Plugin/AclExtras/Console/Command/AclExtrasShell.php:88
+msgid "Add new ACOs for new controllers and actions. Does not remove nodes from the ACO table."
+msgstr ""
+
+#: Plugin/AclExtras/Console/Command/AclExtrasShell.php:93
+msgid "Perform a full sync on the ACO table.Will create new ACOs or missing controllers and actions.Will also remove orphaned entries that no longer have a matching controller/action"
+msgstr ""
+
+#: Plugin/AclExtras/Console/Command/AclExtrasShell.php:97
+msgid "Verify the tree structure of either your Aco or Aro Trees"
+msgstr ""
+
+#: Plugin/AclExtras/Console/Command/AclExtrasShell.php:102
+msgid "The type of tree to verify"
+msgstr ""
+
+#: Plugin/AclExtras/Console/Command/AclExtrasShell.php:108
+msgid "Recover a corrupted Tree"
+msgstr ""
+
+#: Plugin/AclExtras/Console/Command/AclExtrasShell.php:113
+msgid "The type of tree to recover"
+msgstr ""
+
+#: Plugin/AclExtras/Lib/AclExtras.php:124
+msgid "<error>Plugin %s not found or not activated</error>"
+msgstr ""
+
+#: Plugin/AclExtras/Lib/AclExtras.php:137
+msgid "<success>Aco Update Complete</success>"
+msgstr ""
+
+#: Plugin/AclExtras/Lib/AclExtras.php:182
+msgid "Deleted %s and all children"
+msgstr ""
+
+#: Plugin/AclExtras/Lib/AclExtras.php:223
+msgid "Created Aco node: <success>%s</success>"
+msgstr ""
+
+#: Plugin/AclExtras/Lib/AclExtras.php:276
+msgid "Unable to get methods for \"%s\""
+msgstr ""
+
+#: Plugin/AclExtras/Lib/AclExtras.php:297
+msgid "Deleted Aco node: <warning>%s</warning>"
+msgstr ""
+
+#: Plugin/AclExtras/Lib/AclExtras.php:316
+msgid "<success>Tree is valid and strong</success>"
+msgstr ""
+
+#: Plugin/AclExtras/Lib/AclExtras.php:334
+msgid "Tree has been recovered, or tree did not need recovery."
+msgstr ""
+
+#: Plugin/AclExtras/Lib/AclExtras.php:336
+msgid "<error>Tree recovery failed.</error>"
+msgstr ""
+
+#: Plugin/Upload/Console/Command/ThumbnailShell.php:34
+msgid "Which model would you like to regenerate thumbnails for?"
+msgstr ""
+
+#: Plugin/Upload/Console/Command/ThumbnailShell.php:39
+msgid "<error>"
+msgstr ""
+
+#: Plugin/Upload/Model/Behavior/UploadBehavior.php:1091
+msgid "No filename after parsing. Function %s returned an invalid filename"
+msgstr ""
+
+#: View/Categories/add.ctp:8
+#: View/Categories/edit.ctp:8
+#: View/Categories/index.ctp:23
+msgid "Categoryname"
+msgstr ""
+
+#: View/Categories/add.ctp:11
+#: View/Categories/edit.ctp:11
+msgid "Save Category"
+msgstr ""
+
+#: View/Categories/index.ctp:8
+msgid "Categories List"
+msgstr ""
+
+#: View/Categories/index.ctp:14
+msgid "Add Category"
+msgstr ""
+
+#: View/Categories/index.ctp:22
+#: View/Tags/index.ctp:24
+msgid "Id"
+msgstr ""
+
+#: View/Categories/index.ctp:24
+#: View/Groups/add.ctp:12
+#: View/Groups/index.ctp:10;43
+#: View/Tags/index.ctp:26
+#: View/Users/index.ctp:29
+msgid "Actions"
+msgstr ""
+
+#: View/Categories/index.ctp:46
+#: View/Groups/index.ctp:22
+#: View/Posts/index.ctp:121
+#: View/Tags/index.ctp:48
+#: View/Users/index.ctp:47
+msgid "Delete"
+msgstr ""
+
+#: View/Categories/index.ctp:48
+#: View/Tags/index.ctp:50
+msgid "Are you sure?"
+msgstr ""
+
+#: View/Categories/index.ctp:54
+#: View/Groups/index.ctp:21
+#: View/Posts/index.ctp:127
+#: View/Tags/index.ctp:56
+#: View/Users/index.ctp:54
+msgid "Edit"
+msgstr ""
+
+#: View/Elements/zipArea.ctp:9
+msgid "ZipCord"
+msgstr ""
+
+#: View/Elements/zipArea.ctp:12
+msgid "Enter the zip-cord"
+msgstr ""
+
+#: View/Elements/zipArea.ctp:16
+#: View/Posts/index.ctp:26;64
+msgid "Search"
+msgstr ""
+
+#: View/Elements/zipArea.ctp:23
+msgid "Pref"
+msgstr ""
+
+#: View/Elements/zipArea.ctp:31
+msgid "City"
+msgstr ""
+
+#: View/Elements/zipArea.ctp:39
+msgid "Town"
+msgstr ""
+
+#: View/Groups/add.ctp:4
+msgid "Add Group"
+msgstr ""
+
+#: View/Groups/add.ctp:9
+#: View/Groups/edit.ctp:10
+#: View/Users/add.ctp:20
+#: View/Users/edit.ctp:20
+msgid "Submit"
+msgstr ""
+
+#: View/Groups/add.ctp:15
+msgid "List Groups"
+msgstr ""
+
+#: View/Groups/add.ctp:16
+#: View/Groups/index.ctp:46
+msgid "List Users"
+msgstr ""
+
+#: View/Groups/add.ctp:17
+#: View/Groups/index.ctp:47
+msgid "New User"
+msgstr ""
+
+#: View/Groups/edit.ctp:4
+msgid "Edit Group"
+msgstr ""
+
+#: View/Groups/index.ctp:2
+msgid "Groups"
+msgstr ""
+
+#: View/Groups/index.ctp:22
+#: View/Users/index.ctp:50
+msgid "Are you sure you want to delete # %s?"
+msgstr ""
+
+#: View/Groups/index.ctp:31
+msgid "Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}"
+msgstr ""
+
+#: View/Groups/index.ctp:36
+#: View/Posts/index.ctp:159
+#: View/Users/index.ctp:69
+msgid "previous"
+msgstr ""
+
+#: View/Groups/index.ctp:38
+#: View/Posts/index.ctp:161
+#: View/Users/index.ctp:71
+msgid "next"
+msgstr ""
+
+#: View/Groups/index.ctp:45
+msgid "New Group"
+msgstr ""
+
+#: View/Layouts/default.ctp:63
+msgid "Post"
+msgstr ""
+
+#: View/Layouts/default.ctp:64
+msgid "User"
+msgstr ""
+
+#: View/Layouts/default.ctp:69
+#: View/Posts/add.ctp:18
+#: View/Posts/edit.ctp:17
+#: View/Posts/index.ctp:33
+#: View/Posts/view.ctp:11
+msgid "Category"
+msgstr ""
+
+#: View/Layouts/default.ctp:72
+#: View/Posts/add.ctp:25
+#: View/Posts/edit.ctp:23
+#: View/Posts/index.ctp:43
+msgid "Tag"
+msgstr ""
+
+#: View/Layouts/default.ctp:83;95
+msgid "LoginName : "
+msgstr ""
+
+#: View/Layouts/default.ctp:87
+msgid "Logout"
+msgstr ""
+
+#: View/Layouts/default.ctp:99
+#: View/Users/login.ctp:2;14
+msgid "Login"
+msgstr ""
+
+#: View/Posts/add.ctp:9
+#: View/Posts/edit.ctp:7
+#: View/Posts/index.ctp:53
+#: View/Tags/add.ctp:7
+#: View/Tags/edit.ctp:7
+msgid "Title"
+msgstr ""
+
+#: View/Posts/add.ctp:14
+#: View/Posts/edit.ctp:12
+msgid "Body"
+msgstr ""
+
+#: View/Posts/add.ctp:35
+msgid "Image"
+msgstr ""
+
+#: View/Posts/add.ctp:51
+msgid "Choice File"
+msgstr ""
+
+#: View/Posts/add.ctp:90
+#: View/Posts/edit.ctp:48
+msgid "Save Post"
+msgstr ""
+
+#: View/Posts/edit.ctp:39
+msgid "delete"
+msgstr ""
+
+#: View/Posts/index.ctp:5
+msgid "Blog Posts"
+msgstr ""
+
+#: View/Posts/index.ctp:58
+msgid "Enter the keyword"
+msgstr ""
+
+#: View/Posts/index.ctp:76
+msgid "Add Post"
+msgstr ""
+
+#: View/Posts/index.ctp:100
+msgid "the first Image the blog saved"
+msgstr ""
+
+#: View/Posts/index.ctp:104
+msgid "Image is not saved in the posts"
+msgstr ""
+
+#: View/Posts/view.ctp:18
+msgid "Created"
+msgstr ""
+
+#: View/Tags/add.ctp:10
+#: View/Tags/edit.ctp:10
+msgid "Save Tag"
+msgstr ""
+
+#: View/Tags/index.ctp:8
+msgid "Tags List"
+msgstr ""
+
+#: View/Tags/index.ctp:16
+msgid "Add Tag"
+msgstr ""
+
+#: View/Tags/index.ctp:25
+msgid "Tagname"
+msgstr ""
+
+#: View/Users/add.ctp:4
+#: View/Users/index.ctp:16
+msgid "Add User"
+msgstr ""
+
+#: View/Users/add.ctp:7
+#: View/Users/edit.ctp:7
+msgid "Username"
+msgstr ""
+
+#: View/Users/add.ctp:11
+#: View/Users/edit.ctp:11
+msgid "Password"
+msgstr ""
+
+#: View/Users/add.ctp:15
+#: View/Users/edit.ctp:15
+msgid "Group"
+msgstr ""
+
+#: View/Users/edit.ctp:4
+msgid "Edit User"
+msgstr ""
+
+#: View/Users/index.ctp:8
+msgid "Users List"
+msgstr ""
+
+#: View/Users/index.ctp:24
+msgid "id"
+msgstr ""
+
+#: View/Users/index.ctp:25
+msgid "username"
+msgstr ""
+
+#: View/Users/index.ctp:26
+msgid "group_id"
+msgstr ""
+
+#: View/Users/index.ctp:27
+msgid "created"
+msgstr ""
+
+#: View/Users/index.ctp:28
+msgid "modified"
+msgstr ""
+
+#: Model/Attachment.php:validation for field photo
+msgid "File is larger than the maximum filesize"
+msgstr ""
+
+#: Model/Attachment.php:validation for field photo
+msgid "File is not a jpeg, png, gif or pdf"
+msgstr ""
+
+#: Model/Attachment.php:validation for field photo
+msgid "File does not have a jpg, gif, png or pdf extensions"
+msgstr ""
+
+#: Model/Attachment.php:validation for field photo
+msgid "File was unsuccessfully written to the server"
+msgstr ""
+
+#: Model/Category.php:validation for field name
+#: Model/Post.php:validation for field body
+#: Model/Tag.php:validation for field title
+msgid "本文を入力してください。"
+msgstr ""
+
+#: Model/Group.php:validation for field name
+msgid "notBlank"
+msgstr ""
+
+#: Model/Post.php:validation for field title
+msgid "タイトルを入力してください。"
+msgstr ""
+
+#: Model/Post.php:validation for field title
+msgid "タイトルは30文字以内で入力してください。"
+msgstr ""
+
+#: Model/Post.php:validation for field body
+msgid "本文は1000文字以内で入力してください。"
+msgstr ""
+
+#: Model/Post.php:validation for field category_id
+msgid "カテゴリを選択してください。"
+msgstr ""
+
+#: Model/User.php:validation for field username
+msgid "ユーザー名を入力してください。"
+msgstr ""
+
+#: Model/User.php:validation for field username
+msgid "ユーザー名は15文字以内で入力してください。"
+msgstr ""
+
+#: Model/User.php:validation for field password
+msgid "パスワードを入力してください。"
+msgstr ""
+
+#: Model/User.php:validation for field password
+msgid "パスワードは6文字以上, 16文字以下で入力してください。"
+msgstr ""
+
+#: Model/User.php:validation for field password
+msgid "パスワードには文字と数字しか使用できません。"
+msgstr ""
+
+#: Model/User.php:validation for field group_id
+msgid "numeric"
+msgstr ""
+

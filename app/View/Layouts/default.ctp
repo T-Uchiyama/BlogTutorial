@@ -60,13 +60,17 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
 
         <div id="gnavi" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/posts">Post</a></li>
-                <li><a href="/users">User</a></li>
+                <li><a href="/posts"><?php echo __('Post') ?></a></li>
+                <li><a href="/users"><?php echo __('User') ?></a></li>
                 <?php
                     if (AuthComponent::user('group_id') == 1)
                     {
-                        echo('<li><a href="/categories">Category</a></li>');
-                        echo('<li><a href="/tags">Tag</a></li>');
+                        echo ('<li><a href="/categories">');
+                        echo __('Category');
+                        echo ('</a></li>');
+                        echo ('<li><a href="/tags">');
+                        echo __('Tag');
+                        echo ('</a></li>');
                     }
                 ?>
 
@@ -74,22 +78,28 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
                         if (AuthComponent::user('id') != null)
                         {
                             $username = AuthComponent::user('username');
-                            echo('<li><a href="#" class="dropdown-toggle"
-                                data-toggle="dropdown">ログイン名 : '
-                                    .$username. '<b class="caret"></b></a>');
-                            echo('<ul class="dropdown-menu">');
-                            echo('<li><center><a href="/users/logout">Logout</a></center></li>');
-                            echo('</ul>');
-                            echo('</li>');
+                            echo ('<li><a href="#" class="dropdown-toggle"
+                                data-toggle="dropdown">');
+                            echo __('LoginName : ');
+                            echo ($username. '<b class="caret"></b></a>');
+                            echo ('<ul class="dropdown-menu">');
+                            echo ('<li><center><a href="/users/logout">');
+                            echo __('Logout');
+                            echo ('</a></center></li>');
+                            echo ('</ul>');
+                            echo ('</li>');
                         } else {
                             $username = 'Guest';
-                            echo('<li><a href="#" class="dropdown-toggle"
-                                data-toggle="dropdown">ログイン名 : '
-                                    .$username. '<b class="caret"></b></a>');
-                            echo('<ul class="dropdown-menu">');
-                            echo('<li><center><a href="/users/login">Login</a></center></li>');
-                            echo('</ul>');
-                            echo('</li>');
+                            echo ('<li><a href="#" class="dropdown-toggle"
+                                data-toggle="dropdown">');
+                            echo __('LoginName : ');
+                            echo ($username. '<b class="caret"></b></a>');
+                            echo ('<ul class="dropdown-menu">');
+                            echo ('<li><center><a href="/users/login">');
+                            echo __('Login');
+                            echo ('</a></center></li>');
+                            echo ('</ul>');
+                            echo ('</li>');
                         }
                  	?>
             </ul>

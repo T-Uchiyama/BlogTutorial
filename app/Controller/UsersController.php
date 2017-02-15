@@ -82,7 +82,7 @@ class UsersController extends AppController
 	{
 		if ($this->Session->read('Auth.User'))
 		{
-			$this->Flash->set('You are logged in!');
+			$this->Flash->set(__('You are logged in!'));
 			$this->redirect('/', null, false);
 		}
 
@@ -98,7 +98,7 @@ class UsersController extends AppController
 
 	public function logout()
 	{
-		$this->Flash->set('Good-Bye');
+		$this->Flash->set(__('Good-Bye'));
 		$this->redirect($this->Auth->logout());
 	}
 

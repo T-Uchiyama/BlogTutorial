@@ -5,7 +5,7 @@
 
     <div class="heading">
         <center>
-            <h5><?php echo __('Users List'); ?></h5>
+            <h1><?php echo __('Users List'); ?></h1>
         </center>
     </div>
 <div class="main col-sm-9  col-md-10 ">
@@ -14,16 +14,18 @@
 	<?php
 		echo $this->Html->link(
 			__('Add User'),
-			array ('controller' => 'users', 'action' => 'add'));
+			array('controller' => 'users', 'action' => 'add'),
+            array('class' => 'btn btn-info', 'role' => 'button')
+        );
 	 ?>
 	<table>
 		<thead>
 			<tr>
-					<th><?php echo $this->Paginator->sort('id'); ?></th>
-					<th><?php echo $this->Paginator->sort('username'); ?></th>
-					<th><?php echo $this->Paginator->sort('group_id'); ?></th>
-					<th><?php echo $this->Paginator->sort('created'); ?></th>
-					<th><?php echo $this->Paginator->sort('modified'); ?></th>
+					<th><?php echo $this->Paginator->sort(__('id')); ?></th>
+					<th><?php echo $this->Paginator->sort(__('username')); ?></th>
+					<th><?php echo $this->Paginator->sort(__('group_id')); ?></th>
+					<th><?php echo $this->Paginator->sort(__('created')); ?></th>
+					<th><?php echo $this->Paginator->sort(__('modified')); ?></th>
 					<th class="actions"><?php echo __('Actions'); ?></th>
 			</tr>
 		</thead>
@@ -45,12 +47,14 @@
 					echo $this->Form->postLink(__('Delete'), array(
 						'action' => 'delete',
 						$user['User']['id']),
-						array('confirm' => __('Are you sure you want to delete # %s?', $user['User']['id'])));
+						array('class' => 'btn btn-warning', 'confirm' => __('Are you sure you want to delete # %s?', $user['User']['id'])));
 
 						echo('&nbsp&nbsp');
 
 						echo $this->Html->link(__('Edit'), array(
-							'action' => 'edit', $user['User']['id']));
+							'action' => 'edit', $user['User']['id']),
+                            array('class' => 'btn btn-primary', 'role' => 'button')
+                        );
 
 
 				endif;

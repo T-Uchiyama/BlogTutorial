@@ -5,7 +5,7 @@
 
     <div class="heading">
         <center>
-            <h5>Tags List</h5>
+            <h1><?php echo __('Tags List'); ?></h1>
         </center>
     </div>
 
@@ -14,14 +14,16 @@
     <?php
         echo $this->Html->link(
             __('Add Tag'),
-            array ('controller' => 'tags', 'action' => 'add'));
+            array('controller' => 'tags', 'action' => 'add'),
+            array('class' => 'btn btn-info', 'role' => 'button')
+        );
      ?>
 
     <table>
         <tr>
-        <th>Id</th>
-        <th>Tagname</th>
-        <th>Action</th>
+        <th><?php echo __('Id'); ?></th>
+        <th><?php echo __('Tagname'); ?></th>
+        <th><?php echo __('Actions') ?></th>
         </tr>
 
      <!-- ここから$tag配列をループさせ投稿記事の情報表示 -->
@@ -45,14 +47,15 @@
                     echo $this->Form->postLink(
             		    __('Delete'),
                         array('action' => 'delete', $tag['Tag']['id']),
-                        array('confirm' => __('Are you sure?'))
+                        array('class' => 'btn btn-warning', 'confirm' => __('Are you sure?'))
         	        );
         	     ?>
 
         	    <?php
                     echo $this->Html->link(
             		    __('Edit'),
-            		    array('action' => 'edit', $tag['Tag']['id'])
+            		    array('action' => 'edit', $tag['Tag']['id']),
+                        array('class' => 'btn btn-primary', 'role' => 'button')
                     );
         	    ?>
         	</td>
