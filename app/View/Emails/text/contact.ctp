@@ -15,5 +15,5 @@
  */
 ?>
 
-名前 : <?php echo $name; ?>
-内容 : <?php echo $body; ?>
+名前 : <?php echo $name . PHP_EOL; ?>
+内容 : <?php echo $body . PHP_EOL; ?>
