@@ -49,21 +49,14 @@ class AppController extends Controller
         'Session'
     );
 
+
     // 使用ヘルパーの指定
     public $helpers = array('Html', 'Form', 'Session');
 
-	// public function isAuthorized($user)
-    // {
-	// 	// Admin can access every action
-	// 	if (isset($user['role']) && $user['role'] === 'admin') {
-	// 		return true;
-	// 	}
-	// 	// デフォルトは拒否
-	// 	return false;
-	// }
-
     public function beforeFilter()
     {
+
+
         // AuthComponentの設定
         $this->Auth->loginAction = array(
             'controller' => 'users',
@@ -78,6 +71,9 @@ class AppController extends Controller
             'controller' => 'users',
             'action' => 'index',
         );
+
+        $this->Auth->loginError = "ログインに失敗しました。";
+        $this->Auth->authError = "権限が付与されておりません。";
 
         $this->Auth->allow('display');
     }

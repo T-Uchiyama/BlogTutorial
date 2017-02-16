@@ -110,6 +110,10 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
         </div>
 
 		<div id="content">
+            <?php
+                echo $this->Session->flash();
+                echo $this->Session->flash('auth');
+            ?>
 			<?php echo $this->Flash->render(); ?>
             <?php echo $this->fetch('content'); ?>
 		</div>
@@ -133,7 +137,6 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
 
 <script type="text/javascript">
 
-    /* TODO window.resizeをContainerに実施してみたが画面サイズが半分で固定されてしまっている */
     $(document).ready(function ()
     {
         width = $(window).width();
@@ -187,5 +190,37 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
                 alert('Ajax通信失敗');
             }
         });
+    });
+
+    $('#contact_form').on('click', '#send_Button', function()
+    {
+        var sender = $('#mail_name').val();
+        var content = $('#mail_content').val();
+
+        if (sender == '' || content == '')
+        {
+            alert('名前か本文に不備が存在します。');
+            return;
+        }
+
+        alert('メール送信を実施します。');
+
+        $.ajax({
+            url: '/posts/send',
+            type: 'POST',
+            dataType: 'json',
+            data: {'name': sender, 'mailBody' : content},
+        })
+        .done(function(e) {
+            alert(e);
+        })
+        .fail(function(e) {
+            alert(e);
+        })
+        .always(function(e) {
+            console.log("Ajax is finished");
+        });
+
+
     });
 </script>

@@ -122,10 +122,4 @@
         {
 			return $this->field('id', array('id' => $post, 'user_id' => $user)) !== false;
 		}
-
-        public function beforeSave($data = array())
-        {
-            debug($this->data);
-            // exit;
-        }
 	}

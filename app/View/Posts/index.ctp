@@ -149,6 +149,7 @@
         <div class="sidebar col-sm-3 col-md-2">
             <?php
                 echo $this->element('zipArea');
+                echo $this->element('mail');
              ?>
         </div>
     </div>

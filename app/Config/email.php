@@ -37,10 +37,30 @@
 class EmailConfig {
 
 	public $default = array(
+		/*
+		*  Smtp:SMTPサーバを使う場合
+		*  Mail:PHPのmail関数を使う場合
+		*/
 		'transport' => 'Mail',
 		'from' => 'you@localhost',
 		//'charset' => 'utf-8',
 		//'headerCharset' => 'utf-8',
+	);
+
+	public $contact = array(
+		/*
+		*  Smtp:SMTPサーバを使う場合
+		*  Mail:PHPのmail関数を使う場合
+		*/
+		'transport' => 'Smtp',
+		'from' => 't_uchiyama@funteam.co.jp',
+		'to' => 't_uchiyama@funteam.co.jp',
+		'subject' => 'ご用件ご要望',
+		'sendAs' => 'Sntp',
+		'template' => 'contact', // テンプレートファイル
+		'additionalParameters' => '-f t_uchiyama@funteam.co.jp',
+		'charset' => 'utf-8',
+		'headerCharset' => 'utf-8',
 	);
 
 	public $smtp = array(
@@ -53,8 +73,8 @@ class EmailConfig {
 		'password' => 'secret',
 		'client' => null,
 		'log' => false,
-		//'charset' => 'utf-8',
-		//'headerCharset' => 'utf-8',
+		'charset' => 'utf-8',
+		'headerCharset' => 'utf-8',
 	);
 
 	public $fast = array(

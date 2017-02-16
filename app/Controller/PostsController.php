@@ -6,6 +6,7 @@ class PostsController extends AppController
     public $components = array('Flash', 'Search.Prg');
     public $presetVars = true;
 
+    public $uses = array('Post');
     // ページネーション用
     // index.ctpに8件かつID順に表示するように設定
     public $paginate = array(
@@ -19,7 +20,7 @@ class PostsController extends AppController
     {
         parent::beforeFilter();
         // どの権限であってもindexと記事の閲覧は可能に
-        $this->Auth->allow('index', 'view');
+        $this->Auth->allow('index', 'view', 'send');
     }
 
     public function index()
@@ -188,5 +189,43 @@ class PostsController extends AppController
     {
         echo $this->Post->Attachment->delete($post['data']['id'], true);
         exit();
+    }
+
+    public function send()
+    {
+        $this->autoRender = false;
+        if ($this->request->is('post'))
+        {
+            // 基本の宣言方法
+            // $Email = new CakeEmail();
+            // $Email->config('default'); // /View/Emails/text配下で設定したものの読み込み
+
+            // コンストラクタによる指定
+            $Email = new CakeEmail('contact');
+            try {
+                $Email->config(array(
+                        'viewVars' => array(
+                            'name' => $this->request->data['name'],
+                            'body' => $this->request->data['mailBody'],
+                        ),
+                    )
+                );
+                $responseText = '';
+                /*ここまでは動いている。*/
+                if ($Email->send())
+                {
+                    // メール送信に成功した場合はこの中で処理の実施
+                    $responseText = 'Send Email is Successed';
+                    return json_encode($responseText);
+                }
+                $responseText = 'Send Email is Failed';
+                return json_encode($responseText);
+
+            } catch (Exception $e) {
+                $responseText = $e->getMessage();
+                return json_encode($responseText);
+            }
+
+        }
     }
 }
