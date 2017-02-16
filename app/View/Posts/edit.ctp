@@ -6,25 +6,29 @@
     echo $this->Form->create('Post', array('type' => 'file'));
     echo $this->Form->input('title', array(
             'label' => __('Title'),
+            'required' => false,
         )
     );
     echo $this->Form->input('body', array(
             'rows' => 3,
             'label' => __('Body'),
+            'required' => false,
         )
     );
     echo $this->Form->input('id', array('type' => 'hidden'));
     echo $this->Form->input('category_id', array(
             'label' => __('Category'),
             'type' => 'select',
-            'options' => $list
+            'options' => $list,
+            'required' => false,
             )
     );
-    echo $this->Form->input('Tag', array(
+    echo $this->Form->input('Post.Tag', array(
             'label' => __('Tag'),
             'type' => 'select',
             'multiple' => 'checkbox',
-            'options' => $tag
+            'options' => $tag,
+            'required' => false,
             )
     );
     foreach ($posts['Attachment'] as $attachment):

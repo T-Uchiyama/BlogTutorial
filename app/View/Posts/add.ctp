@@ -6,11 +6,13 @@
     echo $this->Form->create('Post', array('type' => 'file'));
     echo $this->Form->input('title', array(
             'label' => __('Title'),
+            'required' => false,
         )
     );
     echo $this->Form->input('body', array(
             'rows' => 3,
             'label' => __('Body'),
+            'required' => false,
         )
     );
     echo $this->Form->input('category_id', array(
@@ -18,6 +20,7 @@
             'type' => 'select',
             'options' => $list,
             'empty' => true,
+            'required' => false,
             )
     );
     echo $this->Form->input('Post.Tag', array(
@@ -25,6 +28,7 @@
             'type' => 'select',
             'multiple' => 'checkbox',
             'options' => $tag,
+            'required' => false,
         )
     );
     if(!empty ($tagerror))
