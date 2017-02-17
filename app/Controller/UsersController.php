@@ -116,19 +116,21 @@ class UsersController extends AppController
 		if ($this->request->is(array('post', 'put')))
 		{
 			$requestData = $this->request->data;
+			
 			// まずは現在使用されているパスワードがDBに保存されているものと合致しているかチェック
-			if ($requestData['User']['prePassword'] === $passwordList[$id])
+			if (AuthComponent::password($requestData['User']['prePassword']) != $passwordList[$id])
 			{
 				$this->Flash->error(__('Using password is a mistake.'));
 				$this->redirect(array('action' => 'password/' . $id));
 
-				// 次は新規パスワードと確認用パスワードが合致しているかチェック
-				if ($requestData['User']['newPassword'] === $requestData['User']['passwordConfirmation'])
-				{
-						$this->Flash->error(__('New password is diffrent from the passwordConfirmation.'));
-						$this->redirect(array('action' => 'password/' . $id));
+			}
 
-				}
+			// 次は新規パスワードと確認用パスワードが合致しているかチェック
+			if ($requestData['User']['newPassword'] != $requestData['User']['passwordConfirmation'])
+			{
+					$this->Flash->error(__('New password is diffrent from the passwordConfirmation.'));
+					$this->redirect(array('action' => 'password/' . $id));
+
 			}
 			// パスワードチェックを抜けた後には新規パスワードをDB保存用にリネーム
 			$requestData['User']['password'] = $requestData['User']['newPassword'];
