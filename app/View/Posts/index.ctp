@@ -90,29 +90,42 @@
                     echo ('<div class="col-sm-6 col-md-3">');
                     echo ('<div class="blog_article">');
                     echo ('<article id="area_article">');
+                    echo ('<a><h1>'. $posts[$idx]['Post']['title'] .'</h1></a>');
+
+                    echo ('<ul>');
+                    echo ('<li class="blog_date" style="float:left">');
+                    echo ('<span class="glyphicon glyphicon-calendar"> : </span>');
+                    echo ('<time> '. $posts[$idx]['User']['created'] .'</time>');
+                    echo ('</li>');
+
+                    echo ('<li class="blog_author" style="float:left">');
+                    echo ('<span class="glyphicon glyphicon-pencil"> : </span>');
+                    echo ('<h6> '. $posts[$idx]['User']['username'] .'</h6>');
+                    echo ('</li>');
+                    echo ('</ul>');
                     echo ('<a class="post_link" href="/posts/view/'.$posts[$idx]['Post']['id'].'">');
                     echo ('<figure class="post_img">');
                     if (isset($posts[$idx]['Attachment'][0]))
                     {
-                        echo ('<img width="300" height="170"
+                        echo ('<img width="350" height="250"
                             src="/files/attachment/photo/' . $posts[$idx]['Attachment'][0]['dir'] . '/' .$posts[$idx]['Attachment'][0]['photo'].'"
                                 alt="');
                         echo __('the first Image the blog saved');
                         echo ('"/>');
                     } else {
-                        echo ('<img width="300" height="170" src="" alt="');
+                        echo ('<img width="350" height="250" src="" alt="');
                         echo __('Image is not saved in the posts');
                         echo ('"/>');
                     }
 
-                    echo ('<p class="label_'.$posts[$idx]['Category']['name'].'">'.$posts[$idx]['Category']['name'].'</p>');
+                    echo ('<p class="label_'. $posts[$idx]['Category']['name'] .'">'. $posts[$idx]['Category']['name'].'</p>');
                     echo ('</figure>');
-                    echo ('<time>'.$posts[$idx]['Post']['created'].'</time>');
-                    echo ('<div class="post_title">');
-                    echo ('<h3>'.$posts[$idx]['Post']['title'].'</h3>');
-                    echo ('<h5>Author : '.$posts[$idx]['User']['username'].'</h5>');
-
+                    echo ('<p class="send_view">');
+                    echo ('<a href="/posts/view/'.$posts[$idx]['Post']['id'].'">本文を読む');
+                    echo ('<span class="glyphicon glyphicon-chevron-right"></span>');
                     echo ('</a>');
+                    echo ('</p>');
+                    echo ('<div class="post_title">');
 
                     if ($posts[$idx]['Post']['user_id'] == AuthComponent::user('id')
                         || AuthComponent::user('group_id') == 1):

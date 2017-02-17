@@ -4,7 +4,7 @@
 
 <div id="contact_form">
     <fieldset>
-        <legend><?php echo __('Contact Form'); ?></legend>
+        <legend class="form_info"><?php echo __('Contact Form'); ?></legend>
 <?php
     echo $this->Form->input('name', array(
         'label' => '名前',

@@ -7,16 +7,28 @@
 </h1>
 
 <p class="text_info">
-    <small>
+    <small class="text_info_category">
         <?php echo __('Category'); ?>
         : <?php echo $post['Category']['name']?>
     </small>
 </p>
 
 <p class="text_info">
-    <small>
-        <?php echo __('Created'); ?>
-        : <?php echo $post['Post']['created']?>
+    <small class="text_info_created">
+        <!-- <?php echo __('Created'); ?> -->
+        <?php echo ('<span class="glyphicon glyphicon-calendar"></span>'); ?>
+        : <?php
+            echo $post['Post']['created'];
+        ?>
+    </small>
+
+    <small class="text_info_tag">
+        <!-- <?php echo __('Tag'); ?> -->
+        <?php echo ('<span class="glyphicon glyphicon-tags"></span>'); ?>
+        : <?php foreach($post['Tag'] as $tag): ?>
+          <?php echo $tag['title']; ?>
+          <?php endforeach; ?>
+
     </small>
 </p>
 
@@ -66,15 +78,6 @@
     <small>
 </p>
 
-<p class="text_info">
-    <small>
-        <?php echo __('Tag'); ?>
-        : <?php foreach($post['Tag'] as $tag): ?>
-          <?php echo $tag['title']; ?>
-          <?php endforeach; ?>
-
-    </small>
-</p>
 <script>
 
    /*

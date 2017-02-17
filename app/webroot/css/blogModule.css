@@ -61,6 +61,64 @@ body
 	padding-top: 25px;
 }
 
+a
+{
+    text-decoration: none;
+}
+
+article h1
+{
+    font-weight: bold;
+    border-bottom: 1px solid #0f2525;
+    border-left: 10px solid #0f2525;
+    text-align: left;
+    background-color: #fff;
+    font-size: 25px;
+    color: #000;
+    margin-bottom: 10px;
+    padding: 5px 0px 5px 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    clear: both;
+}
+
+article h6
+{
+    display: inline;
+}
+
+.blog_author
+{
+  display:inline-block;
+  vertical-align: middle;
+  margin-bottom: 10px;
+}
+
+.blog_date
+{
+  display:inline-block;
+  vertical-align: middle;
+  margin-bottom: 10px;
+}
+
+.send_view
+{
+    font-size: 16px;
+    text-align: right;
+}
+
+.form_info
+{
+    /*text-shadow:1px 1px 0 rgba(255,255,255,1);*/
+    box-shadow:	0 1px 2px 0 rgba(0,0,0,0.2),
+                20px 0 0 0 #00a8f0,
+                -20px 0 0 0 #00a8f0;
+    transform: rotate(-1deg) skew(-1deg);
+    text-align: center;
+    background-color: #393737;
+    color: #ffffff;
+}
+
 a.btn.btn-info
 {
     margin: 10px;
@@ -135,13 +193,31 @@ a.btn.btn-info
 .text_main
 {
     line-height: 180%;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .text_info
 {
     line-height: 180%;
-    font-size: 12px;
+    font-size: 14px;
+}
+
+.text_info_category
+{
+  display:inline-block;
+  vertical-align: middle;
+}
+
+.text_info_created
+{
+  display:inline-block;
+  vertical-align: middle;
+}
+
+.text_info_tag
+{
+  display: inline;
+  vertical-align: middle;
 }
 
 .heading::after
@@ -165,15 +241,15 @@ a.btn.btn-info
 }
 .blog_article
 {
-    width: 307px;
-    height: 350px;
+    width: 357px;
+    height: 450px;
     padding: 5px 10px;
 }
 
 #area_article
 {
-    width: 300px;
-    height: 340px;
+    width: 350px;
+    height: 440px;
     background-color: #ffffff;
     text-decoration: none;
 
@@ -186,57 +262,57 @@ a.post_link
 
 .label_Novel
 {
-    width: 300px;
-    height: 20px;
-    font-size: 12px;
-    background-color: #99ffcc;
+    width: 350px;
+    height: 25px;
+    font-size: 14px;
+    background-color: #b8f7d8;
     border-left: 8px solid #2ad2ac;
     text-align: center;
 }
 
 .label_Music
 {
-    width: 300px;
-    height: 20px;
-    font-size: 12px;
-    background-color: #99ffff;
+    width: 350px;
+    height: 25px;
+    font-size: 14px;
+    background-color: #c6ffff;
     border-left: 8px solid #2ab4d2;
     text-align: center;
 }
 
 .label_Trip
 {
-    width: 300px;
-    height: 20px;
-    font-size: 12px;
-    background-color: #ff99ff;
+    width: 350px;
+    height: 25px;
+    font-size: 14px;
+    background-color: #ffd0ff;
     border-left: 8px solid #c92ad2;
     text-align: center;
 }
 
 .label_Hobby
 {
-    width: 300px;
-    height: 20px;
-    font-size: 12px;
-    background-color: #ff9999;
+    width: 350px;
+    height: 25px;
+    font-size: 14px;
+    background-color: #f7cfcf;
     border-left: 8px solid #d22a2a;
     text-align: center;
 }
 
 .label_Computers
 {
-    width: 300px;
-    height: 20px;
-    font-size: 12px;
-    background-color: #ffff99;
+    width: 350px;
+    height: 25px;
+    font-size: 14px;
+    background-color: #fafab8;
     border-left: 8px solid #c8d22a;
     text-align: center;
 }
 
 .post_title
 {
-    width: 300px;
+    width: 350px;
     height: 40px;
     font-weight: bold;
     font-size: 14px;

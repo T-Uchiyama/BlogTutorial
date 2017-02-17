@@ -187,6 +187,10 @@ class PostsController extends AppController
 
     public function imageDelete()
     {
+        /*
+         * TODO : 現状だと画面上からしか画像を消せていないのでDB側からも削除
+         *        するようなアプローチを考える。
+         */
         echo $this->Post->Attachment->delete($post['data']['id'], true);
         exit();
     }

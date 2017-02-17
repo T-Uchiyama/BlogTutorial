@@ -3,6 +3,8 @@
 <div class="box_indent"></div>
 
 <div id="zipCord">
+    <fieldset>
+        <legend class="form_info"><?php echo __('Postal Form'); ?></legend>
 <?php
     // 郵便番号検索用
     echo $this->Form->input('zipCord', array(
@@ -43,5 +45,5 @@
         )
     );
 ?>
-
+    </fieldset>
 </div>
