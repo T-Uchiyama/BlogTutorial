@@ -75,6 +75,9 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
                 ?>
 
                 <?php
+                        /*
+                         * TODO : dropdown-menuの表示でdividerか何かを後に追加あるかも
+                         */
                         if (AuthComponent::user('id') != null)
                         {
                             $username = AuthComponent::user('username');
@@ -86,6 +89,10 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
                             echo ('<li><center><a href="/users/logout">');
                             echo __('Logout');
                             echo ('</a></center></li>');
+                            echo ('<li><center><a href="/users/password/' . AuthComponent::user('id') .'"> ');
+                            echo __('Password');
+                            echo ('</a></center></li>');
+                            echo ('</div>');
                             echo ('</ul>');
                             echo ('</li>');
                         } else {
@@ -101,6 +108,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
                             echo ('</ul>');
                             echo ('</li>');
                         }
+                        echo ('</div>')
                  	?>
             </ul>
         </div>

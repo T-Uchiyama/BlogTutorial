@@ -5,6 +5,8 @@ class UsersController extends AppController
 {
 	public $components = array('Paginator');
 
+	public $uses = array('User');
+
 	public function index()
 	{
 		$this->User->recursive = 0;
@@ -19,6 +21,22 @@ class UsersController extends AppController
 		}
 		$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
 		$this->set('user', $this->User->find('first', $options));
+	}
+
+	/*
+	 * $idをキーにパスワードをDBから取得しIDとPasswordの配列にし
+	 * 取得
+	 */
+	public function getPasswordhash($id)
+	{
+		$passwordList = $this->User->find('list', array(
+				'conditions' => array(
+					'id' => $id,
+				),
+				'fields' => array('password'),
+			)
+		);
+		return $passwordList;
 	}
 
 	public function add()
@@ -78,6 +96,58 @@ class UsersController extends AppController
 		return $this->redirect(array('action' => 'index'));
 	}
 
+	public function password($id = null)
+	{
+		/*
+		 *	TODO : password内での一連の流れ
+		 * 	1. 現在使用しているパスワードが正確なものかチェック
+		 *  2. 新規パスワードと確認用のパスワードの文字列が同じかどうかをチェック
+		 *  3. edit関数を呼び出しDBに上書き
+		 */
+
+		//  var_dump($this->request->data);
+		//  exit;
+		$this->User->id = $id;
+		if (!$this->User->exists($id))
+		{
+			throw new NotFoundException(__('Invalid user'));
+		}
+		$passwordList = $this->getPasswordhash($id);
+		if ($this->request->is(array('post', 'put')))
+		{
+			$requestData = $this->request->data;
+			// まずは現在使用されているパスワードがDBに保存されているものと合致しているかチェック
+			if ($requestData['User']['prePassword'] === $passwordList[$id])
+			{
+				$this->Flash->error(__('Using password is a mistake.'));
+				$this->redirect(array('action' => 'password/' . $id));
+
+				// 次は新規パスワードと確認用パスワードが合致しているかチェック
+				if ($requestData['User']['newPassword'] === $requestData['User']['passwordConfirmation'])
+				{
+						$this->Flash->error(__('New password is diffrent from the passwordConfirmation.'));
+						$this->redirect(array('action' => 'password/' . $id));
+
+				}
+			}
+			// パスワードチェックを抜けた後には新規パスワードをDB保存用にリネーム
+			$requestData['User']['password'] = $requestData['User']['newPassword'];
+			if ($this->User->save($requestData))
+			{
+				$this->Flash->success(__('The password has been changed.'));
+				return $this->redirect(array('action' => 'index'));
+			} else {
+				$this->Flash->error(__('The password could not be updated. Please, try again.'));
+			}
+		} else {
+			$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
+			$this->request->data = $this->User->find('first', $options);
+		}
+		$groups = $this->User->Group->find('list');
+		$this->set(compact('groups'));
+
+	}
+
 	public function login()
 	{
 		if ($this->Session->read('Auth.User'))
@@ -132,6 +202,7 @@ class UsersController extends AppController
 	    $this->Acl->allow($group, 'controllers/Zips');
 	    $this->Acl->allow($group, 'controllers/Users/index');
 	    $this->Acl->allow($group, 'controllers/Users/edit');
+		$this->Acl->allow($group, 'controllers/Users/password');
 		echo 'all done';
 		exit;
 	}

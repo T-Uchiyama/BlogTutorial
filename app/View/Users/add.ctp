@@ -1,4 +1,4 @@
-
+<!-- File: /app/View/Users/add.ctp -->
 <?php echo $this->Form->create('User'); ?>
 	<fieldset>
 		<legend><?php echo __('Add User'); ?></legend>

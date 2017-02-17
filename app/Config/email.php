@@ -55,6 +55,14 @@ class EmailConfig {
 		'transport' => 'Smtp',
 		'from' => 't_uchiyama@funteam.co.jp',
 		'to' => 't_uchiyama@funteam.co.jp',
+		/*
+		*	MEMO
+		*	portは25ではなく587を選択
+		*	→25はただ送信だけを実施するため。
+		*	usernameとpasswordを設定しないと迷惑メールとして扱われる。
+		* 	sendMailはバグだらけなのでPostFixを普通は使用する。
+		*/
+		'port' => 587,
 		'subject' => 'ご用件ご要望',
 		'sendAs' => 'Sntp',
 		'template' => 'contact', // テンプレートファイル
