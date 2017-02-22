@@ -60,8 +60,10 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
 
         <div id="gnavi" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/posts"><?php echo __('Post') ?></a></li>
-                <li><a href="/users"><?php echo __('User') ?></a></li>
+                <li><a href="/posts"><?php echo __('Post'); ?></a></li>
+                <li><a href="/users"><?php echo __('User'); ?></a></li>
+
+
                 <?php
                     if (AuthComponent::user('group_id') == 1)
                     {
@@ -73,6 +75,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
                         echo ('</a></li>');
                     }
                 ?>
+                <!-- 以下に英語用のローカラゼーション対応URLの追加 -->
+                <li><a href=""><?php echo __('English'); ?></a></li>
 
                 <?php
                         /*
@@ -92,7 +96,6 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
                             echo ('<li><center><a href="/users/password/' . AuthComponent::user('id') .'"> ');
                             echo __('Password');
                             echo ('</a></center></li>');
-                            echo ('</div>');
                             echo ('</ul>');
                             echo ('</li>');
                         } else {
@@ -108,7 +111,6 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
                             echo ('</ul>');
                             echo ('</li>');
                         }
-                        echo ('</div>')
                  	?>
             </ul>
         </div>
@@ -127,15 +129,22 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
 		</div>
 
 		<div id="footer">
+            <ul class="footer_list">
+                <li><a href="/posts"><?php echo __('Home'); ?></a></li>
+                <!-- 以下に英語用のローカラゼーション対応URLの追加 -->
+                <li><a href=""><?php echo __('English'); ?></a></li>
+            </ul>
+
+            <p>
+                <?php echo $cakeVersion; ?>
+
 			<?php echo $this->Html->link(
 					$this->Html->image('cake.power.gif', array('alt' => $cakeDescription, 'border' => '0')),
 					'http://www.cakephp.org/',
 					array('target' => '_blank', 'escape' => false, 'id' => 'cake-powered')
 				);
 			?>
-			<p>
-				<?php echo $cakeVersion; ?>
-			</p>
+            </p>
 		</div>
 	</div>
 
@@ -159,6 +168,10 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
         height = $(window).height();
         $("#container").css("width", width + "px");
         $("#container").css("height", height + "px");
+        if ($('.main_wrap').width() > 900 && $('#contact_form').hasClass('fixed'))
+        {
+            $('#contact_form').removeClass('fixed');
+        }
     });
 
     $('#zipCord').on('click', '#search_Button', function ()
@@ -166,13 +179,20 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
         // テキストエリアから郵便番号を取得
         var zipNum =  $('#zipText').val();
 
+        // ZipNumが未記入の場合はその時点でJQuery終了。
+        if (zipNum == '')
+        {
+            alert('郵便番号が記載されておりません。');
+            return;
+        }
+
         // 全角数字を半角数字に変換
         zipNum = zipNum.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(s)
         {
           return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
         });
 
-        if (!(zipNum.length > 6 || zipNum.length < 8))
+        if (zipNum.length < 6 || zipNum.length > 8)
         {
             alert('郵便番号は７桁で入力してください。');
             return;
@@ -231,4 +251,30 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
 
 
     });
+
+    var nav = $('#contact_form');
+    offset = nav.offset();
+
+    var sizeCheck = function()
+    {
+        var size = $('.main_wrap').width();
+        // console.log(size);
+        return size;
+    };
+
+    $(window).scroll(function ()
+    {
+        // TODO:特殊な条件下でまだfixedが削除されていない判例あり。
+        var size = sizeCheck();
+        if(size > 900)
+        {
+            if($(window).scrollTop() > offset.top)
+            {
+                nav.addClass('fixed');
+            } else {
+                nav.removeClass('fixed');
+            }
+        }
+    });
+
 </script>

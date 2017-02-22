@@ -7,67 +7,69 @@
 </div>
 
 <div class="main_wrap">
-    <div class="row">
-        <div class="clearfix"></div>
+    <?php
+        echo $this->Form->Create('Post', array(
+                'url' => array_merge(array(
+                    'action' => 'index'
+                    ), $this->params['pass']
+                )
+            )
+        );
+    ?>
+    <fieldset>
+        <div id="searchFuncPush">
+            <legend><?php echo __('Search'); ?></legend>
+        </div>
 
-        <div class="main col-sm-9  col-md-10">
-
+        <div id="searchLink">
+            <!-- Category  -->
             <?php
-                echo $this->Form->Create('Post', array(
-                        'url' => array_merge(array(
-                            'action' => 'index'
-                            ), $this->params['pass']
-                        )
-                    )
-                );
-            ?>
-            <fieldset>
-                <div id="searchFuncPush">
-                    <legend><?php echo __('Search'); ?></legend>
-                </div>
+                echo $this->Form->input('category_id', array(
+                'label' => __('Category'),
+                'id' => 'search_category',
+                'class' => 'category',
+                'empty' => true,
+                )
+            );
+        ?>
+        <!-- Tag  -->
+        <?php
+            echo $this->Form->input('tag_id', array(
+                'label' => __('Tag'),
+                'type' => 'select',
+                'multiple' => 'checkbox',
+                'options' => $tags,
+                )
+            );
+        ?>
+        <!-- Title  -->
+        <?php
+            echo $this->Form->input('title', array(
+                'label' => __('Title'),
+                'type' => 'text',
+                'id' => 'search_title',
+                'class' => 'title',
+                'empty' => true,
+                'placeholder' => __('Enter the keyword'),
+                )
+            );
+        ?>
 
-                <div id="searchLink">
-                    <!-- Category  -->
-                    <?php
-                        echo $this->Form->input('category_id', array(
-                        'label' => __('Category'),
-                        'id' => 'search_category',
-                        'class' => 'category',
-                        'empty' => true,
-                        )
-                    );
-                ?>
-                <!-- Tag  -->
-                <?php
-                    echo $this->Form->input('tag_id', array(
-                        'label' => __('Tag'),
-                        'type' => 'select',
-                        'multiple' => 'checkbox',
-                        'options' => $tags,
-                        )
-                    );
-                ?>
-                <!-- Title  -->
-                <?php
-                    echo $this->Form->input('title', array(
-                        'label' => __('Title'),
-                        'type' => 'text',
-                        'id' => 'search_title',
-                        'class' => 'title',
-                        'empty' => true,
-                        'placeholder' => __('Enter the keyword'),
-                        )
-                    );
-                ?>
+        <?php
+            echo $this->Form->Submit(__('Search'));
+        ?>
+        </div>
+    <?php
+        echo $this->Form->End();
+    ?>
+    </fieldset>
+    <!-- <div class="row"> -->
 
-                <?php
-                    echo $this->Form->Submit(__('Search'));
-                ?>
-                </div>
-            <?php
-                echo $this->Form->End();
-            ?>
-            </fieldset>
+        <!-- <div class="clearfix"></div> -->
+
+        <!-- <div class="col-sm-9  col-md-10"> -->
+        <div class="main">
+
 
 
 
@@ -83,19 +85,22 @@
             <?php
                 for ($idx = 0; $idx < count($posts); $idx++)
                 {
-                    if ($idx % 4 == 0)
-                    {
-                        echo '<div class="row">';
-                    }
-                    echo ('<div class="col-sm-6 col-md-3">');
-                    echo ('<div class="blog_article">');
+                    // if ($idx % 4 == 0)
+                    // {
+                    //     echo '<div class="row">';
+                    // }
+                    // echo ('<div class="col-sm-6 col-md-3">');
                     echo ('<article id="area_article">');
-                    echo ('<a><h1>'. $posts[$idx]['Post']['title'] .'</h1></a>');
-
-                    echo ('<ul>');
+                    echo ('<h1><a href="/posts/view/'.$posts[$idx]['Post']['id'].'">'. $posts[$idx]['Post']['title'] .'</a></h1>');
+                    echo ('<ul class="post_info">');
                     echo ('<li class="blog_date" style="float:left">');
                     echo ('<span class="glyphicon glyphicon-calendar"> : </span>');
-                    echo ('<time> '. $posts[$idx]['User']['created'] .'</time>');
+                    echo ('<time> '. $this->Time->format($posts[$idx]['User']['created'], '%Y-%m-%d') .'</time>');
+                    echo ('</li>');
+
+                    echo ('<li class="blog_category" style="float:left">');
+                    echo ('<span class="glyphicon glyphicon-file"> : </span>');
+                    echo ('<h6> '. $posts[$idx]['Category']['name'] .'</h6>');
                     echo ('</li>');
 
                     echo ('<li class="blog_author" style="float:left">');
@@ -104,22 +109,26 @@
                     echo ('</li>');
                     echo ('</ul>');
                     echo ('<a class="post_link" href="/posts/view/'.$posts[$idx]['Post']['id'].'">');
-                    echo ('<figure class="post_img">');
+                    // if (isset($posts[$idx]['Attachment'][0]))
+                    // {
+                    //     echo ('<img
+                    //         src="/files/attachment/photo/' . $posts[$idx]['Attachment'][0]['dir'] . '/' .$posts[$idx]['Attachment'][0]['photo'].'"
+                    //             alt="');
+                    //     echo __('the first Image the blog saved');
+                    //     echo ('"/>');
+                    // } else {
+                    //     echo ('<img width="330" height="250" src="" alt="');
+                    //     echo __('Image is not saved in the posts');
+                    //     echo ('"/>');
+                    // }
                     if (isset($posts[$idx]['Attachment'][0]))
                     {
-                        echo ('<img width="350" height="250"
+                        echo ('<p><img
                             src="/files/attachment/photo/' . $posts[$idx]['Attachment'][0]['dir'] . '/' .$posts[$idx]['Attachment'][0]['photo'].'"
                                 alt="');
                         echo __('the first Image the blog saved');
-                        echo ('"/>');
-                    } else {
-                        echo ('<img width="350" height="250" src="" alt="');
-                        echo __('Image is not saved in the posts');
-                        echo ('"/>');
+                        echo ('"/></p>');
                     }
-
-                    echo ('<p class="label_'. $posts[$idx]['Category']['name'] .'">'. $posts[$idx]['Category']['name'].'</p>');
-                    echo ('</figure>');
                     echo ('<p class="send_view">');
                     echo ('<a href="/posts/view/'.$posts[$idx]['Post']['id'].'">本文を読む');
                     echo ('<span class="glyphicon glyphicon-chevron-right"></span>');
@@ -142,30 +151,32 @@
                             array('class' => 'btn btn-primary', 'role' => 'button')
                         );
                     endif;
-                    echo ('</div>');
-                    echo ('</div>');
-                    echo ('<div class="box_indent"></div>');
+                    echo ('<!-- post_title -->');
                     echo ('</div>');
 
                     echo ('</article>');
-
-
-                    if ($idx % 4 == 3 || $idx == count($posts) -1)
-                    {
-                        echo ('</div>');
-                    }
+                    // echo ('<!-- column -->');
+                    // echo ('</div>');
+                    //
+                    //
+                    // if ($idx % 4 == 3 || $idx == count($posts) -1)
+                    // {
+                    //     // Row
+                    //     echo ('</div>');
+                    // }
                 }
 
             ?>
         </div>
 
-        <div class="sidebar col-sm-3 col-md-2">
+        <!-- <div class="col-sm-3 col-md-2"> -->
+        <div class="side">
             <?php
                 echo $this->element('zipArea');
                 echo $this->element('mail');
              ?>
         </div>
-    </div>
+    <!-- </div> -->
 </div>
 
 <div class="paging">

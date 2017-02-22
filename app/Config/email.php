@@ -62,7 +62,7 @@ class EmailConfig {
 		*	usernameとpasswordを設定しないと迷惑メールとして扱われる。
 		* 	sendMailはバグだらけなのでPostFixを普通は使用する。
 		*/
-		'port' => 587,
+		'port' => 25,
 		'subject' => 'ご用件ご要望',
 		'sendAs' => 'Sntp',
 		'template' => 'contact', // テンプレートファイル

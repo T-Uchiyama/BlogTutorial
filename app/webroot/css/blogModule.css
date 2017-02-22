@@ -3,6 +3,7 @@
 #container
 {
     z-index: 0;
+
 }
 
 #back-curtain
@@ -87,14 +88,21 @@ article h6
     display: inline;
 }
 
-.blog_author
+.blog_date
 {
   display:inline-block;
   vertical-align: middle;
   margin-bottom: 10px;
 }
 
-.blog_date
+.blog_category
+{
+  display:inline-block;
+  vertical-align: middle;
+  margin-bottom: 10px;
+}
+
+.blog_author
 {
   display:inline-block;
   vertical-align: middle;
@@ -126,7 +134,9 @@ a.btn.btn-info
 
 .main_wrap
 {
-    background-color: #f5f5f5;
+    max-width: 1200px;
+    margin: 0 auto;
+    /*background-color: #f5f5f5;*/
     padding: 10px;
 }
 
@@ -174,7 +184,6 @@ a.btn.btn-info
     color: #000;
     margin-bottom: 10px;
     padding: 4px 4px 4px 30px;
-    width: 1786px;
 }
 
 .heading_view
@@ -187,7 +196,6 @@ a.btn.btn-info
     color: #000;
     margin-bottom: 10px;
     padding: 4px 4px 4px 30px;
-    width: 1786px;
 }
 
 .text_main
@@ -216,7 +224,7 @@ a.btn.btn-info
 
 .text_info_tag
 {
-  display: inline;
+  display: inline-block;;
   vertical-align: middle;
 }
 
@@ -239,20 +247,39 @@ a.btn.btn-info
     height: 20px;
     background-color: transparent;
 }
-.blog_article
-{
-    width: 357px;
-    height: 450px;
-    padding: 5px 10px;
-}
 
+article
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    font-weight: normal;
+    box-sizing: border-box;
+}
 #area_article
 {
-    width: 350px;
-    height: 440px;
+    /*width: 350px;
+    height: 500px;*/
     background-color: #ffffff;
     text-decoration: none;
+    padding: 5px 10px;
+    margin-bottom: 20px;
+}
 
+ul
+{
+    font-size: 12px;
+}
+
+.post_info
+{
+    overflow: hidden;
+    margin: 5px 0;
+    padding: 0;
 }
 
 a.post_link
@@ -262,7 +289,7 @@ a.post_link
 
 .label_Novel
 {
-    width: 350px;
+    /*width: 330px;*/
     height: 25px;
     font-size: 14px;
     background-color: #b8f7d8;
@@ -272,7 +299,7 @@ a.post_link
 
 .label_Music
 {
-    width: 350px;
+    /*width: 330px;*/
     height: 25px;
     font-size: 14px;
     background-color: #c6ffff;
@@ -282,7 +309,7 @@ a.post_link
 
 .label_Trip
 {
-    width: 350px;
+    /*width: 330px;*/
     height: 25px;
     font-size: 14px;
     background-color: #ffd0ff;
@@ -292,7 +319,7 @@ a.post_link
 
 .label_Hobby
 {
-    width: 350px;
+    /*width: 330px;*/
     height: 25px;
     font-size: 14px;
     background-color: #f7cfcf;
@@ -302,7 +329,7 @@ a.post_link
 
 .label_Computers
 {
-    width: 350px;
+    /*width: 330px;*/
     height: 25px;
     font-size: 14px;
     background-color: #fafab8;
@@ -312,10 +339,82 @@ a.post_link
 
 .post_title
 {
-    width: 350px;
+    /*width: 330px;*/
     height: 40px;
     font-weight: bold;
     font-size: 14px;
     position: relative;
     text-align: center;
+}
+
+#footer
+{
+    background-color: #101010;
+    height: 60px;
+    text-align: center;
+}
+
+#footer a
+{
+    color: #9d9d9d;
+}
+
+#footer p
+{
+    color: #9d9d9d;
+}
+
+.footer_list
+{
+    font-size: 0;
+    margin-bottom: 10px;
+}
+
+.footer_list li
+{
+    display: inline-block;
+    font-size: 12px;
+    width: 25%;
+}
+@media (min-width: 900px)
+{
+    .main
+    {
+        width: 68%;
+        float: left;
+    }
+}
+
+@media (min-width: 900px)
+{
+    .side
+    {
+        width: 26.3%;
+        margin-left: 5.7%;
+        float: right;
+    }
+}
+
+article a img:hover
+{
+    border-color: #0bd;
+}
+
+article img
+{
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin: 10px 0 0 0;
+    border: 5px #e0e0e0 solid;
+}
+
+.fixed
+{
+        position: fixed;
+        top: 0;
+        max-width: 300px;
+        margin-top: 60px;
 }

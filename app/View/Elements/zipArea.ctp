@@ -11,13 +11,14 @@
         'label' => __('ZipCord'),
         'type' => 'text',
         'id' => 'zipText',
-        'placeholder' => __('Enter the zip-cord')
+        'placeholder' => __('Enter the zip-cord'),
         )
     );
 
     echo $this->Form->button(__('Search'), array(
         'type' => 'button',
         'id' => 'search_Button',
+        'class' => 'btn btn-success',
         )
     );
     echo "<br>";

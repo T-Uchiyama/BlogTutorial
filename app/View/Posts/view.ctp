@@ -1,82 +1,89 @@
 <!-- File: /app/View/Posts/view.ctp -->
 
-<h1 class="heading_view">
-    <?php
-        echo h($post['Post']['title']);
-    ?>
-</h1>
+<div class="main_wrap">
+    <div class="main">
+        <h1 class="heading_view">
+            <?php
+                echo h($post['Post']['title']);
+            ?>
+        </h1>
 
-<p class="text_info">
-    <small class="text_info_category">
-        <?php echo __('Category'); ?>
-        : <?php echo $post['Category']['name']?>
-    </small>
-</p>
+        <p class="text_info">
+            <small class="text_info_created">
+                <!-- <?php echo __('Created'); ?> -->
+                <?php echo ('<span class="glyphicon glyphicon-calendar"></span>'); ?>
+                : <?php
+                    echo $post['Post']['created'];
+                ?>
+            </small>
 
-<p class="text_info">
-    <small class="text_info_created">
-        <!-- <?php echo __('Created'); ?> -->
-        <?php echo ('<span class="glyphicon glyphicon-calendar"></span>'); ?>
-        : <?php
-            echo $post['Post']['created'];
-        ?>
-    </small>
+            <small class="text_info_category">
+                <!-- <?php echo __('Category'); ?> -->
+                <?php echo ('<span class="glyphicon glyphicon-file"></span>'); ?>
+                : <?php echo $post['Category']['name']?>
+            </small>
 
-    <small class="text_info_tag">
-        <!-- <?php echo __('Tag'); ?> -->
-        <?php echo ('<span class="glyphicon glyphicon-tags"></span>'); ?>
-        : <?php foreach($post['Tag'] as $tag): ?>
-          <?php echo $tag['title']; ?>
-          <?php endforeach; ?>
+            <small class="text_info_tag">
+                <!-- <?php echo __('Tag'); ?> -->
+                <?php echo ('<span class="glyphicon glyphicon-tags"></span>'); ?>
+                : <?php foreach($post['Tag'] as $tag): ?>
+                  <?php echo $tag['title']; ?>
+                  <?php endforeach; ?>
 
-    </small>
-</p>
+            </small>
+        </p>
 
-<p class="text_main">
-    <?php
-        echo nl2br(h($post['Post']['body']))
-    ?>
-</p>
+        <p class="text_main">
+            <?php
+                echo nl2br(h($post['Post']['body']))
+            ?>
+        </p>
 
-<p>
-    <small>
-        <?php
-            $baseUrl = $this->Html->url('/files/attachment/photo/');
-            // カウンタ用変数
-            $cnt = 0;
+        <p>
+            <small>
+                <?php
+                    $baseUrl = $this->Html->url('/files/attachment/photo/');
+                    // カウンタ用変数
+                    $cnt = 0;
 
-            // スライドショー向けdiv追加
-            echo('<div id="slide">');
+                    // スライドショー向けdiv追加
+                    echo('<div id="slide">');
 
-            foreach($post['Attachment'] as $attachment):
-                echo('<div id="image_id'.$cnt.'">');
-                echo $this->Html->image( $baseUrl . $attachment['dir'] . '/' . $attachment['photo'],
-                    array(
-                        'class' => 'thumbnail',
-                        'width' => 200,
-                        'height' => 200,
-                        'pageNum' => $cnt,
-                    )
-                );
-                echo('<div class="image_div">');
+                    foreach($post['Attachment'] as $attachment):
+                        echo('<div id="image_id'.$cnt.'">');
+                        echo $this->Html->image( $baseUrl . $attachment['dir'] . '/' . $attachment['photo'],
+                            array(
+                                'class' => 'thumbnail',
+                                'width' => 200,
+                                'height' => 200,
+                                'pageNum' => $cnt,
+                            )
+                        );
+                        echo('<div class="image_div">');
 
-                echo $this->Html->image( $baseUrl . $attachment['dir'] . '/' . $attachment['photo'],
-                    array(
-                        'id' => 'defaultImg'.$cnt,
-                        'class' => 'defaultImgCls',
-                        'element' => $cnt,
-                    )
-                );
-                echo('</div>');
-                echo('</div>');
+                        echo $this->Html->image( $baseUrl . $attachment['dir'] . '/' . $attachment['photo'],
+                            array(
+                                'id' => 'defaultImg'.$cnt,
+                                'class' => 'defaultImgCls',
+                                'element' => $cnt,
+                            )
+                        );
+                        echo('</div>');
+                        echo('</div>');
 
-                $cnt++;
+                        $cnt++;
 
-            endforeach;
-            echo('</div>');
-        ?>
-    <small>
-</p>
+                    endforeach;
+                    echo('</div>');
+                ?>
+            <small>
+        </p>
+    </div>
+
+    <div class="side">
+        <!-- TODO: 参考サイトではこの箇所に関連する記事を表示 -->
+    </div>
+</div>
 
 <script>
 
