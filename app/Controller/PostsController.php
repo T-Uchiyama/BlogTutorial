@@ -92,9 +92,6 @@ class PostsController extends AppController
 
     public function add()
     {
-        // debug($this->Post->validate);
-        // exit;
-
 		if ($this->request->is('post'))
         {
             /* コメントアウト行は承認の項目変更にて記載がなかったため一応コメントアウト  */
@@ -187,11 +184,12 @@ class PostsController extends AppController
 
     public function imageDelete()
     {
-        /*
-         * TODO : 現状だと画面上からしか画像を消せていないのでDB側からも削除
-         *        するようなアプローチを考える。
-         */
-        echo $this->Post->Attachment->delete($post['data']['id'], true);
+         $this->autoRender = false;
+         $id = $this->request->data;
+
+        $attachment = $this->Post->Attachment->findById($id);
+
+        echo $this->Post->Attachment->delete($attachment['Attachment']['id'], true);
         exit();
     }
 
@@ -215,7 +213,6 @@ class PostsController extends AppController
                     )
                 );
                 $responseText = '';
-                /*ここまでは動いている。*/
                 if ($Email->send())
                 {
                     // メール送信に成功した場合はこの中で処理の実施
