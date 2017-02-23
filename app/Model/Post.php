@@ -69,7 +69,7 @@
             )
         );
 
-        // Upload Plugin
+        // Upload Plugin & log
         public $hasMany = array(
             'Attachment' => array(
                 'className' => 'Attachment',
@@ -77,6 +77,10 @@
                 'conditions' => array(
                     'Attachment.model' => 'Post',
                 ),
+            ),
+            'Postviewlog' => array(
+                'className' => 'Postviewlog',
+                'foreignKey' => 'post_id',
             ),
         );
 

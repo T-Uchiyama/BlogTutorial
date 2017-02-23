@@ -1,4 +1,6 @@
 <?php
+App::uses('PostviewlogsController', 'Controller');
+
 class PostsController extends AppController
 {
     public $helpers = array('Html', 'Form', 'Flash');
@@ -33,6 +35,8 @@ class PostsController extends AppController
         $this->Prg->commonProcess();
         $this->paginate['Post']['conditions'][] =
                 $this->Post->parseCriteria($this->passedArgs);
+        // debug($this->paginate());
+        // exit;
         $this->set('posts', $this->paginate());
         // Category
         $categories = $this->getList();
@@ -87,6 +91,9 @@ class PostsController extends AppController
         {
 	        throw new NotFoundException(__('Invalid post'));
         }
+        // ログ書き込み実施
+        $postviewslogsCtr = new PostviewlogsController();
+        $postviewslogsCtr->writeLog($id);
 	    $this->set('post', $post);
     }
 
@@ -204,7 +211,8 @@ class PostsController extends AppController
 
             // コンストラクタによる指定
             $Email = new CakeEmail('contact');
-            try {
+            try
+            {
                 $Email->config(array(
                         'viewVars' => array(
                             'name' => $this->request->data['name'],
