@@ -35,8 +35,6 @@ class PostsController extends AppController
         $this->Prg->commonProcess();
         $this->paginate['Post']['conditions'][] =
                 $this->Post->parseCriteria($this->passedArgs);
-        // debug($this->paginate());
-        // exit;
         $this->set('posts', $this->paginate());
         // Category
         $categories = $this->getList();
@@ -49,6 +47,10 @@ class PostsController extends AppController
         // Title
         $titles = $this->Post->find('list');
         $this->set(compact('titles'));
+
+        // 人気記事用検索用のPOST全件データ
+        $postList = $this->Post->find('all');
+        $this->set(compact('postList'));
 
     }
 
@@ -207,7 +209,7 @@ class PostsController extends AppController
         {
             // 基本の宣言方法
             // $Email = new CakeEmail();
-            // $Email->config('default'); // /View/Emails/text配下で設定したものの読み込み
+            // $Email->config('default');
 
             // コンストラクタによる指定
             $Email = new CakeEmail('contact');

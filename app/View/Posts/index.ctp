@@ -95,7 +95,7 @@
                     echo ('<ul class="post_info">');
                     echo ('<li class="blog_date" style="float:left">');
                     echo ('<span class="glyphicon glyphicon-calendar"> : </span>');
-                    echo ('<time> '. $this->Time->format($posts[$idx]['User']['created'], '%Y-%m-%d') .'</time>');
+                    echo ('<time> '. $this->Time->format($posts[$idx]['Post']['created'], '%Y-%m-%d') .'</time>');
                     echo ('</li>');
 
                     echo ('<li class="blog_category" style="float:left">');
@@ -174,6 +174,7 @@
             <?php
                 echo $this->element('zipArea');
                 echo $this->element('mail');
+                echo $this->element('popular');
              ?>
         </div>
     <!-- </div> -->

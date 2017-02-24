@@ -252,7 +252,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
 
     });
 
-    var nav = $('#contact_form');
+    var nav = $('#popularList');
     offset = nav.offset();
 
     var sizeCheck = function()
