@@ -8,7 +8,7 @@
 
         <?php
             $jsonUrl = WWW_ROOT.'accesslog/test_accesslog.json';
-
+            $data = array();
 
             if(file_exists($jsonUrl))
             {
@@ -26,21 +26,38 @@
                     {
                         if ($obj[$a]['Postviewlog']['post_id'] == $postList[$idx]['Post']['id'])
                         {
-                            echo ('<li><a href="/posts/view/' .$postList[$idx]['Post']['id']. '">');
-                            if (isset($postList[$idx]['Attachment'][0]))
-                            {
-                                echo ('<img
-                                    src="/files/attachment/photo/' . $postList[$idx]['Attachment'][0]['dir'] . '/'
-                                    .$postList[$idx]['Attachment'][0]['photo'].'" width="100" height="80" alt="');
-                                echo __('the first Image the blog saved');
-                                echo ('"/>');
-                            }
-                            echo ('<span class="popularListTitle">'  . $postList[$idx]['Post']['title'] .'</span></a></li>');
+                            $data[] = array(
+                                'id' => $postList[$idx]['Post']['id'],
+                                'title' => $postList[$idx]['Post']['title'],
+                                'url' => $postList[$idx]['Attachment'][0]['dir'] . '/'.$postList[$idx]['Attachment'][0]['photo'],
+                                'cnt' => $obj[$a]['Postviewlog']['cnt'],
+                            );
                         }
                     }
                 }
                 echo ('</ul>');
 
+                // cntの値を用いてソート実施
+                foreach ($data as $key => $value)
+                {
+                    $cnt[$key] = $value['cnt'];
+                }
+
+                array_multisort($cnt, SORT_DESC, $data);
+
+                // ソートした配列を表示
+                for ($idx = 0; $idx < count($data); $idx++)
+                {
+                    echo ('<li><a href="/posts/view/' .$data[$idx]['id']. '">');
+                    if (isset($postList[$idx]['Attachment'][0]))
+                    {
+                        echo ('<img
+                            src="/files/attachment/photo/' . $data[$idx]['url'].'" width="100" height="80" alt="');
+                        echo __('the first Image the blog saved');
+                        echo ('"/>');
+                    }
+                    echo ('<span class="popularListTitle">'  . $data[$idx]['title'] .'</span></a></li>');
+                }
             }
 
         ?>
