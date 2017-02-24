@@ -16,6 +16,9 @@
                 $json = mb_convert_encoding($json, 'UTF8', 'ASCII,JIS,UTF-8,EUC-JP,SJIS-WIN');
                 $obj = json_decode($json,true);
 
+                /*
+                 * TODO: 二つのリストより目的のものこそ取得できているが順番がアクセス数降順になっていないのを修正する。
+                 */
                 echo ('<ul>');
                 for ($idx = 0; $idx < count($postList); $idx++)
                 {
