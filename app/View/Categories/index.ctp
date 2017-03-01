@@ -1,10 +1,10 @@
 <!-- File: /app/View/Categories/index.ctp -->
 
-<div class="heading">
+<!-- <div class="heading">
     <center>
         <h1><?php echo __('Categories List'); ?></h1>
     </center>
-</div>
+</div> -->
 
 <div class="main_wrap">
     <div class="row">

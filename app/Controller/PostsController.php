@@ -247,6 +247,9 @@ class PostsController extends AppController
     {
         $this->autoRender = false;
 
+        /*
+         * TODO カテゴリも後に追加して、より密度の濃い関連記事の表示へ。
+         */
         /* 1.リクエストデータより使用しているタグの種類、使用しているタグの個数を計測 */
         $tagData = $this->request->data;
 
@@ -261,7 +264,7 @@ class PostsController extends AppController
         // 2.1 タグ名よりIDの取得
         for ($idx=0; $idx < count($data); $idx++)
         {
-            $tempList = $this->Post->PostsTag->Tag->find('list',array(
+            $tempList[] = $this->Post->PostsTag->Tag->find('list',array(
                 'conditions' => array(
                     'title' => $data[$idx]['title']
                 ),
@@ -271,14 +274,15 @@ class PostsController extends AppController
             {
                 $tagTitle = $data[$idx]['title'];
                 $tagId[] = array(
-                    'id' => $tempList[$tagTitle],
+                    'id' => $tempList[$idx][$tagTitle],
                 );
             }
         }
+
         // 2.2 Tag_IDよりPostsTagの関連しているPost_ID全て掃き出し。
         for ($idx=0; $idx < count($tagId); $idx++)
         {
-            $postidList = $this->Post->PostsTag->find('list',array(
+            $postidList[] = $this->Post->PostsTag->find('list',array(
                     'conditions' => array(
                         'tag_id' => $tagId[$idx]['id'],
                     ),
@@ -288,31 +292,46 @@ class PostsController extends AppController
 
         }
 
+
+
         /* 3. 取得したPost_idを元に各種データを取得した後、Json形式に戻し、View側に返却 */
-        foreach ($postidList as $value)
+        for ($idx=0; $idx < count($postidList); $idx++)
         {
-            $postTitle = $this->Post->find('list',array(
-                    'conditions' => array(
-                        'id' => $value,
-                    ),
-                    'fields' => array('title'),
-                )
-            );
+            foreach ($postidList[$idx] as $key => $value)
+            {
+                $postTitle[] = $this->Post->find('list',array(
+                        'conditions' => array(
+                            'id' => $value,
+                        ),
+                        'fields' => array('title'),
+                    )
+                );
 
-            $postUrl = $this->Post->Attachment->find('first',array(
-                    'conditions' => array(
-                        'foreign_key' => $value,
-                    ),
-                    'fields' => array('dir', 'photo')
-                )
-            );
+                $postUrl = $this->Post->Attachment->find('first',array(
+                        'conditions' => array(
+                            'foreign_key' => $value,
+                        ),
+                        'fields' => array('dir', 'photo')
+                    )
+                );
 
-            $response[] = array(
-                'post_id' => $value,
-                'title' => $postTitle[$value],
-                'url' => $postUrl['Attachment']['dir'] . '/'. $postUrl['Attachment']['photo'],
-            );
+                // 本来はここでスマートにタイトルを取りたい。
+                // →取得方法が悪いために現在コメントアウトしているままだと
+                //  配列の形をそのまま入れてしまう形になってしまっている。
+                $postData[] = array(
+                    'post_id' => $value,
+                    // 'title' => $postTitle[$idx][$value],
+                    'url' => $postUrl['Attachment']['dir'] . '/'. $postUrl['Attachment']['photo'],
+                );
+
+            }
         }
+        // TODO 入れたはいいがキーの名称が気持ち悪い・・・
+        for ($idx = 0; $idx < count($postTitle); $idx++)
+        {
+            $response[] = array_merge_recursive($postTitle[$idx], $postData[$idx]);
+        }
+
         return json_encode($response);
     }
 }

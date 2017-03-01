@@ -319,11 +319,12 @@
                  console.log(e[i]['post_id']);
                  $('#samepostList ul').append('<li><a href="/posts/view/' + e[i]['post_id'] + '">'
                  + '<img src="/files/attachment/photo/' + e[i]['url'] + '" width="100" height="80" alt="the first Image the blog saved"/>'
-                 + '<span class="samepostListTitle">' + e[i]['title'] + '</span></a></li>');
+                 + '<span class="samepostListTitle">' + e[i][0] + '</span></a></li>');
              }
          })
          .fail(function(e) {
-             alert('Ajax is Failed');
+            //  alert('Ajax is Failed');
+            console.log("error");
          })
          .always(function() {
              console.log("Ajax is finished");

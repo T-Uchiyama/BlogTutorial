@@ -118,13 +118,19 @@ article h6
 .form_info
 {
     /*text-shadow:1px 1px 0 rgba(255,255,255,1);*/
-    box-shadow:	0 1px 2px 0 rgba(0,0,0,0.2),
+    box-shadow:	0 5px 10px 0 rgba(0,0,0,0.2),
                 20px 0 0 0 #0bd,
                 -20px 0 0 0 #0bd;
     transform: rotate(-1deg) skew(-1deg);
     text-align: center;
+    display: table-cell;
+    font-size: 16px;
     background-color: #393737;
     color: #ffffff;
+    margin-top: 10px;
+    margin-bottom: : 20px;
+    width: 300px;
+    height: 30px;
 }
 
 a.btn.btn-info
@@ -430,6 +436,7 @@ article img
     list-style: none;
     margin-bottom: 20px;
     line-height: 1.4em;
+    font-size: 12px;
     overflow: hidden;
     background: #fff;
 }
@@ -458,6 +465,7 @@ article img
     list-style: none;
     margin-bottom: 20px;
     line-height: 1.4em;
+    font-size: 12px;
     overflow: hidden;
     background: #fff;
 }

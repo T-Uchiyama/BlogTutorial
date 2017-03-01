@@ -1,10 +1,10 @@
 <!-- File: /app/View/Posts/index.ctp -->
 
-<div class="heading">
+<!-- <div class="heading">
     <center>
         <h1><?php echo __('Blog Posts'); ?></h1>
     </center>
-</div>
+</div> -->
 
 <div class="main_wrap">
     <?php
