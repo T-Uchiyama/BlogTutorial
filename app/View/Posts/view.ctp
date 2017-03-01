@@ -81,7 +81,6 @@
     </div>
 
     <div class="side">
-        <!-- TODO: 参考サイトではこの箇所に関連する記事を表示 -->
         <?php
             echo $this->element('samePost');
         ?>
