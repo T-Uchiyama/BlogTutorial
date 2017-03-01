@@ -16,9 +16,6 @@
                 $json = mb_convert_encoding($json, 'UTF8', 'ASCII,JIS,UTF-8,EUC-JP,SJIS-WIN');
                 $obj = json_decode($json,true);
 
-                /*
-                 * TODO: 二つのリストより目的のものこそ取得できているが順番がアクセス数降順になっていないのを修正する。
-                 */
                 echo ('<ul>');
                 for ($idx = 0; $idx < count($postList); $idx++)
                 {
@@ -35,7 +32,7 @@
                         }
                     }
                 }
-                echo ('</ul>');
+
 
                 // cntの値を用いてソート実施
                 foreach ($data as $key => $value)
@@ -58,6 +55,7 @@
                     }
                     echo ('<span class="popularListTitle">'  . $data[$idx]['title'] .'</span></a></li>');
                 }
+                echo ('</ul>');
             }
 
         ?>

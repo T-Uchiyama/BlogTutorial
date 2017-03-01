@@ -82,6 +82,9 @@
 
     <div class="side">
         <!-- TODO: 参考サイトではこの箇所に関連する記事を表示 -->
+        <?php
+            echo $this->element('samePost');
+        ?>
     </div>
 </div>
 
@@ -278,4 +281,54 @@
         }
     });
 
+    /*
+     * 画面起動時にタグを取得し、関連記事の表示を実施する。
+     */
+     $(document).ready(function()
+     {
+         var tag = $('.text_info_tag').text();
+         // 謎の↵(return char.)が混入してしてしまう為ここで置換を実施。
+         tag = tag.replace(/(\r\n|\n|\r)/gm, "");
+         var tagArr = tag.split(' ');
+         var tagData = new Array();
+
+         /* 不要要素を削除しタグ名だけの配列に */
+         for (var i = 0; i < tagArr.length; i++)
+         {
+             // spliceにて不要要素を削除
+             if (tagArr[i] == '' || tagArr[i] == ':')
+             {
+                 tagArr.splice(i--, 1);
+             }
+         }
+
+         for (var i = 0; i < tagArr.length; i++)
+         {
+             tagData.push({title : tagArr[i]});
+         }
+
+         $.ajax({
+             url: '/posts/searchTag',
+             type: 'POST',
+             dataType: 'json',
+             data: {tags:tagData},
+         })
+         .done(function(e) {
+             /* TODO 全ての表示こそ出来たが検索条件が緩すぎるので修正していく。 */
+             for (var i = 0; i < 5; i++)
+             {
+                 console.log(e[i]['post_id']);
+                 $('#samepostList ul').append('<li><a href="/posts/view/' + e[i]['post_id'] + '">'
+                 + '<img src="/files/attachment/photo/' + e[i]['url'] + '" width="100" height="80" alt="the first Image the blog saved"/>'
+                 + '<span class="samepostListTitle">' + e[i]['title'] + '</span></a></li>');
+             }
+         })
+         .fail(function(e) {
+             alert('Ajax is Failed');
+         })
+         .always(function() {
+             console.log("Ajax is finished");
+         });
+
+     });
 </script>

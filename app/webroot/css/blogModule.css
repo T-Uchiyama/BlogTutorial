@@ -419,6 +419,12 @@ article img
         margin-top: 60px;
 }
 
+.side #popularList ul
+{
+    list-style: none;
+    font-size: 100%;
+}
+
 .side #popularList li
 {
     list-style: none;
@@ -437,6 +443,34 @@ article img
 }
 
 .side .popularListTitle
+{
+    width: 62%;
+}
+
+.side #samepostList ul
+{
+    list-style: none;
+    font-size: 100%;
+}
+
+.side #samepostList li
+{
+    list-style: none;
+    margin-bottom: 20px;
+    line-height: 1.4em;
+    overflow: hidden;
+    background: #fff;
+}
+
+.side #samepostList img
+{
+    float: left;
+    height: auto;
+    max-width: 100%;
+    margin: 0 10px 0 0;
+}
+
+.side .samepostListTitle
 {
     width: 62%;
 }

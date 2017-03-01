@@ -239,4 +239,80 @@ class PostsController extends AppController
 
         }
     }
+
+    /*
+     * 画面に出力されているタグ名より、関連する記事を取得する。
+     */
+    public function searchTag()
+    {
+        $this->autoRender = false;
+
+        /* 1.リクエストデータより使用しているタグの種類、使用しているタグの個数を計測 */
+        $tagData = $this->request->data;
+
+        foreach ($tagData['tags'] as $tag)
+        {
+            $data[] = array(
+                'title' => $tag['title'],
+            );
+        }
+
+        /* 2.同様のタグを使用している記事がないか検索。 */
+        // 2.1 タグ名よりIDの取得
+        for ($idx=0; $idx < count($data); $idx++)
+        {
+            $tempList = $this->Post->PostsTag->Tag->find('list',array(
+                'conditions' => array(
+                    'title' => $data[$idx]['title']
+                ),
+                 'fields' => array('title', 'id'),
+            ));
+            if ($data[$idx]['title'] == key($tempList))
+            {
+                $tagTitle = $data[$idx]['title'];
+                $tagId[] = array(
+                    'id' => $tempList[$tagTitle],
+                );
+            }
+        }
+        // 2.2 Tag_IDよりPostsTagの関連しているPost_ID全て掃き出し。
+        for ($idx=0; $idx < count($tagId); $idx++)
+        {
+            $postidList = $this->Post->PostsTag->find('list',array(
+                    'conditions' => array(
+                        'tag_id' => $tagId[$idx]['id'],
+                    ),
+                    'fields' => array('post_id'),
+                )
+            );
+
+        }
+
+        /* 3. 取得したPost_idを元に各種データを取得した後、Json形式に戻し、View側に返却 */
+        foreach ($postidList as $value)
+        {
+            $postTitle = $this->Post->find('list',array(
+                    'conditions' => array(
+                        'id' => $value,
+                    ),
+                    'fields' => array('title'),
+                )
+            );
+
+            $postUrl = $this->Post->Attachment->find('first',array(
+                    'conditions' => array(
+                        'foreign_key' => $value,
+                    ),
+                    'fields' => array('dir', 'photo')
+                )
+            );
+
+            $response[] = array(
+                'post_id' => $value,
+                'title' => $postTitle[$value],
+                'url' => $postUrl['Attachment']['dir'] . '/'. $postUrl['Attachment']['photo'],
+            );
+        }
+        return json_encode($response);
+    }
 }

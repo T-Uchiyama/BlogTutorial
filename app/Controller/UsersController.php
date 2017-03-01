@@ -200,6 +200,7 @@ class UsersController extends AppController
 		$this->Acl->allow($group, 'controllers/Posts/delete');
 	    $this->Acl->allow($group, 'controllers/Posts/edit');
 	    $this->Acl->allow($group, 'controllers/Posts/send');
+	    $this->Acl->allow($group, 'controllers/Posts/searchTag');
 
 	    $this->Acl->allow($group, 'controllers/Zips');
 	    $this->Acl->allow($group, 'controllers/Users/index');
