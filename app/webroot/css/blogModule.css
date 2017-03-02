@@ -52,7 +52,7 @@
 {
     position: fixed;
     top: 470px;
-    left: 510px;
+    left: 588px;
     padding: 20px 50px;
     font-size: 1.2em;
 }
@@ -74,7 +74,7 @@ article h1
     border-left: 10px solid #0f2525;
     text-align: left;
     background-color: #fff;
-    font-size: 25px;
+    font-size: 30px;
     color: #000;
     margin-bottom: 10px;
     padding: 5px 0px 5px 15px;
@@ -85,6 +85,7 @@ article h1
 
 article h6
 {
+    font-size: 14px;
     display: inline;
 }
 
@@ -92,6 +93,7 @@ article h6
 {
   display:inline-block;
   vertical-align: middle;
+  font-size: 14px;
   margin-bottom: 10px;
 }
 
@@ -111,8 +113,9 @@ article h6
 
 .send_view
 {
-    font-size: 16px;
+    font-size: 18px;
     text-align: right;
+    margin-top: 10px;
 }
 
 .form_info
@@ -124,7 +127,7 @@ article h6
     transform: rotate(-1deg) skew(-1deg);
     text-align: center;
     display: table-cell;
-    font-size: 16px;
+    font-size: 20px;
     background-color: #393737;
     color: #ffffff;
     margin-top: 10px;
@@ -135,7 +138,10 @@ article h6
 
 a.btn.btn-info
 {
-    margin: 10px;
+    display: inline;
+    font-size: 180%;
+    width: auto;
+    margin: 30px 10px;
 }
 
 .main_wrap
@@ -198,22 +204,24 @@ a.btn.btn-info
     border-left: 10px solid #000;
     text-align: left;
     background-color: #fff;
-    font-size: 24px;
+    font-size: 30px;
     color: #000;
     margin-bottom: 10px;
     padding: 4px 4px 4px 30px;
+    font-weight: bold;
 }
 
 .text_main
 {
     line-height: 180%;
-    font-size: 18px;
+    font-size: 22px;
+
 }
 
 .text_info
 {
     line-height: 180%;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .text_info_category
@@ -302,7 +310,6 @@ a.post_link
     border-left: 8px solid #2ad2ac;
     text-align: center;
 }
-
 .label_Music
 {
     /*width: 330px;*/
@@ -418,12 +425,15 @@ article img
     border: 5px #e0e0e0 solid;
 }
 
-.fixed
+@media (min-width: 900px)
 {
-        position: fixed;
-        top: 0px;
-        max-width: 300px;
-        margin-top: 60px;
+    .fixed
+    {
+            position: fixed;
+            top: 0px;
+            max-width: 300px;
+            margin-top: 60px;
+    }
 }
 
 .side #popularList ul
@@ -437,7 +447,7 @@ article img
     list-style: none;
     margin-bottom: 20px;
     line-height: 1.4em;
-    font-size: 12px;
+    font-size: 14px;
     overflow: hidden;
     background: #fff;
 }
@@ -466,7 +476,7 @@ article img
     list-style: none;
     margin-bottom: 20px;
     line-height: 1.4em;
-    font-size: 12px;
+    font-size: 14px;
     overflow: hidden;
     background: #fff;
 }
@@ -482,4 +492,140 @@ article img
 .side .samepostListTitle
 {
     width: 62%;
+}
+
+.zipcord_class
+{
+    margin-bottom: 5px;
+}
+
+.mail_class
+{
+    margin-bottom: 5px;
+}
+
+.btn-success
+{
+    background: #62af56;
+    background-image: -webkit-linear-gradient(top, #76BF6B, #3B8230);
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-repeat-x: initial;
+    background-repeat-y: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: rgb(98, 175, 86);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#76BF6B), to(#3B8230));
+    background-image: -webkit-linear-gradient(top, #76BF6B, #3B8230);
+    background-image: -moz-linear-gradient(top, #76BF6B, #3B8230);
+    border-color: #2d6324;
+    border-top-color: rgb(45, 99, 36);
+    border-right-color: rgb(45, 99, 36);
+    border-bottom-color: rgb(45, 99, 36);
+    border-left-color: rgb(45, 99, 36);
+    color: #fff;
+    text-shadow: rgba(0, 0, 0, 0.5) 0 -1px 0;
+    padding: 8px 10px;
+    margin: 5px 0px;
+    display: inline;
+    font-size: 110%;
+    width: auto;
+
+}
+
+.btn-info
+{
+    background: #56afa9;
+    background-image: -webkit-linear-gradient(top, #6bbfbf, #30827d);
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-repeat-x: initial;
+    background-repeat-y: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: rgb(86, 175, 167);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#6bbfbf), to(#30827d));
+    background-image: -webkit-linear-gradient(top, #6bbfbf, #30827d);
+    background-image: -moz-linear-gradient(top, #6bbfbf, #30827d);
+    border-color: #24635e;
+    border-top-color: rgb(36, 99, 98);
+    border-right-color: rgb(36, 99, 98);
+    border-bottom-color: rgb(36, 99, 98);
+    border-left-color: rgb(36, 99, 98);
+    color: #fff;
+    text-shadow: rgba(0, 0, 0, 0.5) 0 -1px 0;
+    padding: 8px 10px;
+}
+
+.btn-warning
+{
+    background: #cad222;
+    background-image: -webkit-linear-gradient(top, #bfb76b, #7e8230);
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-repeat-x: initial;
+    background-repeat-y: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: rgb(200, 199, 98);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#bfb76b), to(#7e8230));
+    background-image: -webkit-linear-gradient(top, #bfb76b, #7e8230);
+    background-image: -moz-linear-gradient(top, #bfb76b, #7e8230);
+    border-color: #858530;
+    border-top-color: rgb(96, 99, 36);
+    border-right-color: rgb(96, 99, 36);
+    border-bottom-color: rgb(96, 99, 36);
+    border-left-color: rgb(96, 99, 36);
+    color: #fff;
+    text-shadow: rgba(0, 0, 0, 0.5) 0 -1px 0;
+    padding: 8px 10px;
+    margin: 10px 0px;;
+    display: inline;
+    font-size: 100%;
+    width: auto;
+}
+
+.btn-primary
+{
+    background: #567caf;
+    background-image: -webkit-linear-gradient(top, #6b92bf, #305b82);
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-repeat-x: initial;
+    background-repeat-y: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: rgb(86, 175, 167);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#6b92bf), to(#305b82));
+    background-image: -webkit-linear-gradient(top, #6b92bf, #305b82);
+    background-image: -moz-linear-gradient(top, #6b92bf, #305b82);
+    border-color: #244563;
+    border-top-color: rgb(36, 65, 99);
+    border-right-color: rgb(36, 65, 99);
+    border-bottom-color: rgb(36, 65, 99);
+    border-left-color: rgb(36, 65, 99);
+    color: #fff;
+    text-shadow: rgba(0, 0, 0, 0.5) 0 -1px 0;
+    padding: 8px 10px;
+    margin: 10px 0px;;
+    display: inline;
+    font-size: 100%;
+    width: auto;
+}
+ #searchFuncPush
+ {
+     font-size: 18px;
+ }
+
+#searchLink
+{
+    font-size: 12px;
 }

@@ -315,9 +315,10 @@
              data: {tags:tagData, category:category},
          })
          .done(function(e) {
-
              for (var i = 0; i < 6; i++)
              {
+                 // TODO 起動してこそいるがe[i]['post_id']が未定義だとエラーが掃かれている
+                 //      どのようにして回避するかを考案
                  if (location.href.match(e[i]['post_id']))
                  {
                      // Ajaxで取得したPost_IDと閲覧している記事が同じ場合には

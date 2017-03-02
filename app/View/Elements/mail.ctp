@@ -9,6 +9,7 @@
     echo $this->Form->input('name', array(
         'label' => '名前(必須)',
         'id' => 'mail_name',
+        'class' => 'mail_class',
     ));
 
     echo $this->Form->input('mailBody', array(
@@ -17,6 +18,7 @@
         'rows' => 10,
         'label' => 'メール本文(必須)',
         'id' => 'mail_content',
+        'class' => 'mail_class',
     ));
     echo $this->Form->button(__('送信'), array(
         'type' => 'button',

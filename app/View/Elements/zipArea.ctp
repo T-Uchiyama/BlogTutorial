@@ -26,6 +26,7 @@
         'label' => __('Pref'),
         'type' => 'text',
         'id' => 'zip_pref',
+        'class' => 'zipcord_class',
         'disabled' => 'disabled',
         )
     );
@@ -34,6 +35,7 @@
         'label' => __('City'),
         'type' => 'text',
         'id' => 'zip_city',
+        'class' => 'zipcord_class',
         'disabled' => 'disabled',
         )
     );
@@ -42,6 +44,7 @@
         'label' => __('Town'),
         'type' => 'text',
         'id' => 'zip_town',
+        'class' => 'zipcord_class',
         'disabled' => 'disabled',
         )
     );

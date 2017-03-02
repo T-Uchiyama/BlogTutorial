@@ -69,10 +69,6 @@
 
         <!-- <div class="col-sm-9  col-md-10"> -->
         <div class="main">
-
-
-
-
             <?php
                 echo $this->Html->link(
                     __('Add Post'),
@@ -212,9 +208,9 @@
         $(window).scroll(function ()
         {
             // TODO:特殊な条件下でまだfixedが削除されていない判例あり。
-            // WindowResizeの際にも実施が必要か？
+            // →.fixed自体にもメディアクエリ対応させて退避する形にしてみた
             var size = sizeCheck();
-            if(size > 900)
+            if(size > 950)
             {
                 if($(window).scrollTop() > offset.top)
                 {
