@@ -251,14 +251,22 @@ class PostsController extends AppController
          * TODO カテゴリも後に追加して、より密度の濃い関連記事の表示へ。
          */
         /* 1.リクエストデータより使用しているタグの種類、使用しているタグの個数を計測 */
-        $tagData = $this->request->data;
+        $requestData = $this->request->data;
 
-        foreach ($tagData['tags'] as $tag)
+        foreach ($requestData['tags'] as $tag)
         {
             $data[] = array(
                 'title' => $tag['title'],
             );
         }
+
+        $categoryData = $this->Post->Category->find('list',array(
+                'conditions' => array(
+                    'name' => $requestData['category'],
+                ),
+                'fields' => array('name', 'id'),
+            )
+        );
 
         /* 2.同様のタグを使用している記事がないか検索。 */
         // 2.1 タグ名よりIDの取得
@@ -290,7 +298,6 @@ class PostsController extends AppController
                     'fields' => array('post_id'),
                 )
             );
-
         }
 
         /* タグごとにCountを実施し重みを計測 */
@@ -303,7 +310,6 @@ class PostsController extends AppController
         }
         $cnt = array_count_values($cnt);
         arsort($cnt);
-
         /* 上記では各Post_idにいくつタグがくっついているかまで取得 */
         // 本来はタグ名まで見て同じものがあるものを取りたい。
 
@@ -312,11 +318,11 @@ class PostsController extends AppController
         {
             foreach ($postidList[$idx] as $key => $value)
             {
-                $postTitle[] = $this->Post->find('list',array(
+                $postTitle = $this->Post->find('list',array(
                         'conditions' => array(
                             'id' => $value,
                         ),
-                        'fields' => array('title'),
+                        'fields' => array('id', 'title'),
                     )
                 );
 
@@ -328,50 +334,56 @@ class PostsController extends AppController
                     )
                 );
 
-                // 本来はここでスマートにタイトルを取りたい。
-                // →取得方法が悪いために現在コメントアウトしているままだと
-                //  配列の形をそのまま入れてしまう形になってしまっている。
+                $category_id = $this->Post->find('list',array(
+                        'conditions' => array(
+                            'id' => $value,
+                        ),
+                        'fields' => array('id', 'category_id'),
+                    )
+                );
 
                 foreach ($cnt as $cntKey => $cntValue)
                 {
                     if ($cntKey == $value)
                     {
-                        $postData[] = array(
+                        $postDatas[] = array(
                             'post_id' => $value,
-                            // 'title' => $postTitle[$idx],
+                            'title' => $postTitle[$value],
                             'url' => $postUrl['Attachment']['dir'] . '/'. $postUrl['Attachment']['photo'],
                             'cnt' => $cntValue,
+                            'category_id' => $category_id[$value],
                         );
                     }
                 }
-
-
             }
         }
 
-        // TODO 入れたはいいがキーの名称が気持ち悪い・・・
-        for ($idx = 0; $idx < count($postTitle); $idx++)
-        {
-            $response[] = array_merge_recursive($postTitle[$idx], $postData[$idx]);
-        }
-
-        foreach ($response as $key => $value)
+        foreach ($postDatas as $key => $value)
         {
             $cntData[$key] = $value['cnt'];
         }
-        array_multisort($cntData, SORT_DESC, $response);
+        array_multisort($cntData, SORT_DESC, $postDatas);
 
         // 重複が多いので削除
         $tmp = [];
-        $uniqueResponse = [];
-        foreach ($response as $responeses)
+        $uniquePost = [];
+        foreach ($postDatas as $postData)
         {
-           if (!in_array($responeses['post_id'], $tmp)) {
-              $tmp[] = $responeses['post_id'];
-              $uniqueResponse[] = $responeses;
+           if (!in_array($postData['post_id'], $tmp)) {
+              $tmp[] = $postData['post_id'];
+              $uniquePost[] = $postData;
            }
         }
 
-        return json_encode($uniqueResponse);
+        $conpareData = array_values($categoryData);
+
+        for ($idx = 0; $idx < count($uniquePost); $idx++)
+        {
+            if ($conpareData[0] == $uniquePost[$idx]['category_id'])
+            {
+                $response[] = $uniquePost[$idx];
+            }
+        }
+        return json_encode($response);
     }
 }

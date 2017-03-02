@@ -212,6 +212,7 @@
         $(window).scroll(function ()
         {
             // TODO:特殊な条件下でまだfixedが削除されていない判例あり。
+            // WindowResizeの際にも実施が必要か？
             var size = sizeCheck();
             if(size > 900)
             {

@@ -286,8 +286,10 @@
      $(document).ready(function()
      {
          var tag = $('.text_info_tag').text();
+         var category = $('.text_info_category').text();
          // 謎の↵(return char.)が混入してしてしまう為ここで置換を実施。
          tag = tag.replace(/(\r\n|\n|\r)/gm, "");
+         category = category.replace(/(\r\n|\n|\r|\s|:)/gm, "");
          var tagArr = tag.split(' ');
          var tagData = new Array();
 
@@ -310,7 +312,7 @@
              url: '/posts/searchTag',
              type: 'POST',
              dataType: 'json',
-             data: {tags:tagData},
+             data: {tags:tagData, category:category},
          })
          .done(function(e) {
 
@@ -324,7 +326,7 @@
                  }
                  $('#samepostList ul').append('<li><a href="/posts/view/' + e[i]['post_id'] + '">'
                  + '<img src="/files/attachment/photo/' + e[i]['url'] + '" width="100" height="80" alt="the first Image the blog saved"/>'
-                 + '<span class="samepostListTitle">' + e[i][0] + '</span></a></li>');
+                 + '<span class="samepostListTitle">' + e[i]['title'] + '</span></a></li>');
              }
 
              // 関連する記事が6件存在する際には最後の要素を切る。
@@ -334,7 +336,7 @@
              }
          })
          .fail(function(e) {
-            alert('Ajax is Failed');
+            // alert('Ajax is Failed');
             console.log("error");
          })
          .always(function() {
