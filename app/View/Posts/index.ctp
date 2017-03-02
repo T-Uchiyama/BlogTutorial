@@ -187,7 +187,7 @@
         echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
     ?>
 </div>
-<script>
+<script type="text/javascript">
     $(function ()
     {
         // 検索エリアの非表示
@@ -197,6 +197,31 @@
         $('#searchFuncPush').click(function()
         {
             $('#searchLink').toggle();
+        });
+
+        var nav = $('#popularList');
+        offset = nav.offset();
+
+        var sizeCheck = function()
+        {
+            var size = $('.main_wrap').width();
+            // console.log(size);
+            return size;
+        };
+
+        $(window).scroll(function ()
+        {
+            // TODO:特殊な条件下でまだfixedが削除されていない判例あり。
+            var size = sizeCheck();
+            if(size > 900)
+            {
+                if($(window).scrollTop() > offset.top)
+                {
+                    nav.addClass('fixed');
+                } else {
+                    nav.removeClass('fixed');
+                }
+            }
         });
     });
 </script>

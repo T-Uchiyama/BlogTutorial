@@ -251,30 +251,4 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
 
 
     });
-
-    var nav = $('#popularList');
-    offset = nav.offset();
-
-    var sizeCheck = function()
-    {
-        var size = $('.main_wrap').width();
-        // console.log(size);
-        return size;
-    };
-
-    $(window).scroll(function ()
-    {
-        // TODO:特殊な条件下でまだfixedが削除されていない判例あり。
-        var size = sizeCheck();
-        if(size > 900)
-        {
-            if($(window).scrollTop() > offset.top)
-            {
-                nav.addClass('fixed');
-            } else {
-                nav.removeClass('fixed');
-            }
-        }
-    });
-
 </script>

@@ -270,6 +270,7 @@ class PostsController extends AppController
                 ),
                  'fields' => array('title', 'id'),
             ));
+
             if ($data[$idx]['title'] == key($tempList))
             {
                 $tagTitle = $data[$idx]['title'];
@@ -292,7 +293,19 @@ class PostsController extends AppController
 
         }
 
+        /* タグごとにCountを実施し重みを計測 */
+        for ($idx=0; $idx < count($postidList); $idx++)
+        {
+            foreach ($postidList[$idx] as $key => $value)
+            {
+                $cnt[] = $value;
+            }
+        }
+        $cnt = array_count_values($cnt);
+        arsort($cnt);
 
+        /* 上記では各Post_idにいくつタグがくっついているかまで取得 */
+        // 本来はタグ名まで見て同じものがあるものを取りたい。
 
         /* 3. 取得したPost_idを元に各種データを取得した後、Json形式に戻し、View側に返却 */
         for ($idx=0; $idx < count($postidList); $idx++)
@@ -318,20 +331,47 @@ class PostsController extends AppController
                 // 本来はここでスマートにタイトルを取りたい。
                 // →取得方法が悪いために現在コメントアウトしているままだと
                 //  配列の形をそのまま入れてしまう形になってしまっている。
-                $postData[] = array(
-                    'post_id' => $value,
-                    // 'title' => $postTitle[$idx][$value],
-                    'url' => $postUrl['Attachment']['dir'] . '/'. $postUrl['Attachment']['photo'],
-                );
+
+                foreach ($cnt as $cntKey => $cntValue)
+                {
+                    if ($cntKey == $value)
+                    {
+                        $postData[] = array(
+                            'post_id' => $value,
+                            // 'title' => $postTitle[$idx],
+                            'url' => $postUrl['Attachment']['dir'] . '/'. $postUrl['Attachment']['photo'],
+                            'cnt' => $cntValue,
+                        );
+                    }
+                }
+
 
             }
         }
+
         // TODO 入れたはいいがキーの名称が気持ち悪い・・・
         for ($idx = 0; $idx < count($postTitle); $idx++)
         {
             $response[] = array_merge_recursive($postTitle[$idx], $postData[$idx]);
         }
 
-        return json_encode($response);
+        foreach ($response as $key => $value)
+        {
+            $cntData[$key] = $value['cnt'];
+        }
+        array_multisort($cntData, SORT_DESC, $response);
+
+        // 重複が多いので削除
+        $tmp = [];
+        $uniqueResponse = [];
+        foreach ($response as $responeses)
+        {
+           if (!in_array($responeses['post_id'], $tmp)) {
+              $tmp[] = $responeses['post_id'];
+              $uniqueResponse[] = $responeses;
+           }
+        }
+
+        return json_encode($uniqueResponse);
     }
 }

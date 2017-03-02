@@ -87,7 +87,7 @@
     </div>
 </div>
 
-<script>
+<script type="text/javascript">
 
    /*
     *  サムネイルをクリックすると元画像で表示されスライドショーを実施する関数
@@ -313,17 +313,28 @@
              data: {tags:tagData},
          })
          .done(function(e) {
-             /* TODO 全ての表示こそ出来たが検索条件が緩すぎるので修正していく。 */
-             for (var i = 0; i < 5; i++)
+
+             for (var i = 0; i < 6; i++)
              {
-                 console.log(e[i]['post_id']);
+                 if (location.href.match(e[i]['post_id']))
+                 {
+                     // Ajaxで取得したPost_IDと閲覧している記事が同じ場合には
+                     // インクリメントして次の記事へ。
+                     i++;
+                 }
                  $('#samepostList ul').append('<li><a href="/posts/view/' + e[i]['post_id'] + '">'
                  + '<img src="/files/attachment/photo/' + e[i]['url'] + '" width="100" height="80" alt="the first Image the blog saved"/>'
                  + '<span class="samepostListTitle">' + e[i][0] + '</span></a></li>');
              }
+
+             // 関連する記事が6件存在する際には最後の要素を切る。
+             if ($('#samepostList li').length == 6)
+             {
+                 $('.side ul > li:last-child').remove();
+             }
          })
          .fail(function(e) {
-            //  alert('Ajax is Failed');
+            alert('Ajax is Failed');
             console.log("error");
          })
          .always(function() {
@@ -331,4 +342,33 @@
          });
 
      });
+
+     $(function ()
+     {
+         var nav = $('#samepostList');
+         offset = nav.offset();
+
+         var sizeCheck = function()
+         {
+             var size = $('.main_wrap').width();
+             // console.log(size);
+             return size;
+         };
+
+         $(window).scroll(function ()
+         {
+             // TODO:特殊な条件下でまだfixedが削除されていない判例あり。
+             var size = sizeCheck();
+             if(size > 900)
+             {
+                 if($(window).scrollTop() > offset.top)
+                 {
+                     nav.addClass('fixed');
+                 } else {
+                     nav.removeClass('fixed');
+                 }
+             }
+         });
+     });
+
 </script>
