@@ -85,7 +85,7 @@
                 <ul class="comment_view">
                     <li>
                         <?php echo h($comment['body']); ?> by <?php echo h($comment['commenter']); ?>
-                        
+
                         <?php echo $this->Form->postLink(
                                     __('Delete'),
                                     array('controller' => 'comments', 'action' => 'delete',$comment['id'], $comment['post_id']),
@@ -237,6 +237,7 @@
                     'top' : Math.floor(($(window).height() -
                             $('#defaultImg' + page).height()) / 2) + 'px',
                 });
+
                 $('#back-curtain').append('<button class="nav-r btn-info btn-lg">次へ</button>');
                 $('#back-curtain').append('<button class="nav-l btn-info btn-lg">戻る</button>');
                 $('#back-curtain').fadeIn('slow');
@@ -288,7 +289,7 @@
             startTimer();
 
             // 最終ページの場合には最初に戻るようにする。
-            if ($(this).attr('class') == 'nav-r')
+            if ($(this).attr('class').match('nav-r'))
             {
                 if (page == lastPage)
                 {
@@ -296,7 +297,6 @@
                 } else {
                     page ++;
                 }
-
             } else {
                 if (page == 0)
                 {

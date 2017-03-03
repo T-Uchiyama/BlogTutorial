@@ -26,6 +26,7 @@
 
 .defaultImgCls
 {
+    max-width: 700px;
     margin: 0;
     padding: 10px 10px;
     position: fixed;
@@ -35,6 +36,12 @@
 
 .tempImg
 {
+    max-width: 700px;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin: 10px 0 0 0;
     position: fixed;
 }
 
@@ -42,7 +49,7 @@
 {
     position: fixed;
     top: 470px;
-    left: 1268px;
+    left: 1320px;
     padding: 20px 50px;
     font-size: 1.2em;
 
@@ -52,7 +59,7 @@
 {
     position: fixed;
     top: 470px;
-    left: 588px;
+    left: 550px;
     padding: 20px 50px;
     font-size: 1.2em;
 }
@@ -666,6 +673,51 @@ article img
         border-bottom: 2px solid #f6f6f6;
         padding-top: 30px;
         overflow: hidden;
-        margin: 50px 0;
+        margin: 30px 0;
     }
+}
+
+#comment h1
+{
+        font-weight: bold;
+        font-size: 1.125rem;
+        line-height: 1.4;
+        border-bottom: 2px solid #f6f6f6;
+        padding: 0 0 20px;
+        margin-bottom: 20px;
+}
+
+.comment_view li
+{
+    margin-bottom: 30px;
+}
+
+.comment_view .btn-warning
+{
+    background: #cad222;
+    background-image: -webkit-linear-gradient(top, #bfb76b, #7e8230);
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-repeat-x: initial;
+    background-repeat-y: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: rgb(200, 199, 98);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#bfb76b), to(#7e8230));
+    background-image: -webkit-linear-gradient(top, #bfb76b, #7e8230);
+    background-image: -moz-linear-gradient(top, #bfb76b, #7e8230);
+    border-color: #858530;
+    border-top-color: rgb(96, 99, 36);
+    border-right-color: rgb(96, 99, 36);
+    border-bottom-color: rgb(96, 99, 36);
+    border-left-color: rgb(96, 99, 36);
+    color: #fff;
+    text-shadow: rgba(0, 0, 0, 0.5) 0 -1px 0;
+    padding: 8px 10px;
+    margin: 10px;
+    display: inline;
+    font-size: 50%;
+    width: auto;
 }
