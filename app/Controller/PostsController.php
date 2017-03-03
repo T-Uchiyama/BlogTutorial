@@ -11,10 +11,12 @@ class PostsController extends AppController
     public $uses = array('Post');
     // ページネーション用
     // index.ctpに8件かつID順に表示するように設定
+    // →最新記事が一番上にくるように降順に変更
     public $paginate = array(
         'Post' => array(
             'limit' => 8,
             'sort' => 'id',
+            'direction' => 'desc',
         ),
     );
 
@@ -97,6 +99,13 @@ class PostsController extends AppController
         $postviewslogsCtr = new PostviewlogsController();
         $postviewslogsCtr->writeLog($id);
 	    $this->set('post', $post);
+
+        $transitionData = $this->Post->find('list', array(
+            'fields' => array('id', 'title'),
+            'order' => array('id DESC')
+            )
+        );
+        $this->set('transition', $transitionData);
     }
 
     public function add()
@@ -247,9 +256,6 @@ class PostsController extends AppController
     {
         $this->autoRender = false;
 
-        /*
-         * TODO カテゴリも後に追加して、より密度の濃い関連記事の表示へ。
-         */
         /* 1.リクエストデータより使用しているタグの種類、使用しているタグの個数を計測 */
         $requestData = $this->request->data;
 

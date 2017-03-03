@@ -432,7 +432,7 @@ article img
             position: fixed;
             top: 0px;
             max-width: 300px;
-            margin-top: 60px;
+            margin-top: 80px;
     }
 }
 
@@ -622,10 +622,34 @@ article img
 }
  #searchFuncPush
  {
-     font-size: 18px;
+     font-size: 16px;
  }
 
 #searchLink
 {
     font-size: 12px;
+}
+
+#transition
+{
+    border-top: 2px solid #f6f6f6;
+    padding-top: 30px;
+    overflow: hidden;
+    margin: 50px 0;
+}
+
+.view_next
+{
+    font-size: 18px;
+    text-align: right;
+    margin-top: 10px;
+    float: right;
+}
+
+.view_prev
+{
+    font-size: 18px;
+    text-align: left;
+    margin-top: 10px;
+    float: left;
 }

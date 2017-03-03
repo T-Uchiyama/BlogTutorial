@@ -78,6 +78,56 @@
                 ?>
             <small>
         </p>
+
+        <div id="transition">
+            <?php
+                // 遷移先データより出力順を作成。
+                foreach ($transition as $key => $value)
+                {
+                    $data[] = array(
+                        'id' => $key,
+                        'title' => $value,
+                    );
+                }
+
+
+                for ($idx = 0; $idx < count($data); $idx++)
+                {
+                    if ($post['Post']['id'] == $data[$idx]['id'])
+                    {
+                        if ($idx == 0)
+                        {
+                            // Prev
+                            echo ('<p class="view_prev">');
+                            echo ('<span class="glyphicon glyphicon-chevron-left"></span>');
+                            echo ('<a href="/posts/view/'.$data[$idx + 1]['id'].'">'.$data[$idx + 1]['title']);
+                            echo ('</a>');
+                            echo ('</p>');
+                        } else if ($idx == count($data) - 1) {
+                            // Next
+                            echo ('<p class="view_next">');
+                            echo ('<a href="/posts/view/'.$data[$idx - 1]['id'].'">'.$data[$idx - 1]['title']);
+                            echo ('<span class="glyphicon glyphicon-chevron-right"></span>');
+                            echo ('</a>');
+                            echo ('</p>');
+                        } else {
+                            // Prev & Next
+                            echo ('<p class="view_prev">');
+                            echo ('<span class="glyphicon glyphicon-chevron-left"></span>');
+                            echo ('<a href="/posts/view/'.$data[$idx + 1]['id'].'">'.$data[$idx + 1]['title']);
+                            echo ('</a>');
+                            echo ('</p>');
+
+                            echo ('<p class="view_next">');
+                            echo ('<a href="/posts/view/'.$data[$idx - 1]['id'].'">'.$data[$idx - 1]['title']);
+                            echo ('<span class="glyphicon glyphicon-chevron-right"></span>');
+                            echo ('</a>');
+                            echo ('</p>');
+                        }
+                    }
+                }
+            ?>
+        </div>
     </div>
 
     <div class="side">
@@ -85,6 +135,8 @@
             echo $this->element('samePost');
         ?>
     </div>
+
+
 </div>
 
 <script type="text/javascript">
@@ -169,8 +221,6 @@
                 });
             }
         });
-
-
 
         // リサイズされたら、センタリングをする関数を実行する
         $(window).resize(centeringModalSyncer);
@@ -317,8 +367,12 @@
          .done(function(e) {
              for (var i = 0; i < 6; i++)
              {
-                 // TODO 起動してこそいるがe[i]['post_id']が未定義だとエラーが掃かれている
-                 //      どのようにして回避するかを考案
+                 // Ajax結果が5件未満の場合にはbreakしてif文終了。
+                 if (!e[i] || e.length == 1)
+                 {
+                     break;
+                 }
+
                  if (location.href.match(e[i]['post_id']))
                  {
                      // Ajaxで取得したPost_IDと閲覧している記事が同じ場合には
@@ -337,7 +391,7 @@
              }
          })
          .fail(function(e) {
-            // alert('Ajax is Failed');
+            alert('Ajax is Failed');
             console.log("error");
          })
          .always(function() {
@@ -361,8 +415,9 @@
          $(window).scroll(function ()
          {
              // TODO:特殊な条件下でまだfixedが削除されていない判例あり。
+             // →indexと同様に.fixedにメディアクエリを対応させて対処。
              var size = sizeCheck();
-             if(size > 900)
+             if(size > 950)
              {
                  if($(window).scrollTop() > offset.top)
                  {

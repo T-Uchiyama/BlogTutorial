@@ -18,7 +18,7 @@
     ?>
     <fieldset>
         <div id="searchFuncPush">
-            <legend><?php echo __('Search'); ?></legend>
+            <legend><?php echo __('Search').('【文字をクリックすると検索画面が表示されます】'); ?></legend>
         </div>
 
         <div id="searchLink">
@@ -193,6 +193,12 @@
         $('#searchFuncPush').click(function()
         {
             $('#searchLink').toggle();
+            if ($('#searchLink').css('display') == 'block')
+            {
+                $('#searchFuncPush legend').text('検索【文字をクリックすると検索画面が非表示に戻ります】');
+            } else {
+                $('#searchFuncPush legend').text('検索【文字をクリックすると検索画面が表示されます】');
+            }
         });
 
         var nav = $('#popularList');
@@ -201,7 +207,6 @@
         var sizeCheck = function()
         {
             var size = $('.main_wrap').width();
-            // console.log(size);
             return size;
         };
 
