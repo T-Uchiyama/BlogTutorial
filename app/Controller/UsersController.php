@@ -208,6 +208,7 @@ class UsersController extends AppController
 		$this->Acl->allow($group, 'controllers/Users/password');
 		$this->Acl->allow($group, 'controllers/Postviewlogs/writeLog');
 		$this->Acl->allow($group, 'controllers/Postviewlogs/callShell');
+		$this->Acl->allow($group, 'controllers/Comments/add');
 		echo 'all done';
 		exit;
 	}

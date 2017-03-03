@@ -79,6 +79,43 @@
             <small>
         </p>
 
+        <div id="comment">
+            <h1><?php echo __('コメント'); ?></h1>
+            <?php foreach ($post['Comment'] as $comment): ?>
+                <ul class="comment_view">
+                    <li>
+                        <?php echo h($comment['body']); ?> by <?php echo h($comment['commenter']); ?>
+                        
+                        <?php echo $this->Form->postLink(
+                                    __('Delete'),
+                                    array('controller' => 'comments', 'action' => 'delete',$comment['id'], $comment['post_id']),
+                                    array('class' => 'btn btn-warning', 'confirm' => __('Are you sure?'))
+                                );
+                        ?>
+                    </li>
+                </ul>
+            <?php endforeach; ?>
+
+            <?php
+                echo $this->Form->create('Comment', array(
+                    'url' => array(
+                        'controller' => 'comments',
+                        'action' => 'add',
+                        )
+                    )
+                );
+                echo $this->Form->input('commenter', array(
+                    'label' => __('お名前'),
+                ));
+                echo $this->Form->input('body', array(
+                    'label' => __('コメント本文'),
+                    'rows' => 3,
+                ));
+                echo $this->Form->input('Comment.post_id', array('type' => 'hidden', 'value' => $post['Post']['id']));
+                echo $this->Form->end(__('送信'));
+            ?>
+        </div>
+
         <div id="transition">
             <?php
                 // 遷移先データより出力順を作成。
@@ -135,8 +172,6 @@
             echo $this->element('samePost');
         ?>
     </div>
-
-
 </div>
 
 <script type="text/javascript">

@@ -82,6 +82,10 @@
                 'className' => 'Postviewlog',
                 'foreignKey' => 'post_id',
             ),
+            'Comment' => array(
+                'className' => 'Comment',
+                'foreignKey' => 'post_id',
+            ),
         );
 
 
