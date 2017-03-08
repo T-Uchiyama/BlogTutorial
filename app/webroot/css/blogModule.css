@@ -818,3 +818,25 @@ article img
 {
     font-size: 14px;
 }
+
+h6 a
+{
+    color: #0bd;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+.text_info a
+{
+    color: #0bd;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}

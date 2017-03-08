@@ -100,6 +100,7 @@ class PostsController extends AppController
         $postviewslogsCtr->writeLog($id);
 	    $this->set('post', $post);
 
+        // 遷移用リスト
         $transitionData = $this->Post->find('list', array(
             'fields' => array('id', 'title'),
             'order' => array('id DESC')
@@ -107,15 +108,23 @@ class PostsController extends AppController
         );
         $this->set('transition', $transitionData);
 
+        // Commentサムネイル用リスト
         $this->Post->Comment->Attachment->virtualFields = array(
                 'filePath' => 'CONCAT(dir, "/" , photo)'
         );
-
         $commentThumb = $this->Post->Comment->Attachment->find('list', array(
             'fields' => array('foreign_key', 'filePath', 'model',)
             )
         );
         $this->set('commentThumb', $commentThumb);
+
+        // Category
+        $categories = $this->getList();
+        $this->set(compact('categories'));
+
+        // Tag
+        $tags = $this->getTag();
+        $this->set(compact('tags'));
     }
 
     public function add()
@@ -327,7 +336,6 @@ class PostsController extends AppController
         $cnt = array_count_values($cnt);
         arsort($cnt);
         /* 上記では各Post_idにいくつタグがくっついているかまで取得 */
-        // 本来はタグ名まで見て同じものがあるものを取りたい。
 
         /* 3. 取得したPost_idを元に各種データを取得した後、Json形式に戻し、View側に返却 */
         for ($idx=0; $idx < count($postidList); $idx++)

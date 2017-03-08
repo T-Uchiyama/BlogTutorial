@@ -16,48 +16,53 @@
             )
         );
     ?>
+
     <fieldset>
         <div id="searchFuncPush">
-            <legend><?php echo __('Search').('【文字をクリックすると検索画面が表示されます】'); ?></legend>
+            <legend>
+                <?php echo __('Search').('【文字をクリックすると検索画面が表示されます】'); ?>
+            </legend>
         </div>
 
         <div id="searchLink">
             <!-- Category  -->
             <?php
                 echo $this->Form->input('category_id', array(
-                'label' => __('Category'),
-                'id' => 'search_category',
-                'class' => 'category',
-                'empty' => true,
-                )
-            );
-        ?>
-        <!-- Tag  -->
-        <?php
-            echo $this->Form->input('tag_id', array(
-                'label' => __('Tag'),
-                'type' => 'select',
-                'multiple' => 'checkbox',
-                'options' => $tags,
-                )
-            );
-        ?>
-        <!-- Title  -->
-        <?php
-            echo $this->Form->input('title', array(
-                'label' => __('Title'),
-                'type' => 'text',
-                'id' => 'search_title',
-                'class' => 'title',
-                'empty' => true,
-                'placeholder' => __('Enter the keyword'),
-                )
-            );
-        ?>
+                    'label' => __('Category'),
+                    'id' => 'search_category',
+                    'class' => 'category',
+                    'empty' => true,
+                    )
+                );
+            ?>
 
-        <?php
-            echo $this->Form->Submit(__('Search'));
-        ?>
+            <!-- Tag  -->
+            <?php
+                echo $this->Form->input('tag_id', array(
+                    'label' => __('Tag'),
+                    'type' => 'select',
+                    'multiple' => 'checkbox',
+                    'options' => $tags,
+                    )
+                );
+            ?>
+
+            <!-- Title  -->
+            <?php
+                echo $this->Form->input('title', array(
+                    'label' => __('Title'),
+                    'type' => 'text',
+                    'id' => 'search_title',
+                    'class' => 'title',
+                    'empty' => true,
+                    'placeholder' => __('Enter the keyword'),
+                    )
+                );
+            ?>
+
+            <?php
+                echo $this->Form->Submit(__('Search'));
+            ?>
         </div>
     <?php
         echo $this->Form->End();
@@ -96,7 +101,13 @@
 
                     echo ('<li class="blog_category" style="float:left">');
                     echo ('<span class="glyphicon glyphicon-file"> : </span>');
-                    echo ('<h6> '. $posts[$idx]['Category']['name'] .'</h6>');
+                    foreach ($categories as $key => $value)
+                    {
+                        if ($value == $posts[$idx]['Category']['name'])
+                        {
+                            echo ('<h6><a href="/?category_id='.$key.'"> '. $posts[$idx]['Category']['name'] .'</a></h6>');
+                        }
+                    }
                     echo ('</li>');
 
                     echo ('<li class="blog_author" style="float:left">');
@@ -183,6 +194,7 @@
         echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
     ?>
 </div>
+
 <script type="text/javascript">
     $(function ()
     {

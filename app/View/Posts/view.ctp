@@ -20,14 +20,30 @@
             <small class="text_info_category">
                 <!-- <?php echo __('Category'); ?> -->
                 <?php echo ('<span class="glyphicon glyphicon-file"></span>'); ?>
-                : <?php echo $post['Category']['name']?>
+                : <?php
+                        foreach ($categories as $key => $value)
+                        {
+                            if ($value == $post['Category']['name'])
+                            {
+                                echo ('<a href="/?category_id='.$key.'">'. $post['Category']['name'] .'</a>');
+                            }
+                        }
+                   ?>
             </small>
 
             <small class="text_info_tag">
                 <!-- <?php echo __('Tag'); ?> -->
                 <?php echo ('<span class="glyphicon glyphicon-tags"></span>'); ?>
                 : <?php foreach($post['Tag'] as $tag): ?>
-                  <?php echo $tag['title']; ?>
+                  <?php
+                        foreach ($tags as $key => $value)
+                        {
+                            if ($value == $tag['title'])
+                            {
+                                echo ('<a href="/?tag_id='.$key.'">'. $tag['title'] .'</a>');
+                            }
+                        }
+                  ?>
                   <?php endforeach; ?>
 
             </small>
