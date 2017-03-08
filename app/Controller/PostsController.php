@@ -106,6 +106,16 @@ class PostsController extends AppController
             )
         );
         $this->set('transition', $transitionData);
+
+        $this->Post->Comment->Attachment->virtualFields = array(
+                'filePath' => 'CONCAT(dir, "/" , photo)'
+        );
+
+        $commentThumb = $this->Post->Comment->Attachment->find('list', array(
+            'fields' => array('foreign_key', 'filePath', 'model',)
+            )
+        );
+        $this->set('commentThumb', $commentThumb);
     }
 
     public function add()

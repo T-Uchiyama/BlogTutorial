@@ -127,9 +127,7 @@
                         {
                             // 名称を上書きし、TextAreaに名称表示
                             $('#photoCover' + columnNum).val($(this).val().replace("C:\\fakepath\\", ""));
-                        } else {
-                            // elseの場合には
-                        }
+                        } 
                     }
                 });
             },

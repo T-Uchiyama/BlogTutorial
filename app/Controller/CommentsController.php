@@ -11,7 +11,18 @@
         {
             if($this->request->is('post'))
             {
-                if ($this->Comment->save($this->request->data))
+                foreach ($this->request->data['Attachment'] as $idx=>$a)
+                {
+                    if ($a['photo']['error'])
+                    {
+                        /*
+                         * 写真を複数枚送る場合に一つでも空箱があるとエラーになるために
+                         * 空箱をController側で削除。
+                         */
+                        unset($this->request->data['Attachment'][$idx]);
+                    }
+                }
+                if ($this->Comment->saveAll($this->request->data))
                 {
                     $this->Flash->success(__('コメントの投稿に成功しました。'));
                     $this->redirect(array('controller' => 'posts', 'action' => 'view', $this->data['Comment']['post_id']));

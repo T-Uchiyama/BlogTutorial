@@ -54,6 +54,10 @@
             'Post' => array(
                 'className' => 'Post',
                 'foreignKey' => 'foreign_key',
+            ),
+            'Comment' => array(
+                'className' => 'Comment',
+                'foreignKey' => 'foreign_key',
             )
         );
 

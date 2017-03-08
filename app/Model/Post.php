@@ -69,7 +69,7 @@
             )
         );
 
-        // Upload Plugin & log
+        // Upload Plugin, log, Comment
         public $hasMany = array(
             'Attachment' => array(
                 'className' => 'Attachment',

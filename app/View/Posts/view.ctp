@@ -81,39 +81,146 @@
 
         <div id="comment">
             <h1><?php echo __('コメント'); ?></h1>
+
             <?php foreach ($post['Comment'] as $comment): ?>
                 <ul class="comment_view">
                     <li>
-                        <?php echo h($comment['body']); ?> by <?php echo h($comment['commenter']); ?>
+                        <div class="commenter">
+                            <?php
+                                $flg = 0;
+                                foreach ($commentThumb['Comment'] as $key => $value)
+                                {
+                                    $baseUrl = $this->Html->url('/files/attachment/photo/');
 
-                        <?php echo $this->Form->postLink(
+                                    if($key == $comment['id'])
+                                    {
+                                        echo $this->Html->image($baseUrl . $value,
+                                            array(
+                                                'class' => 'comment_thumbnail',
+                                                'width' => 100,
+                                                'height' => 50,
+                                            )
+                                        );
+                                        $flg = 1;
+                                    }
+                                }
+
+                                if(!$key == $comment['id'] || $flg == 0)
+                                {
+                                    echo ('<div class="noThumbnail">No Setting</div>');
+                                    $flg = 1;
+                                }
+                            ?>
+                        </div>
+
+                        <div class="comment-body">
+                            <header class="comment_header">
+                                <span class="comment_author">
+                                    <?php echo h($comment['commenter']); ?>
+                                </span>
+                                <span class="bullet">・</span>
+                                <span class="comment_created">
+                                <!-- TODO:timeAgoInWordsでは時間表記が英語にしかならない問題あり・・・ -->
+                                    <?php
+                                        echo $this->Time->timeAgoInWords($comment['created'], array(
+                                            'accuracy' => array(
+                                                'day' => 'day',
+                                                'week' => 'week',
+                                                'month' => 'month'
+                                            ),
+                                            'format' => 'Y/m/d',
+                                            'end' => '1 year'
+                                        ));
+                                    ?>
+                                </span>
+                            </header>
+                            <div class="comment_main">
+                                <?php echo nl2br(h($comment['body'])); ?>
+                            </div>
+                        </div>
+
+                        <?php
+                            if (AuthComponent::user('group_id') == 1 )
+                            {
+                                echo $this->Form->postLink(
                                     __('Delete'),
                                     array('controller' => 'comments', 'action' => 'delete',$comment['id'], $comment['post_id']),
                                     array('class' => 'btn btn-warning', 'confirm' => __('Are you sure?'))
                                 );
+                            }
                         ?>
+
                     </li>
                 </ul>
             <?php endforeach; ?>
 
-            <?php
-                echo $this->Form->create('Comment', array(
-                    'url' => array(
-                        'controller' => 'comments',
-                        'action' => 'add',
-                        )
-                    )
-                );
-                echo $this->Form->input('commenter', array(
-                    'label' => __('お名前'),
-                ));
-                echo $this->Form->input('body', array(
-                    'label' => __('コメント本文'),
-                    'rows' => 3,
-                ));
-                echo $this->Form->input('Comment.post_id', array('type' => 'hidden', 'value' => $post['Post']['id']));
-                echo $this->Form->end(__('送信'));
-            ?>
+            <div class="comment-wrapper">
+                <div class="comment_add">
+                    <?php
+                        echo $this->Form->create('Comment', array(
+                            'type' => 'file',
+                            'url' => array(
+                                'controller' => 'comments',
+                                'action' => 'add',
+                                )
+                            )
+                        );
+                        echo $this->Form->input('commenter', array(
+                            'label' => __('お名前'),
+                        ));
+                        echo $this->Form->input('body', array(
+                            'label' => __('コメント本文'),
+                            'rows' => 3,
+                        ));
+                    ?>
+
+                    <div class= "File">
+                        <label><?php echo __('Image'); ?></label>
+                        <?php
+                            echo $this->Form->input('image', array(
+                                    'label' => false,
+                                    'div' => false,
+                                    'type' => 'text',
+                                    'id' => 'photoCover',
+                                    'class' => 'form-control',
+                                    'placeholder' => 'select file...',
+                                    'readonly' => true,
+                                )
+                            );
+
+                            echo $this->Form->button(__('Choice File'), array(
+                                    'div' => false,
+                                    'type' => 'button',
+                                    'id' => 'btn_link',
+                                    'class' => 'btn-info',
+                                )
+                            );
+
+                            echo $this->Form->input('Attachment0photo', array(
+                                    'type' => 'file',
+                                    'label' => false,
+                                    'id' => 'Attachment0Photo',
+                                    'name' => 'data[Attachment][0][photo]',
+                                    'style' => 'display:none',
+                                    )
+                            );
+
+                            echo $this->Form->input('Attachment0model', array(
+                                     'type' => 'hidden',
+                                     'id' => 'Attachment0Model',
+                                     'name' => 'data[Attachment][0][model]',
+                                     'value' => 'Comment',
+                                    )
+                            );
+                        ?>
+                    </div>
+
+                    <?php
+                        echo $this->Form->input('Comment.post_id', array('type' => 'hidden', 'value' => $post['Post']['id']));
+                        echo $this->Form->end(__('送信'));
+                    ?>
+                </div>
+            </div>
         </div>
 
         <div id="transition">
@@ -179,84 +286,85 @@
    /*
     *  サムネイルをクリックすると元画像で表示されスライドショーを実施する関数
     */
-    $(function ()
-    {
-        // サムネイルよりelementを入手する用の変数
-        var id;
-        var idStr;
+   $(function ()
+   {
+       // サムネイルよりelementを入手する用の変数
+       var id;
+       var idStr;
 
-        // スライドショー向け変数
-        var page;
-        var lastPage;
-        var timer;
-        var sX_syncerModal = 0;
-        var sY_syncerModal = 0;
-        var img_src
+       // スライドショー向け変数
+       var page;
+       var lastPage;
+       var timer;
+       var sX_syncerModal = 0;
+       var sY_syncerModal = 0;
+       var img_src
 
-        $('.thumbnail').on(
-        {
-            'click' : function(e)
-            {
-               /*
-                * キーボード操作等で、暗幕の多重起動を防止。
-                */
-                // ボタンよりフォーカスを外す。
-                $(this).blur();
+       $('.thumbnail').on(
+           {
+               'click' : function(e)
+               {
+                  /*
+                   * キーボード操作等で、暗幕の多重起動を防止。
+                   */
 
-                // 新規のモーダルウインドウの起動を阻止。
-                if ($('#back-curtain')[0]) return false;
+                   // ボタンよりフォーカスを外す。
+                   $(this).blur();
 
-                // モーダルウインドウの展開前のスクロール位置の記録。
-                var dElm = document.documentElement;
-                var dBody = document.body;
-                sX_syncerModal = dElm.scrollLeft || dBody.scrollLeft;
-                sY_syncerModal = dElm.scrollTop || dBody.scrollTop;
+                   // 新規のモーダルウインドウの起動を阻止。
+                   if ($('#back-curtain')[0]) return false;
 
-                // サムネイルをクリックし元画像の情報取得。
-                id = $(this).parents('div').attr('id');
-                idStr = "#" + id;
-                page = $(idStr).find('.defaultImgCls').attr('element');
+                   // モーダルウインドウの展開前のスクロール位置の記録。
+                   var dElm = document.documentElement;
+                   var dBody = document.body;
+                   sX_syncerModal = dElm.scrollLeft || dBody.scrollLeft;
+                   sY_syncerModal = dElm.scrollTop || dBody.scrollTop;
 
-                // イメージ総数を最後のページ数として定義化
-                lastPage = parseInt($('.defaultImgCls').length - 1);
+                    // サムネイルをクリックし元画像の情報取得。
+                    id = $(this).parents('div').attr('id');
+                    idStr = "#" + id;
+                    page = $(idStr).find('.defaultImgCls').attr('element');
 
-                // 同時発火を抑える。
-                if ($(e.target).attr('id') == "back-curtain")
-                {
-                    return;
+                    // イメージ総数を最後のページ数として定義化
+                    lastPage = parseInt($('.defaultImgCls').length - 1);
+
+                    // 同時発火を抑える。
+                    if ($(e.target).attr('id') == "back-curtain")
+                    {
+                        return;
+                    }
+
+                    // 暗幕やスライドショー用の画像等の出現
+                    $('#slide').append('<div id="back-curtain"></div>');
+                    img_src = $(this).attr('src');
+                    $('#back-curtain').append('<img class=tempImg src='+ img_src+ '>');
+                    $('.tempImg').css(
+                    {
+                        'left' : Math.floor(($(window).width() -
+                                $('#defaultImg' + page).width()) / 2) + 'px',
+                        'top' : Math.floor(($(window).height() -
+                                $('#defaultImg' + page).height()) / 2) + 'px',
+                    });
+
+                    $('#back-curtain').append('<button class="nav-r btn-info btn-lg">次へ</button>');
+                    $('#back-curtain').append('<button class="nav-l btn-info btn-lg">戻る</button>');
+                    $('#back-curtain').fadeIn('slow');
+
+                    /*
+                     * 暗幕非表示関数
+                     */
+                    $('#slide').on('click', '#back-curtain , #defaultImg' + page, function(e)
+                    {
+                            // スクロール位置を元に戻す。
+                            window.scrollTo(sX_syncerModal, sY_syncerModal);
+
+                            $('#back-curtain , #defaultImg' + page).fadeOut('slow', function()
+                            {
+                                $('#back-curtain').remove();
+                            });
+                    });
                 }
-
-                // 暗幕やスライドショー用の画像等の出現
-                $('#slide').append('<div id="back-curtain"></div>');
-                img_src = $(this).attr('src');
-                $('#back-curtain').append('<img class=tempImg src='+ img_src+ '>');
-                $('.tempImg').css(
-                {
-                    'left' : Math.floor(($(window).width() -
-                            $('#defaultImg' + page).width()) / 2) + 'px',
-                    'top' : Math.floor(($(window).height() -
-                            $('#defaultImg' + page).height()) / 2) + 'px',
-                });
-
-                $('#back-curtain').append('<button class="nav-r btn-info btn-lg">次へ</button>');
-                $('#back-curtain').append('<button class="nav-l btn-info btn-lg">戻る</button>');
-                $('#back-curtain').fadeIn('slow');
-
-                /*
-                 * 暗幕非表示関数
-                 */
-                $('#slide').on('click', '#back-curtain , #defaultImg' + page, function(e)
-                {
-                        // スクロール位置を元に戻す。
-                        window.scrollTo(sX_syncerModal, sY_syncerModal);
-
-                        $('#back-curtain , #defaultImg' + page).fadeOut('slow', function()
-                        {
-                            $('#back-curtain').remove();
-                        });
-                });
-            }
-        });
+            });
 
         // リサイズされたら、センタリングをする関数を実行する
         $(window).resize(centeringModalSyncer);
@@ -435,6 +543,9 @@
 
      });
 
+     /*
+      * 画面スクロール実施する際に関連する記事をFixedに固定する
+      */
      $(function ()
      {
          var nav = $('#samepostList');
@@ -464,4 +575,38 @@
          });
      });
 
+     /*
+      * 画面上に表示された画像を選択してくださいボタンを押下した際に
+      * Upload Pluginを発火させる
+      */
+     $(function ()
+     {
+         var id;
+         var columnNum;
+
+         $("#btn_link").on(
+         {
+             'click' : function()
+             {
+                 $('#Attachment0Photo').click();
+
+                 $('#Attachment0Photo').change(function()
+                 {
+                     // placeHolderが何も選択されていない状態かで判別
+                     if ($('#photoCover').attr('placeholder') == 'select file...')
+                     {
+                         //TextAreaに名称表示
+                         $('#photoCover').val($(this).val().replace("C:\\fakepath\\", ""));
+
+                     } else {
+                         if ($(this).val())
+                         {
+                             // 名称を上書きし、TextAreaに名称表示
+                             $('#photoCover').val($(this).val().replace("C:\\fakepath\\", ""));
+                         }
+                     }
+                 });
+             },
+         });
+     });
 </script>
