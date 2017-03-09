@@ -729,9 +729,10 @@
              // 送信フォーム内の送信ボタンが押下されたら発火
              $('.replyTo').on('click', '#submit_Button', function()
              {
+
                  /* 返信者の名前、内容、コメンター情報を取得 */
-                 var replier = $('#replier').val();
-                 var replyBody = $('#replyBody').val();
+                 var replier = $(this).parent().find('#replier').val();
+                 var replyBody = $(this).parent().find('#replyBody').val();
                  var commenter = $(this).parents('li').find('.comment_author').text();
                  commenter = commenter.replace(/(\r\n|\n|\r|\s|:)/gm, "");
                  url = location.href;
