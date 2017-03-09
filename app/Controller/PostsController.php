@@ -125,6 +125,10 @@ class PostsController extends AppController
         // Tag
         $tags = $this->getTag();
         $this->set(compact('tags'));
+
+        // Reply
+        $replies = $this->Post->Comment->Reply->find('all');
+        $this->set('replies', $replies);
     }
 
     public function add()

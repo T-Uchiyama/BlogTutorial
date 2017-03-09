@@ -92,14 +92,14 @@
                     endforeach;
                     echo('</div>');
                 ?>
-            <small>
+            </small>
         </p>
 
         <div id="comment">
             <h1><?php echo __('コメント'); ?></h1>
 
+            <ul class="comment_view">
             <?php foreach ($post['Comment'] as $comment): ?>
-                <ul class="comment_view">
                     <li>
                         <div class="commenter">
                             <?php
@@ -153,22 +153,96 @@
                             <div class="comment_main">
                                 <?php echo nl2br(h($comment['body'])); ?>
                             </div>
+
+                            <footer class="comment_footer">
+                            <?php
+                                echo $this->Form->button(__('返信'), array(
+                                        'div' => false,
+                                        'type' => 'button',
+                                        'id' => 'comment_reply',
+                                        'class' => 'btn-info',
+                                    )
+                                );
+
+                                if (AuthComponent::user('group_id') == 1 )
+                                {
+                                    echo $this->Form->postLink(
+                                        __('Delete'),
+                                        array('controller' => 'comments', 'action' => 'delete',$comment['id'], $comment['post_id']),
+                                        array('class' => 'btn btn-warning', 'confirm' => __('Are you sure?'))
+                                    );
+                                }
+                            ?>
+                            </footer>
+
+                            <div class="reply_form_container">
+                                <div class="reply_wrapper">
+                                    <div class="replyTo">
+                                    <?php
+                                        echo $this->Form->input('replier', array(
+                                            'label' => __('お名前'),
+                                        ));
+                                        echo $this->Form->input('body', array(
+                                            'label' => __('コメント本文'),
+                                            'id' => 'replyBody',
+                                            'rows' => 3,
+                                        ));
+
+                                        echo $this->Form->button(__('送信'), array(
+                                            'type' => 'button',
+                                            'id' => 'submit_Button',
+                                            'class' => 'btn btn-success',
+                                            )
+                                        );
+                                    ?>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="replyData">
+                            <?php if(count($replies) != 0): ?>
+
+                                <?php for ($idx=0; $idx < count($replies); $idx++): ?>
+                                    <?php if($replies[$idx]['Reply']['comment_id'] == $comment['id']): ?>
+                                        <header class="reply_header">
+                                            <span class="reply_author">
+                                                <?php echo h($replies[$idx]['Reply']['replier']); ?>
+                                            </span>
+                                            <span class="glyphicon glyphicon-share-alt">
+                                                <span class="comment_author">
+                                                    <?php echo h($comment['commenter']); ?>
+                                                </span>
+                                            </span>
+                                            <span class="bullet">・</span>
+                                            <span class="reply_created">
+                                            <!-- TODO:timeAgoInWordsでは時間表記が英語にしかならない問題あり・・・ -->
+                                                <?php
+                                                    echo $this->Time->timeAgoInWords($replies[$idx]['Reply']['created'], array(
+                                                        'accuracy' => array(
+                                                            'day' => 'day',
+                                                            'week' => 'week',
+                                                            'month' => 'month'
+                                                        ),
+                                                        'format' => 'Y/m/d',
+                                                        'end' => '1 year'
+                                                    ));
+                                                ?>
+                                            </span>
+                                        </header>
+                                        <div class="reply_main">
+                                            <?php echo nl2br(h($replies[$idx]['Reply']['body'])); ?>
+                                        </div>
+                                    <?php endif; ?>
+                                <?php endfor; ?>
+                            <?php endif; ?>
+                            </div>
                         </div>
 
-                        <?php
-                            if (AuthComponent::user('group_id') == 1 )
-                            {
-                                echo $this->Form->postLink(
-                                    __('Delete'),
-                                    array('controller' => 'comments', 'action' => 'delete',$comment['id'], $comment['post_id']),
-                                    array('class' => 'btn btn-warning', 'confirm' => __('Are you sure?'))
-                                );
-                            }
-                        ?>
 
                     </li>
-                </ul>
+
             <?php endforeach; ?>
+            </ul>
 
             <div class="comment-wrapper">
                 <div class="comment_add">
@@ -595,7 +669,7 @@
       * 画面上に表示された画像を選択してくださいボタンを押下した際に
       * Upload Pluginを発火させる
       */
-     $(function ()
+     $(function()
      {
          var id;
          var columnNum;
@@ -625,4 +699,67 @@
              },
          });
      });
+
+    /*
+     * コメント欄で返信を押下した箇所下に返信フォームを表示し
+     *  送信を押下されたらAjaxを起動させ返信内容を該当箇所にAppendする。
+     */
+     $(function()
+     {
+         // 初期宣言
+         var url
+
+         $('#comment').on('click', '#comment_reply', function()
+         {
+             // thisを使用し親要素へ戻り<li>タグ要素に関連した返信フォームだけをスイッチング
+             $(this).parents().children('.reply_form_container').toggle();
+
+             // 送信フォーム内の送信ボタンが押下されたら発火
+             $('.replyTo').on('click', '#submit_Button', function()
+             {
+                 /* 返信者の名前、内容、コメンター情報を取得 */
+                 var replier = $('#replier').val();
+                 var replyBody = $('#replyBody').val();
+                 var commenter = $(this).parents('li').find('.comment_author').text();
+                 commenter = commenter.replace(/(\r\n|\n|\r|\s|:)/gm, "");
+                 url = location.href;
+                 var urlSprit = url.split('/');
+                 var postId;
+                 for (var i = 0; i < urlSprit.length; i++)
+                 {
+                     if(urlSprit[i].match(/^\d+$/))
+                     {
+                         postId = urlSprit[i];
+                     }
+                 }
+
+                 // 内容に不備がないかチェック
+                 if (replier == '' || replyBody == '')
+                 {
+                     alert('名前か本文に不備が存在します。');
+                     return;
+                 }
+
+                 $.ajax({
+                     url: '/replies/add',
+                     type: "POST",
+                     dataType: 'json',
+                     data: {replier:replier, body:replyBody, commenter:commenter, post_id:postId}
+                 })
+                 .done(function() {
+                     // 通信成功の場合にはテキストエリアをクリアしてリダイレクトを実施
+                     $('#replier').val('');
+                     $('#replyBody').val('');
+                     window.location.href = url;
+                     console.log("success");
+                 })
+                 .fail(function() {
+                     console.log("error");
+                 })
+                 .always(function() {
+                     console.log("complete");
+                 });
+             });
+         });
+     })
 </script>

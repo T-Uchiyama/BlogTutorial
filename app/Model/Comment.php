@@ -17,6 +17,10 @@
                     'Attachment.model' => 'Comment',
                 )
             ),
+            'Reply' => array(
+                'className' => 'Reply',
+                'foreignKey' => 'comment_id',
+            ),
         );
     }
 ?>

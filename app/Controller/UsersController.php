@@ -209,6 +209,8 @@ class UsersController extends AppController
 		$this->Acl->allow($group, 'controllers/Postviewlogs/writeLog');
 		$this->Acl->allow($group, 'controllers/Postviewlogs/callShell');
 		$this->Acl->allow($group, 'controllers/Comments/add');
+		$this->Acl->allow($group, 'controllers/Replies/add');
+		$this->Acl->allow($group, 'controllers/Replies/delete');
 		echo 'all done';
 		exit;
 	}
