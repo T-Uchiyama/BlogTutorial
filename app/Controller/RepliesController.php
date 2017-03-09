@@ -2,6 +2,10 @@
 
     class RepliesController extends AppController
     {
+        /*
+         * Ajaxにて通信されてきたリクエストデータを元に
+         * 保存データを作成しDBに保存する。
+         */
         public function add()
         {
             $this->autoRender = false;
@@ -47,9 +51,25 @@
             }
         }
 
-        public function delete()
+        /*
+         * コメントのIDを取得し、削除を実施
+         */
+        public function delete($id, $postId)
         {
+            if ($this->request->is('get'))
+            {
+                throw new MethodNotAllowedException();
+            }
 
+            if ($this->Reply->delete($id))
+            {
+                $this->Flash->success(
+                __('No. %s のコメントの削除に成功しました。', h($id)));
+                $this->redirect(array('controller' => 'posts', 'action' => 'view', $postId));
+            } else {
+                $this->Flash->error(
+                __('No. %s のコメントの削除に失敗しました。 ', h($id)));
+            }
         }
     }
 

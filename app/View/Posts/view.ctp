@@ -201,15 +201,15 @@
 
                             <div class="replyData">
                             <?php if(count($replies) != 0): ?>
-
                                 <?php for ($idx=0; $idx < count($replies); $idx++): ?>
+                                    <div class="reply_content">
                                     <?php if($replies[$idx]['Reply']['comment_id'] == $comment['id']): ?>
                                         <header class="reply_header">
                                             <span class="reply_author">
                                                 <?php echo h($replies[$idx]['Reply']['replier']); ?>
                                             </span>
                                             <span class="glyphicon glyphicon-share-alt">
-                                                <span class="comment_author">
+                                                <span class="replyTo_author">
                                                     <?php echo h($comment['commenter']); ?>
                                                 </span>
                                             </span>
@@ -232,7 +232,19 @@
                                         <div class="reply_main">
                                             <?php echo nl2br(h($replies[$idx]['Reply']['body'])); ?>
                                         </div>
+
+                                        <?php
+                                            if (AuthComponent::user('group_id') == 1 )
+                                            {
+                                                echo $this->Form->postLink(
+                                                    __('Delete'),
+                                                    array('controller' => 'replies', 'action' => 'delete',$replies[$idx]['Reply']['id'], $comment['post_id']),
+                                                    array('class' => 'btn btn-warning', 'confirm' => __('Are you sure?'))
+                                                );
+                                            }
+                                        ?>
                                     <?php endif; ?>
+                                </div>
                                 <?php endfor; ?>
                             <?php endif; ?>
                             </div>
