@@ -15,25 +15,55 @@
             $postId = $this->request->data['post_id'];
             $replyBody = $this->request->data['body'];
             $replier = $this->request->data['replier'];
+            $layer = $this->request->data['layer'];
+            $replyTo = $this->request->data['replyTo'];
 
             // コメント名とPost_IDよりComment_IDを取得
-            $commentIdData = $this->Reply->Comment->find('list', array(
-                    'conditions' => array(
-                        'commenter' => $commenter,
-                        'post_id' => $postId,
-                    ),
-                    'fields' => array('commenter', 'id'),
-                )
-            );
+            if ((Integer)$layer == 0)
+            {
+                // 階層が0の場合にはコメント側からComment_IDを取得し
+                // 保存するDBを生成
+                $commentIdData = $this->Reply->Comment->find('list', array(
+                        'conditions' => array(
+                            'commenter' => $commenter,
+                            'post_id' => $postId,
+                        ),
+                        'fields' => array('commenter', 'id'),
+                    )
+                );
 
-            // 保存するデータの生成
-            $replyData = array(
-                'Reply' => array(
-                    'replier' => $replier,
-                    'body' => $replyBody,
-                    'comment_id' => $commentIdData[$commenter],
-                )
-            );
+                $replyData = array(
+                    'Reply' => array(
+                        'replier' => $replier,
+                        'body' => $replyBody,
+                        'comment_id' => $commentIdData[$commenter],
+                        'layer' => $layer,
+                        'replyTo' => $commenter,
+                    )
+                );
+            } else {
+                // 階層が1以上の場合にはReplyDBより取得
+                $searchLayer = (integer)$layer - 1;
+                $commentIdData = $this->Reply->find('list', array(
+                        'conditions' => array(
+                            'replier' => $commenter,
+                            'replyTo' => $replyTo,
+                            'layer' => $searchLayer,
+                        ),
+                        'fields' => array('layer', 'comment_id'),
+                    )
+                );
+
+                $replyData = array(
+                    'Reply' => array(
+                        'replier' => $replier,
+                        'body' => $replyBody,
+                        'comment_id' => $commentIdData[$searchLayer],
+                        'layer' => $layer,
+                        'replyTo' => $commenter,
+                    )
+                );
+            }
 
             if ($this->Reply->saveAll($replyData))
             {
@@ -42,7 +72,8 @@
                     'conditions' => array(
                         'replier' => $replier,
                         'Reply.body' => $replyBody,
-                        'comment_id' => $commentIdData[$commenter],
+                        'layer' => $layer,
+                        'replyTo' => $commenter,
                     )
                 ));
                 return json_encode($response);

@@ -896,6 +896,12 @@ h6 a
     box-sizing: border-box;
 }
 
+.replyToReply_form_container
+{
+    display: none;
+    box-sizing: border-box;
+}
+
 .reply_wrapper
 {
     /*margin: 24px 0 0 60px;*/
@@ -916,4 +922,10 @@ h6 a
 .reply_content
 {
     margin-bottom: 30px;
+}
+
+.reply_indent
+{
+    margin: 24px 0 0 60px;
+    box-sizing: border-box;
 }
