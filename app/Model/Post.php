@@ -69,7 +69,7 @@
             )
         );
 
-        // Upload Plugin, log, Comment
+        // Upload Plugin, log, Comment, Likeinfo
         public $hasMany = array(
             'Attachment' => array(
                 'className' => 'Attachment',
@@ -86,6 +86,10 @@
                 'className' => 'Comment',
                 'foreignKey' => 'post_id',
             ),
+            'Likeinfo' => array(
+                'className' => 'Likeinfo',
+                'foreignKey' => 'post_id',
+            )
         );
 
 

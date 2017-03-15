@@ -211,6 +211,8 @@ class UsersController extends AppController
 		$this->Acl->allow($group, 'controllers/Comments/add');
 		$this->Acl->allow($group, 'controllers/Replies/add');
 		$this->Acl->allow($group, 'controllers/Replies/delete');
+		$this->Acl->allow($group, 'controllers/Likeinfos/add');
+		$this->Acl->allow($group, 'controllers/Likeinfos/delete');
 		echo 'all done';
 		exit;
 	}

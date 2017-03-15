@@ -956,3 +956,18 @@ h6 a
     font-size: 12px;
     font-weight: normal;
 }
+
+h1 button
+{
+    float: right;
+}
+
+h1 button span
+{
+    font-weight: normal;
+}
+
+.glyphicon.glyphicon-heart
+{
+    color: #f0354b;
+}

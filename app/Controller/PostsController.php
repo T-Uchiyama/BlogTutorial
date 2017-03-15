@@ -129,6 +129,13 @@ class PostsController extends AppController
         // Reply
         $replies = $this->Post->Comment->Reply->find('all');
         $this->set('replies', $replies);
+
+        $likeInfos = $this->Post->Likeinfo->find('all', array(
+            'conditions' => array(
+                'post_id' => $id,
+            )
+        ));
+        $this->set('likeInfos', $likeInfos);
     }
 
     public function add()

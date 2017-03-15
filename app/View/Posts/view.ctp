@@ -13,12 +13,31 @@
             <?php
                 echo h($post['Post']['title']);
             ?>
+            <button class="btn btn-default">
+                <?php
+                    $result = false;
+                    for ($idx = 0; $idx < count($likeInfos); $idx++)
+                    {
+                        if ($likeInfos[$idx]['Likeinfo']['user_id'] == AuthComponent::user('id'))
+                        {
+                            $result = true;
+                        }
+                    }
+                ?>
+
+                <?php if ($result): ?>
+                    <span class="glyphicon glyphicon-heart"></span>
+                <?php else: ?>
+                    <span class="glyphicon glyphicon-heart-empty"></span>
+                <?php endif; ?>
+                ＋ <?php echo count($likeInfos); ?>
+            </button>
         </h1>
 
         <p class="text_info">
             <small class="text_info_created">
                 <!-- <?php echo __('Created'); ?> -->
-                <?php echo ('<span class="glyphicon glyphicon-calendar"></span>'); ?>
+                <span class="glyphicon glyphicon-calendar"></span>
                 : <?php
                     echo $post['Post']['created'];
                 ?>
@@ -26,7 +45,7 @@
 
             <small class="text_info_category">
                 <!-- <?php echo __('Category'); ?> -->
-                <?php echo ('<span class="glyphicon glyphicon-file"></span>'); ?>
+                <span class="glyphicon glyphicon-file"></span>
                 : <?php
                         foreach ($categories as $key => $value)
                         {
@@ -40,7 +59,7 @@
 
             <small class="text_info_tag">
                 <!-- <?php echo __('Tag'); ?> -->
-                <?php echo ('<span class="glyphicon glyphicon-tags"></span>'); ?>
+                <span class="glyphicon glyphicon-tags"></span>
                 <?php
                     $length = count($post['Tag']);
                     $cnt = 0;
@@ -588,5 +607,84 @@
                  });
              });
          });
-     })
+     });
+
+     /*
+      * 空星を押下すると星の色が変わりお気に入り登録する。
+      */
+     $(function()
+     {
+         $('.main_wrap').on('click', '.btn-default', function()
+         {
+             // ユーザー名とPostIDの取得
+             // →ユーザーIDは関数内に入った際に名称から取得
+             var url = location.href;
+             var urlSprit = url.split('/');
+             var postId;
+             for (var i = 0; i < urlSprit.length; i++)
+             {
+                 if(urlSprit[i].match(/^\d+$/))
+                 {
+                     postId = urlSprit[i];
+                 }
+             }
+
+             var userName = $('.dropdown-toggle').text();
+             userName = userName.replace(/(\r\n|\n|\r|\s|)/gm, "");
+             var unameSprit = userName.split(':');
+             for (var i = 0; i < unameSprit.length; i++)
+             {
+                 if(i == unameSprit.length - 1)
+                 {
+                     userName = unameSprit[i];
+                 }
+             }
+
+             if ($(this).children('span').attr('class') == 'glyphicon glyphicon-heart-empty')
+             {
+                $(this).children('span').removeClass('glyphicon glyphicon-heart-empty').addClass('glyphicon glyphicon-heart');
+                var cnt = $('.btn-default').text();
+                cnt = cnt.replace(/(\r\n|\n|\r|\s|＋)/gm, "");
+                var replaceCnt = parseInt(cnt) + 1;
+                $(this).html('<span class="glyphicon glyphicon-heart"></span>' + $('.btn-default').text().replace(cnt, replaceCnt));
+                $.ajax({
+                    url: '/Likeinfos/add',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {userName:userName, post_id:postId}
+                })
+                .done(function() {
+                    console.log("success");
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
+
+            } else {
+                $(this).children('span').removeClass('glyphicon glyphicon-heart').addClass('glyphicon glyphicon-heart-empty');
+                var cnt = $('.btn-default').text();
+                cnt = cnt.replace(/(\r\n|\n|\r|\s|＋)/gm, "");
+                var replaceCnt = parseInt(cnt) - 1;
+                $(this).html('<span class="glyphicon glyphicon-heart-empty"></span>' + $('.btn-default').text().replace(cnt, replaceCnt));
+                $.ajax({
+                    url: '/Likeinfos/delete',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {userName:userName, post_id:postId}
+                })
+                .done(function() {
+                    console.log("success");
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
+            }
+         });
+     });
 </script>
