@@ -41,18 +41,27 @@
             <small class="text_info_tag">
                 <!-- <?php echo __('Tag'); ?> -->
                 <?php echo ('<span class="glyphicon glyphicon-tags"></span>'); ?>
+                <?php
+                    $length = count($post['Tag']);
+                    $cnt = 0;
+                ?>
                 : <?php foreach($post['Tag'] as $tag): ?>
                   <?php
+                        $cnt++;
                         foreach ($tags as $key => $value)
                         {
                             if ($value == $tag['title'])
                             {
                                 echo ('<a href="/?tag_id='.$key.'">'. $tag['title'] .'</a>');
+
+                                if ($cnt != $length)
+                                {
+                                    echo ',';
+                                }
                             }
                         }
                   ?>
                   <?php endforeach; ?>
-
             </small>
         </p>
 
@@ -364,7 +373,7 @@
          var tag = $('.text_info_tag').text();
          var category = $('.text_info_category').text();
          // 謎の↵(return char.)が混入してしてしまう為ここで置換を実施。
-         tag = tag.replace(/(\r\n|\n|\r)/gm, "");
+         tag = tag.replace(/(\r\n|\n|\r|,)/gm, "");
          category = category.replace(/(\r\n|\n|\r|\s|:)/gm, "");
          var tagArr = tag.split(' ');
          var tagData = new Array();
