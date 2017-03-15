@@ -950,3 +950,9 @@ h6 a
 {
     margin-bottom: auto;
 }
+
+.side ol li a span
+{
+    font-size: 12px;
+    font-weight: normal;
+}
