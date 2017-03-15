@@ -1,5 +1,12 @@
 <!-- File: /app/View/Posts/view.ctp -->
 
+<?php
+    // パンくずリストの追加
+    $this->Html->addCrumb('Home', '/');
+    $this->Html->addCrumb($post['Post']['title'], '/posts/view/'.$post['Post']['id']);
+    echo $this->Html->getCrumbs(" &rsaquo; ");
+?>
+
 <div class="main_wrap">
     <div class="main">
         <h1 class="heading_view">

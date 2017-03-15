@@ -1,5 +1,12 @@
 <!-- File: /app/View/Posts/add.ctp -->
 
+<?php
+    // パンくずリストの追加
+    $this->Html->addCrumb('Home', '/');
+    $this->Html->addCrumb('Add', '/posts/add');
+    echo $this->Html->getCrumbs(" &rsaquo; ");
+?>
+
 <h1 class="heading_add"><?php echo __('Add Post'); ?></h1>
 
 <?php
@@ -127,7 +134,7 @@
                         {
                             // 名称を上書きし、TextAreaに名称表示
                             $('#photoCover' + columnNum).val($(this).val().replace("C:\\fakepath\\", ""));
-                        } 
+                        }
                     }
                 });
             },

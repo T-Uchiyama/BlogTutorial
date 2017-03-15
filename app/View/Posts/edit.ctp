@@ -1,5 +1,12 @@
 <!-- File: /app/View/Posts/edit.ctp -->
 
+
+<?php
+    // パンくずリストの追加
+    $this->Html->addCrumb('Home', '/');
+    $this->Html->addCrumb('Edit', '/posts/edit/'.$posts['Post']['id']);
+    echo $this->Html->getCrumbs(" &rsaquo; ");
+?>
 <h1 class="heading_edit"><?php echo __('Edit Post'); ?></h1>
 
 <?php
