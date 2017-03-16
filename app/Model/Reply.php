@@ -7,6 +7,8 @@
                 'foreignKey' => 'comment_id',
             )
         );
+
+        public $actsAs = array('Tree');
     }
 
 ?>

@@ -127,9 +127,9 @@ class PostsController extends AppController
         $this->set(compact('tags'));
 
         // Reply
-        $replies = $this->Post->Comment->Reply->find('all');
+        $replies = $this->Post->Comment->Reply->find('all', array('order' => array('lft ASC')));
         $this->set('replies', $replies);
-
+        
         $likeInfos = $this->Post->Likeinfo->find('all', array(
             'conditions' => array(
                 'post_id' => $id,

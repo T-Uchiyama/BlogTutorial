@@ -19,38 +19,53 @@
             $replyTo = $this->request->data['replyTo'];
 
             // コメント名とPost_IDよりComment_IDを取得
-            if ((Integer)$layer == 0)
+            if ((Integer)$layer == 1)
             {
                 // 階層が0の場合にはコメント側からComment_IDを取得し
                 // 保存するDBを生成
-                $commentIdData = $this->Reply->Comment->find('list', array(
+                $commentIdData = $this->Reply->Comment->find('first', array(
                         'conditions' => array(
                             'commenter' => $commenter,
                             'post_id' => $postId,
                         ),
-                        'fields' => array('commenter', 'id'),
+                        'fields' => array('id', 'commenter', 'body'),
                     )
                 );
+                // parent_id指定用
+                $replyCnt = $this->Reply->find('count');
+                $replyCnt = $replyCnt + 1;
 
                 $replyData = array(
                     'Reply' => array(
-                        'replier' => $replier,
-                        'body' => $replyBody,
-                        'comment_id' => $commentIdData[$commenter],
-                        'layer' => $layer,
-                        'replyTo' => $commenter,
+                        0 => array(
+                            'comment_id' =>  (integer)$commentIdData['Comment']['id'],
+                            'replier' => NULL,
+                            'replyTo' => NULL,
+                            'body' => $commentIdData['Comment']['body'],
+                            'parent_id' => NULL,
+                            // 元のコメント情報なので0確定
+                            'layer' => 0,
+                        ),
+                        1 => array(
+                            'comment_id' =>  (integer)$commentIdData['Comment']['id'],
+                            'replier' => $replier,
+                            'replyTo' => $commenter,
+                            'body' => $replyBody,
+                            'parent_id' => $replyCnt,
+                            'layer' => $layer,
+                        )
                     )
                 );
             } else {
-                // 階層が1以上の場合にはReplyDBより取得
+                // 階層が2以上の場合にはReplyDBより取得
                 $searchLayer = (integer)$layer - 1;
-                $commentIdData = $this->Reply->find('list', array(
+                $commentData = $this->Reply->find('first', array(
                         'conditions' => array(
                             'replier' => $commenter,
                             'replyTo' => $replyTo,
                             'layer' => $searchLayer,
                         ),
-                        'fields' => array('layer', 'comment_id'),
+                        'fields' => array('id', 'comment_id','parent_id', 'layer'),
                     )
                 );
 
@@ -58,14 +73,16 @@
                     'Reply' => array(
                         'replier' => $replier,
                         'body' => $replyBody,
-                        'comment_id' => $commentIdData[$searchLayer],
+                        'comment_id' => $commentData['Reply']['comment_id'],
                         'layer' => $layer,
                         'replyTo' => $commenter,
+                        'parent_id' => $commentData['Reply']['id'],
                     )
                 );
             }
 
-            if ($this->Reply->saveAll($replyData))
+            // 連想配列の場合には名称も加えてあげないと保存しない。
+            if ($this->Reply->saveAll($replyData['Reply']))
             {
                 $this->Flash->success(__('コメントの投稿に成功しました。'));
                 $response = $this->Reply->find('first', array(

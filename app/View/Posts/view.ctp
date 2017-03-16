@@ -539,9 +539,9 @@
              if ($(this).attr('id') == 'comment_reply')
              {
                  // .reply_form_containerが起動した際にはコメントに対する返信なため
-                 // 階層を初期値(0)に
+                 // 階層を初期値(1)に
                  $(this).parents().children('.reply_form_container').toggle();
-                 layer = 0;
+                 layer = 1;
              } else {
                  // replyToReply_form_containerが起動した際には返信に対する返信なため
                  // 階層を取得し+1を実施
@@ -557,7 +557,7 @@
                  /* 返信者の名前、内容、コメンター情報を取得 */
                  var replier = $(this).parent().find('#replier').val();
                  var replyBody = $(this).parent().find('#replyBody').val();
-                 if (layer == 0)
+                 if (layer == 1)
                  {
                      commenter = $(this).parents('li').find('.comment_author').text();
                      // 最初の階層の場合は相手の名称等をPHP側で設定するので必要なし。

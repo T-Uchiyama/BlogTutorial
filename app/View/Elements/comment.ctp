@@ -108,109 +108,109 @@
                     <div class="replyData">
                     <?php if(count($replies) != 0): ?>
                         <?php for ($idx=0; $idx < count($replies); $idx++): ?>
-                            <?php
-                                    if ((Integer)$replies[$idx]['Reply']['layer'] != 0)
-                                    {
-                                        $layer = (Integer)$replies[$idx]['Reply']['layer'];
-                                        for ($i=0; $i < $layer; $i++)
-                                        {
-                                            echo ('<div class="reply_indent">');
-                                        }
-                                    }
-                            ?>
-
-
                             <?php if ($replies[$idx]['Reply']['comment_id'] == $comment['id']): ?>
-                                <div class="reply_content">
-                                    <header class="reply_header">
-                                        <span class="reply_author">
-                                            <?php echo h($replies[$idx]['Reply']['replier']); ?>
-                                        </span>
-                                        <span class="glyphicon glyphicon-share-alt">
-                                            <span class="replyTo_author">
-                                                <?php echo h($replies[$idx]['Reply']['replyTo']); ?>
-                                            </span>
-                                        </span>
-                                        <span class="bullet">・</span>
-                                        <span class="reply_created">
-                                        <!-- TODO:timeAgoInWordsでは時間表記が英語にしかならない問題あり・・・ -->
-                                            <?php
-                                                echo $this->Time->timeAgoInWords($replies[$idx]['Reply']['created'], array(
-                                                    'accuracy' => array(
-                                                        'day' => 'day',
-                                                        'week' => 'week',
-                                                        'month' => 'month'
-                                                    ),
-                                                    'format' => 'Y/m/d',
-                                                    'end' => '1 year'
-                                                ));
-                                            ?>
-                                        </span>
-                                    </header>
-                                    <div class="reply_main">
-                                        <?php echo nl2br(h($replies[$idx]['Reply']['body'])); ?>
-                                    </div>
-
-                                    <footer class="reply_footer">
-                                        <?php
-
-                                            echo $this->Form->button(__('返信'), array(
-                                                    // 以下に階層(stratum)を持たせてデータを取得したら
-                                                    // JQueryにてインクリメント。
-                                                    'div' => false,
-                                                    'type' => 'button',
-                                                    'id' => 'reply_reply',
-                                                    'class' => 'btn-info',
-                                                    'element' => $replies[$idx]['Reply']['layer'],
-                                                )
-                                            );
-
-                                            if (AuthComponent::user('group_id') == 1 )
+                                <?php if ($replies[$idx]['Reply']['replier'] != null && $replies[$idx]['Reply']['replyTo'] != null): ?>
+                                    <?php
+                                            if ((Integer)$replies[$idx]['Reply']['layer'] > 1)
                                             {
-                                                echo $this->Form->postLink(
-                                                    __('Delete'),
-                                                    array('controller' => 'replies', 'action' => 'delete',$replies[$idx]['Reply']['id'], $comment['post_id']),
-                                                    array('class' => 'btn btn-warning', 'confirm' => __('Are you sure?'))
-                                                );
+                                                $layer = (Integer)$replies[$idx]['Reply']['layer'];
+                                                for ($i=1; $i < $layer; $i++)
+                                                {
+                                                    echo ('<div class="reply_indent">');
+                                                }
                                             }
-                                        ?>
-                                    </footer>
+                                    ?>
+                                    <div class="reply_content">
+                                        <header class="reply_header">
+                                            <span class="reply_author">
+                                                <?php echo h($replies[$idx]['Reply']['replier']); ?>
+                                            </span>
+                                            <span class="glyphicon glyphicon-share-alt">
+                                                <span class="replyTo_author">
+                                                    <?php echo h($replies[$idx]['Reply']['replyTo']); ?>
+                                                </span>
+                                            </span>
+                                            <span class="bullet">・</span>
+                                            <span class="reply_created">
+                                            <!-- TODO:timeAgoInWordsでは時間表記が英語にしかならない問題あり・・・ -->
+                                                <?php
+                                                    echo $this->Time->timeAgoInWords($replies[$idx]['Reply']['created'], array(
+                                                        'accuracy' => array(
+                                                            'day' => 'day',
+                                                            'week' => 'week',
+                                                            'month' => 'month'
+                                                        ),
+                                                        'format' => 'Y/m/d',
+                                                        'end' => '1 year'
+                                                    ));
+                                                ?>
+                                            </span>
+                                        </header>
+                                        <div class="reply_main">
+                                            <?php echo nl2br(h($replies[$idx]['Reply']['body'])); ?>
+                                        </div>
 
-                                    <div class="replyToReply_form_container">
-                                        <div class="reply_wrapper">
-                                            <div class="replyTo">
+                                        <footer class="reply_footer">
                                             <?php
-                                                echo $this->Form->input('replier', array(
-                                                    'label' => __('お名前'),
-                                                ));
-                                                echo $this->Form->input('body', array(
-                                                    'label' => __('コメント本文'),
-                                                    'id' => 'replyBody',
-                                                    'rows' => 3,
-                                                ));
 
-                                                echo $this->Form->button(__('送信'), array(
-                                                    'type' => 'button',
-                                                    'id' => 'submit_Button',
-                                                    'class' => 'btn btn-success',
+                                                echo $this->Form->button(__('返信'), array(
+                                                        // 以下に階層(stratum)を持たせてデータを取得したら
+                                                        // JQueryにてインクリメント。
+                                                        'div' => false,
+                                                        'type' => 'button',
+                                                        'id' => 'reply_reply',
+                                                        'class' => 'btn-info',
+                                                        'element' => $replies[$idx]['Reply']['layer'],
                                                     )
                                                 );
+
+                                                if (AuthComponent::user('group_id') == 1 )
+                                                {
+                                                    echo $this->Form->postLink(
+                                                        __('Delete'),
+                                                        array('controller' => 'replies', 'action' => 'delete',$replies[$idx]['Reply']['id'], $comment['post_id']),
+                                                        array('class' => 'btn btn-warning', 'confirm' => __('Are you sure?'))
+                                                    );
+                                                }
                                             ?>
+                                        </footer>
+
+                                        <div class="replyToReply_form_container">
+                                            <div class="reply_wrapper">
+                                                <div class="replyTo">
+                                                <?php
+                                                    echo $this->Form->input('replier', array(
+                                                        'label' => __('お名前'),
+                                                    ));
+                                                    echo $this->Form->input('body', array(
+                                                        'label' => __('コメント本文'),
+                                                        'id' => 'replyBody',
+                                                        'rows' => 3,
+                                                    ));
+
+                                                    echo $this->Form->button(__('送信'), array(
+                                                        'type' => 'button',
+                                                        'id' => 'submit_Button',
+                                                        'class' => 'btn btn-success',
+                                                        )
+                                                    );
+                                                ?>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                    <?php
+                                            if ((Integer)$replies[$idx]['Reply']['layer'] > 1)
+                                            {
+                                                $layer = (Integer)$replies[$idx]['Reply']['layer'];
+                                                for ($i=1; $i < $layer; $i++)
+                                                {
+                                                    echo ('</div>');
+                                                }
+                                            }
+                                    ?>
+                                <?php endif; ?>
                             <?php endif; ?>
-                        <?php
-                            if ((Integer)$replies[$idx]['Reply']['layer'] != 0)
-                            {
-                                $layer = (Integer)$replies[$idx]['Reply']['layer'];
-                                for ($i=0; $i < $layer; $i++)
-                                {
-                                    echo ('</div>');
-                                }
-                            }
-                        ?>
                         <?php endfor; ?>
                     <?php endif; ?>
                     </div>
