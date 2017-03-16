@@ -601,7 +601,6 @@
                  })
                  .fail(function(e) {
                      console.log("error");
-                     alert(e['object']);
                  })
                  .always(function(e) {
                      console.log("complete");

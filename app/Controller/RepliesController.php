@@ -104,6 +104,10 @@
          * コメントのIDを取得し、削除を実施
          * REVIEW: 木構造の特徴か、削除した際にそのID以下の要素が登録されていると配下要素も
          * 同時に削除を実施している。
+         * →ただ単にdeleteを発動させると配下要素も削除するのは仕様とのこと。
+         *  →単一のものだけを削除する際にはremoveFromTree(第二引数:true)を使用するのが木構造の特徴。
+         *   →指定のものも消え後はlayerの値を変更すれば問題なしと。
+         *・
          */
         public function delete($id, $postId)
         {
@@ -112,14 +116,67 @@
                 throw new MethodNotAllowedException();
             }
 
-            if ($this->Reply->delete($id))
-            {
-                $this->Flash->success(
-                __('No. %s のコメントの削除に成功しました。', h($id)));
-                $this->redirect(array('controller' => 'posts', 'action' => 'view', $postId));
-            } else {
-                $this->Flash->error(
-                __('No. %s のコメントの削除に失敗しました。 ', h($id)));
+            // 削除の前に小ノード/親ノードを検索。
+            $children = $this->Reply->children($id);
+            $parent = $this->Reply->getParentNode($id);
+
+            $dataSource = $this->Reply->getDataSource();
+            $dataSource->begin();
+            try {
+                // 第一階層であれば親要素から破棄する。
+                if($parent['Reply']['layer'] == 0)
+                {
+                    if ($this->Reply->delete($parent['Reply']['id']))
+                    {
+                        $this->Flash->success(
+                        __('No. %s のコメントの削除に成功しました。', h($id)));
+                        $dataSource->commit();
+                        $this->redirect(array('controller' => 'posts', 'action' => 'view', $postId));
+                    } else {
+                        $this->Flash->error(
+                        __('No. %s のコメントの削除に失敗しました。 ', h($id)));
+                        $dataSource->rollback();
+                        $this->redirect(array('controller' => 'posts', 'action' => 'view', $postId));
+                    }
+                }
+
+                if ($this->Reply->removeFromTree($id, true))
+                {
+                    // 子要素がある場合にはlayer値を一階層引き上げる。
+                    if(!empty($children))
+                    {
+                        for ($idx = 0; $idx < count($children); $idx++)
+                        {
+                            $data[] = array(
+                                'id' => $children[$idx]['Reply']['id'],
+                                'comment_id' => $children[$idx]['Reply']['comment_id'],
+                                'layer' => (Integer)$children[$idx]['Reply']['layer'] - 1,
+
+                            );
+                        }
+                        if($this->Reply->saveAll($data))
+                        {
+                            $dataSource->commit();
+                            $this->Flash->success(
+                            __('No. %s のコメントの削除に成功しました。', h($id)));
+                        } else {
+                            $dataSource->rollback();
+                            $this->Flash->success(
+                            __('No. %s のコメントの削除に失敗しました。', h($id)));
+                        }
+                    }
+                    $dataSource->commit();
+                    $this->Flash->success(
+                    __('No. %s のコメントの削除に成功しました。', h($id)));
+                    $this->redirect(array('controller' => 'posts', 'action' => 'view', $postId));
+                } else {
+                    $this->Flash->error(
+                    __('No. %s のコメントの削除に失敗しました。 ', h($id)));
+                    $dataSource->rollback();
+                    $this->redirect(array('controller' => 'posts', 'action' => 'view', $postId));
+                }
+            } catch (Exception $e) {
+                $dataSource->rollback();
             }
         }
     }
