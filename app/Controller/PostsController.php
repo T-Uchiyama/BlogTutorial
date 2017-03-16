@@ -129,7 +129,8 @@ class PostsController extends AppController
         // Reply
         $replies = $this->Post->Comment->Reply->find('all', array('order' => array('lft ASC')));
         $this->set('replies', $replies);
-        
+
+        // いいね情報
         $likeInfos = $this->Post->Likeinfo->find('all', array(
             'conditions' => array(
                 'post_id' => $id,

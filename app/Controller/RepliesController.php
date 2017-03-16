@@ -32,8 +32,9 @@
                     )
                 );
                 // parent_id指定用
-                $replyCnt = $this->Reply->find('count');
-                $replyCnt = $replyCnt + 1;
+                $sql = 'SHOW TABLE STATUS LIKE "replies"';
+                $queryData = $this->Reply->query($sql);
+                $increment = $queryData[0]['TABLES']['Auto_increment'];
 
                 $replyData = array(
                     'Reply' => array(
@@ -51,7 +52,7 @@
                             'replier' => $replier,
                             'replyTo' => $commenter,
                             'body' => $replyBody,
-                            'parent_id' => $replyCnt,
+                            'parent_id' => $increment,
                             'layer' => $layer,
                         )
                     )
@@ -101,6 +102,8 @@
 
         /*
          * コメントのIDを取得し、削除を実施
+         * REVIEW: 木構造の特徴か、削除した際にそのID以下の要素が登録されていると配下要素も
+         * 同時に削除を実施している。
          */
         public function delete($id, $postId)
         {

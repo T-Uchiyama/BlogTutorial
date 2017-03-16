@@ -87,6 +87,7 @@
                                 echo $this->Form->input('replier', array(
                                     'label' => __('お名前'),
                                 ));
+                                
                                 echo $this->Form->input('body', array(
                                     'label' => __('コメント本文'),
                                     'id' => 'replyBody',
@@ -152,9 +153,8 @@
 
                                         <footer class="reply_footer">
                                             <?php
-
                                                 echo $this->Form->button(__('返信'), array(
-                                                        // 以下に階層(stratum)を持たせてデータを取得したら
+                                                        // 以下に階層(を持たせてデータを取得したら
                                                         // JQueryにてインクリメント。
                                                         'div' => false,
                                                         'type' => 'button',
@@ -182,6 +182,7 @@
                                                     echo $this->Form->input('replier', array(
                                                         'label' => __('お名前'),
                                                     ));
+
                                                     echo $this->Form->input('body', array(
                                                         'label' => __('コメント本文'),
                                                         'id' => 'replyBody',
@@ -200,14 +201,14 @@
                                         </div>
                                     </div>
                                     <?php
-                                            if ((Integer)$replies[$idx]['Reply']['layer'] > 1)
+                                        if ((Integer)$replies[$idx]['Reply']['layer'] > 1)
+                                        {
+                                            $layer = (Integer)$replies[$idx]['Reply']['layer'];
+                                            for ($i=1; $i < $layer; $i++)
                                             {
-                                                $layer = (Integer)$replies[$idx]['Reply']['layer'];
-                                                for ($i=1; $i < $layer; $i++)
-                                                {
-                                                    echo ('</div>');
-                                                }
+                                                echo ('</div>');
                                             }
+                                        }
                                     ?>
                                 <?php endif; ?>
                             <?php endif; ?>

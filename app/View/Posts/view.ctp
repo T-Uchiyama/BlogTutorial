@@ -592,17 +592,18 @@
                      dataType: 'json',
                      data: {replier:replier, body:replyBody, commenter:commenter, post_id:postId, layer:layer, replyTo:replyTo}
                  })
-                 .done(function() {
+                 .done(function(e) {
                      // 通信成功の場合にはテキストエリアをクリアしてリダイレクトを実施
                      $('#replier').val('');
                      $('#replyBody').val('');
                      window.location.href = url;
                      console.log("success");
                  })
-                 .fail(function() {
+                 .fail(function(e) {
                      console.log("error");
+                     alert(e['object']);
                  })
-                 .always(function() {
+                 .always(function(e) {
                      console.log("complete");
                  });
              });
