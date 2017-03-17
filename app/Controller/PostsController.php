@@ -54,6 +54,9 @@ class PostsController extends AppController
         $postList = $this->Post->find('all');
         $this->set(compact('postList'));
 
+        // Calendar
+        $calendarData = $this->getCalendar();
+        $this->set('calendar', $calendarData);
     }
 
     public function getList()
@@ -421,5 +424,51 @@ class PostsController extends AppController
             }
         }
         return json_encode($response);
+    }
+
+    /*
+     * カレンダー情報を作成する。
+     */
+    public function getCalendar()
+    {
+        // 現在の年月を取得
+        $year = date('Y');
+        $month = date('m');
+
+        // 月末日の取得
+        $lastDay = date('t');
+        $calendar = array();
+
+        // 月末日までループ
+        for ($idx = 1; $idx <= $lastDay; $idx++)
+        {
+            // 曜日の取得
+            $week = date('w', mktime(0, 0, 0, $month, $idx, $year));
+
+            // 1日の場合
+            if ($idx == 1)
+            {
+                // 1日目の曜日までループ
+                for ($i = 0; $i < $week; $i++)
+                {
+                    // 空文字セット
+                    $calendar[]['day'] = '';
+                }
+            }
+            // 配列に日付セット
+            $calendar[]['day'] = $idx;
+
+            // 月末の場合
+            if ($idx == $lastDay)
+            {
+                // 月末から残りをループ
+                for ($j = 0; $j < 6 - $week ; $j++)
+                {
+                    // 空文字セット
+                    $calendar[]['day'] = '';
+                }
+            }
+        }
+        return $calendar;
     }
 }

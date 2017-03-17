@@ -181,6 +181,7 @@
             <?php
                 echo $this->element('zipArea');
                 echo $this->element('mail');
+                echo $this->element('calendar');
                 echo $this->element('archive');
                 echo $this->element('popular');
              ?>
