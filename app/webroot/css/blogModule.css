@@ -922,6 +922,9 @@ h6 a
 .reply_content
 {
     margin-bottom: 30px;
+    border: 2px;
+    border-color: rgb(108, 108, 108);
+    border-bottom-style: dotted;
 }
 
 .reply_indent

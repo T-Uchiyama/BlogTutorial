@@ -87,7 +87,7 @@
                                 echo $this->Form->input('replier', array(
                                     'label' => __('お名前'),
                                 ));
-                                
+
                                 echo $this->Form->input('body', array(
                                     'label' => __('コメント本文'),
                                     'id' => 'replyBody',
@@ -111,16 +111,7 @@
                         <?php for ($idx=0; $idx < count($replies); $idx++): ?>
                             <?php if ($replies[$idx]['Reply']['comment_id'] == $comment['id']): ?>
                                 <?php if ($replies[$idx]['Reply']['replier'] != null && $replies[$idx]['Reply']['replyTo'] != null): ?>
-                                    <?php
-                                            if ((Integer)$replies[$idx]['Reply']['layer'] > 1)
-                                            {
-                                                $layer = (Integer)$replies[$idx]['Reply']['layer'];
-                                                for ($i=1; $i < $layer; $i++)
-                                                {
-                                                    echo ('<div class="reply_indent">');
-                                                }
-                                            }
-                                    ?>
+
                                     <div class="reply_content">
                                         <header class="reply_header">
                                             <span class="reply_author">
@@ -200,16 +191,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <?php
-                                        if ((Integer)$replies[$idx]['Reply']['layer'] > 1)
-                                        {
-                                            $layer = (Integer)$replies[$idx]['Reply']['layer'];
-                                            for ($i=1; $i < $layer; $i++)
-                                            {
-                                                echo ('</div>');
-                                            }
-                                        }
-                                    ?>
+
                                 <?php endif; ?>
                             <?php endif; ?>
                         <?php endfor; ?>

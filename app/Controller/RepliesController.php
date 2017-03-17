@@ -101,13 +101,7 @@
         }
 
         /*
-         * コメントのIDを取得し、削除を実施
-         * REVIEW: 木構造の特徴か、削除した際にそのID以下の要素が登録されていると配下要素も
-         * 同時に削除を実施している。
-         * →ただ単にdeleteを発動させると配下要素も削除するのは仕様とのこと。
-         *  →単一のものだけを削除する際にはremoveFromTree(第二引数:true)を使用するのが木構造の特徴。
-         *   →指定のものも消え後はlayerの値を変更すれば問題なしと。
-         *・
+         * コメントのIDを取得し、取得結果によって削除機能をチェックし削除を実施
          */
         public function delete($id, $postId)
         {
@@ -128,14 +122,14 @@
                 {
                     if ($this->Reply->delete($parent['Reply']['id']))
                     {
+                        $dataSource->commit();
                         $this->Flash->success(
                         __('No. %s のコメントの削除に成功しました。', h($id)));
-                        $dataSource->commit();
                         $this->redirect(array('controller' => 'posts', 'action' => 'view', $postId));
                     } else {
+                        $dataSource->rollback();
                         $this->Flash->error(
                         __('No. %s のコメントの削除に失敗しました。 ', h($id)));
-                        $dataSource->rollback();
                         $this->redirect(array('controller' => 'posts', 'action' => 'view', $postId));
                     }
                 }
@@ -170,9 +164,9 @@
                     __('No. %s のコメントの削除に成功しました。', h($id)));
                     $this->redirect(array('controller' => 'posts', 'action' => 'view', $postId));
                 } else {
+                    $dataSource->rollback();
                     $this->Flash->error(
                     __('No. %s のコメントの削除に失敗しました。 ', h($id)));
-                    $dataSource->rollback();
                     $this->redirect(array('controller' => 'posts', 'action' => 'view', $postId));
                 }
             } catch (Exception $e) {
