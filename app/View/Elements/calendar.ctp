@@ -4,33 +4,7 @@
 
 <div id="Calendar">
     <fieldset>
-        <legend class="form_info"><?php echo __('Calendar'); ?></legend>
-
-        <?php
-            // Postの作成日をリスト分解して保持
-            for ($idx = 0; $idx < count($postList); $idx++)
-            {
-                $postCreatedDate = strtotime($postList[$idx]['Post']['created']);
-                $data[] = array(
-                    'checkDate' => date('Y-m', $postCreatedDate),
-                    'created' => date('Y-m-d', $postCreatedDate),
-                    'day' => date('j', $postCreatedDate),
-                );
-
-            }
-            for ($idx = 0; $idx < count($data); $idx++)
-            {
-                $createdArr[] = $data[$idx]['checkDate'];
-            }
-            $counted = array_count_values($createdArr);
-
-            foreach ($data as $key => $value)
-            {
-                $sortKey[$key] = $value['checkDate'];
-            }
-            array_multisort($sortKey, SORT_DESC, $data);
-        ?>
-
+        <legend class="form_info"><?php echo __('カレンダー'); ?></legend>
 
         <label>
             <input type="text" id="date" size="20"></input>
@@ -46,30 +20,64 @@
           // 日付選択ボックスを生成
           $('#date').datepicker(
               {
-                onSelect: function(dateText)
-                {
-                    var date = dateText;
+                    dateFormat: 'yy-mm-dd',
+                    beforeShowDay: function(date)
+                    {
+                        // holidays内に国民の休日を記載しておく。
+                        // →なので年毎等決まったスパンで変更が必要。
+                        var holidays = [
+                            '2017-01-01', '2017-01-09', '2017-02-11',
+                            '2017-03-20', '2017-04-29', '2017-05-03',
+                            '2017-05-04', '2017-05-05', '2017-07-17',
+                            '2017-08-11', '2017-09-18', '2017-09-23',
+                            '2017-10-09', '2017-11-23', '2017-12-23'
+                            ];
 
-                    $.ajax({
-                        url: '/posts/getCalendar',
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {created:date}
-                    })
-                    .done(function(e) {
-                        window.location.href = e;
-                        console.log("success");
-                    })
-                    .fail(function() {
-                        console.log("error");
-                    })
-                    .always(function() {
-                        console.log("complete");
-                    });
+                        for (var i = 0; i < holidays.length; i++)
+                        {
+                            var holiday = new Date();
+                            holiday.setTime(Date.parse(holidays[i]));   // 祝日を日付型に変換
 
-                },
-                  dateFormat: 'yy-mm-dd',
+                            if (holiday.getYear() == date.getYear() &&  // 祝日の判定
+                              holiday.getMonth() == date.getMonth() &&
+                              holiday.getDate() == date.getDate())
+                              {
+                                  return [true, 'class-holiday', '祝日'];
+                              }
+                          }
+
+                          if (date.getDay() == 0)
+                          {                     // 日曜日
+                              return [true, 'class-sunday', '日曜日'];
+                          } else if (date.getDay() == 6) {              // 土曜日
+                              return [true, 'class-saturday', '土曜日'];
+                          } else {                                      // 平日
+                              return [true, 'class-weekday', '平日'];
+                          }
+                    },
+
+                    onSelect: function(dateText)
+                    {
+                        var date = dateText;
+
+                        $.ajax({
+                            url: '/posts/getCalendar',
+                              type: 'POST',
+                              dataType: 'json',
+                              data: {created:date}
+                          })
+                          .done(function(e) {
+                              window.location.href = e;
+                              console.log("success");
+                          })
+                          .fail(function() {
+                              console.log("error");
+                          })
+                          .always(function() {
+                              console.log("complete");
+                          });
+
+                      },
               });
     });
-
 </script>
