@@ -7,7 +7,7 @@
         <legend class="form_info"><?php echo __('カレンダー'); ?></legend>
 
         <label>
-            <input type="text" id="date" size="20"></input>
+            <input type="text" id="date" size="20" placeholder="クリックするとカレンダーが表示されます。"></input>
         </label>
     </fieldset>
 </div>
@@ -30,6 +30,10 @@
         $('#date').datepicker(
         {
             dateFormat: 'yy-mm-dd',
+
+            /*
+             * 日時を表示する前に土日・祝日、更には活性・非活性の判別の実施
+             */
             beforeShowDay: function(date)
             {
                 // holidays内に国民の休日を記載しておく。
@@ -85,6 +89,41 @@
                 }
             },
 
+            /*
+             * カレンダーを開く前にテキストエリアサイズを計算しカレンダーも
+             * 同様のサイズに変更。
+             */
+            beforeShow: function(input)
+            {
+                var textWidth = $('#date').innerWidth();
+                var calendarWidth = textWidth + 'px';
+
+              setTimeout(function()
+              {
+                $(input).datepicker('widget').css('width',calendarWidth);
+              }, 10);
+            },
+
+            /*
+             * カレンダー内のボタンを押下し、先月/翌月のカレンダーを表示する前に
+             * テキストエリアサイズを取得しカレンダーも同様のサイズへ適応。
+             */
+            onChangeMonthYear: function(year,month)
+            {
+                var textWidth = $('#date').innerWidth();
+                var calendarWidth = textWidth + 'px';
+
+                setTimeout(function()
+                {
+                    $(this).datepicker('widget').css('width',calendarWidth).show();
+                }, 10);
+                $(this).datepicker('widget').hide();
+            },
+
+            /*
+             * カレンダー内の活性要素を選択すると、選択した日付をキーに
+             * DBに同日付の記事があるか検索し、存在した場合にはその条件で記事をソート。
+             */
             onSelect: function(dateText)
             {
                 var date = dateText;

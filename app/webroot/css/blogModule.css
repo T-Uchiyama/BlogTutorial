@@ -1012,3 +1012,8 @@ h1 button span
 {
     background: #bbbbbb !important;
 }
+
+.ui-datepicker
+{
+    font-size: 12px;
+}

@@ -466,7 +466,7 @@ class PostsController extends AppController
      */
     public function createdCheck()
     {
-        // リストに保存したら記事作成日時を全て取得しJsonで使用しやすい形へ変更。
+        // リストに保存/削除したら記事作成日時を全て取得しJsonで使用しやすい形へ変更。
         $blogCreatedDate = $this->Post->find('all', array(
             'fields' => array('Post.created'),
             'recursive' => -1,
