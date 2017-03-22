@@ -990,17 +990,25 @@ h1 button span
     width: 150%;
 }
 
-.class-holiday > .ui-state-default {
+.class-holiday > .ui-state-default
+{
   background: #FFFFCC !important;
   color: red !important;
 }
 
-.class-sunday > .ui-state-default {
+.class-sunday > .ui-state-default
+{
   background: #FFCCCC !important;
   color: red !important;
 }
 
-.class-saturday > .ui-state-default {
+.class-saturday > .ui-state-default
+{
   background: #CCCCFF !important;
   color: blue !important;
+}
+
+.class-blogPostDay > .ui-state-default
+{
+    background: #bbbbbb !important;
 }

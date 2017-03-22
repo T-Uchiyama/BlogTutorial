@@ -163,7 +163,27 @@ class PostsController extends AppController
             // deep => trueを記載することでPostに関連するテーブルも保存可能に
 			if ($this->Post->saveAll($this->request->data, array('deep' => true)))
             {
-	        	$this->Flash->success(__('Your post has been saved.'));
+                // リストに保存したら記事作成日時を全て取得しJsonで使用しやすい形へ変更。
+                $blogCreatedDate = $this->Post->find('all', array(
+                    'fields' => array('Post.created'),
+                    'recursive' => -1,
+                ));
+
+                foreach ($blogCreatedDate as $key => $value)
+                {
+                    $date = strtotime($value['Post']['created']);
+                    $blogDateData[] = date('Y-m-d', $date);
+                }
+
+                //配列で重複している物を削除し、キーの再振り分けの実施
+                $uniqueDate = array_unique($blogDateData);
+                $alignedUniqueDate = array_values($uniqueDate);
+
+                // JSONファイルに格納
+                $json = json_encode($alignedUniqueDate);
+                file_put_contents(WWW_ROOT.'accesslog/blogDate.json', $json);
+
+                $this->Flash->success(__('Your post has been saved.'));
 				return $this->redirect(array('action' => 'index'));
             }
             $this->set('validationError', $this->Post->Attachment->validationErrors);
@@ -224,6 +244,26 @@ class PostsController extends AppController
 
 	    if ($this->Post->delete($id))
         {
+            // リストに保存したら記事作成日時を全て取得しJsonで使用しやすい形へ変更。
+            $blogCreatedDate = $this->Post->find('all', array(
+                'fields' => array('Post.created'),
+                'recursive' => -1,
+            ));
+
+            foreach ($blogCreatedDate as $key => $value)
+            {
+                $date = strtotime($value['Post']['created']);
+                $blogDateData[] = date('Y-m-d', $date);
+            }
+
+            //配列で重複している物を削除し、キーの再振り分けの実施
+            $uniqueDate = array_unique($blogDateData);
+            $alignedUniqueDate = array_values($uniqueDate);
+
+            // JSONファイルに格納
+            $json = json_encode($alignedUniqueDate);
+            file_put_contents(WWW_ROOT.'accesslog/blogDate.json', $json);
+
 	        $this->Flash->success(
 		    __('The post with id: %s has been deleted.', h($id)));
 	    } else {
@@ -440,6 +480,8 @@ class PostsController extends AppController
                 )
             )
         );
+
+        // 配列が空でなければ検索条件を作成しその文言をレスポンスデータとして返却
         if(!empty($postList))
         {
             $response = '/?created='.$created;
@@ -447,50 +489,5 @@ class PostsController extends AppController
         } else {
             exit;
         }
-
-        // // 現在の年月を取得
-        // $year = date('Y');
-        // $month = date('m');
-        // $dateStr = $year . '-' . $month;
-        // $calendar = array($dateStr => array());
-        // // $calendar = array();
-        //
-        // // 月末日の取得
-        // $lastDay = date('t');
-        //
-        // // 月末日までループ
-        // for ($idx = 1; $idx <= $lastDay; $idx++)
-        // {
-        //     // 曜日の取得
-        //     $week = date('w', mktime(0, 0, 0, $month, $idx, $year));
-        //
-        //     // 1日の場合
-        //     if ($idx == 1)
-        //     {
-        //         // 1日目の曜日までループ
-        //         for ($i = 0; $i < $week; $i++)
-        //         {
-        //             // 空文字セット
-        //             $calendar[$dateStr][]['day'] = '';
-        //             // $calendar[]['day'] = '';
-        //         }
-        //     }
-        //     // 配列に日付セット
-        //     $calendar[$dateStr][]['day'] = $idx;
-        //     // $calendar[]['day'] = $idx;
-        //
-        //     // 月末の場合
-        //     if ($idx == $lastDay)
-        //     {
-        //         // 月末から残りをループ
-        //         for ($j = 0; $j < 6 - $week ; $j++)
-        //         {
-        //             // 空文字セット
-        //             $calendar[$dateStr][]['day'] = '';
-        //             // $calendar[]['day'] = '';
-        //         }
-        //     }
-        // }
-        // return $calendar;
     }
 }
