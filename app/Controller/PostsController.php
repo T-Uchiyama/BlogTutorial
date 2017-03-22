@@ -163,28 +163,13 @@ class PostsController extends AppController
             // deep => trueを記載することでPostに関連するテーブルも保存可能に
 			if ($this->Post->saveAll($this->request->data, array('deep' => true)))
             {
-                // リストに保存したら記事作成日時を全て取得しJsonで使用しやすい形へ変更。
-                $blogCreatedDate = $this->Post->find('all', array(
-                    'fields' => array('Post.created'),
-                    'recursive' => -1,
-                ));
-
-                foreach ($blogCreatedDate as $key => $value)
+                $flg = false;
+                $flg = $this->createdCheck();
+                if($flg)
                 {
-                    $date = strtotime($value['Post']['created']);
-                    $blogDateData[] = date('Y-m-d', $date);
+                    $this->Flash->success(__('Your post has been saved.'));
+                    return $this->redirect(array('action' => 'index'));
                 }
-
-                //配列で重複している物を削除し、キーの再振り分けの実施
-                $uniqueDate = array_unique($blogDateData);
-                $alignedUniqueDate = array_values($uniqueDate);
-
-                // JSONファイルに格納
-                $json = json_encode($alignedUniqueDate);
-                file_put_contents(WWW_ROOT.'accesslog/blogDate.json', $json);
-
-                $this->Flash->success(__('Your post has been saved.'));
-				return $this->redirect(array('action' => 'index'));
             }
             $this->set('validationError', $this->Post->Attachment->validationErrors);
 		}
@@ -244,28 +229,13 @@ class PostsController extends AppController
 
 	    if ($this->Post->delete($id))
         {
-            // リストに保存したら記事作成日時を全て取得しJsonで使用しやすい形へ変更。
-            $blogCreatedDate = $this->Post->find('all', array(
-                'fields' => array('Post.created'),
-                'recursive' => -1,
-            ));
-
-            foreach ($blogCreatedDate as $key => $value)
+            $flg = false;
+            $flg = $this->createdCheck();
+            if ($flg)
             {
-                $date = strtotime($value['Post']['created']);
-                $blogDateData[] = date('Y-m-d', $date);
+                $this->Flash->success(
+                __('The post with id: %s has been deleted.', h($id)));
             }
-
-            //配列で重複している物を削除し、キーの再振り分けの実施
-            $uniqueDate = array_unique($blogDateData);
-            $alignedUniqueDate = array_values($uniqueDate);
-
-            // JSONファイルに格納
-            $json = json_encode($alignedUniqueDate);
-            file_put_contents(WWW_ROOT.'accesslog/blogDate.json', $json);
-
-	        $this->Flash->success(
-		    __('The post with id: %s has been deleted.', h($id)));
 	    } else {
 	        $this->Flash->error(
 		    __('The post with id: %s could not be deleted.', h($id)));
@@ -489,5 +459,33 @@ class PostsController extends AppController
         } else {
             exit;
         }
+    }
+
+    /*
+     * 記事の日時を検索し、Jsonに日程情報を記載する。
+     */
+    public function createdCheck()
+    {
+        // リストに保存したら記事作成日時を全て取得しJsonで使用しやすい形へ変更。
+        $blogCreatedDate = $this->Post->find('all', array(
+            'fields' => array('Post.created'),
+            'recursive' => -1,
+        ));
+
+        foreach ($blogCreatedDate as $key => $value)
+        {
+            $date = strtotime($value['Post']['created']);
+            $blogDateData[] = date('Y-m-d', $date);
+        }
+
+        //配列で重複している物を削除し、キーの再振り分けの実施
+        $uniqueDate = array_unique($blogDateData);
+        $alignedUniqueDate = array_values($uniqueDate);
+
+        // JSONファイルに格納
+        $json = json_encode($alignedUniqueDate);
+        file_put_contents(WWW_ROOT.'accesslog/blogDate.json', $json);
+
+        return true;
     }
 }

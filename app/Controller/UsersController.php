@@ -202,7 +202,7 @@ class UsersController extends AppController
 	    $this->Acl->allow($group, 'controllers/Posts/send');
 	    $this->Acl->allow($group, 'controllers/Posts/searchTag');
 	    $this->Acl->allow($group, 'controllers/Posts/getCalendar');
-
+	    $this->Acl->allow($group, 'controllers/Posts/createdCheck');
 	    $this->Acl->allow($group, 'controllers/Zips');
 	    $this->Acl->allow($group, 'controllers/Users/index');
 	    $this->Acl->allow($group, 'controllers/Users/edit');
