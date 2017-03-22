@@ -110,6 +110,10 @@
                 'name' => 'tag_id',
                 'method' => 'findByTags',
                 'field' => 'Post.id',
+            ),
+            'created' => array(
+                'type' => 'like',
+                'field' => 'Post.created',
             )
         );
 

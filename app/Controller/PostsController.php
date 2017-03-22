@@ -55,8 +55,8 @@ class PostsController extends AppController
         $this->set(compact('postList'));
 
         // Calendar
-        $calendarData = $this->getCalendar();
-        $this->set('calendar', $calendarData);
+        // $calendarData = $this->getCalendar();
+        // $this->set('calendar', $calendarData);
     }
 
     public function getList()
@@ -427,48 +427,70 @@ class PostsController extends AppController
     }
 
     /*
-     * カレンダー情報を作成する。
+     * カレンダー情報を取得する。
      */
     public function getCalendar()
     {
-        // 現在の年月を取得
-        $year = date('Y');
-        $month = date('m');
+        $this->autoRender = false;
+        $created = $this->request->data['created'];
 
-        // 月末日の取得
-        $lastDay = date('t');
-        $calendar = array();
-
-        // 月末日までループ
-        for ($idx = 1; $idx <= $lastDay; $idx++)
+        $postList = $this->Post->find('list', array(
+                'conditions' => array(
+                    'Post.created LIKE' => '%'. $created .'%'
+                )
+            )
+        );
+        if(!empty($postList))
         {
-            // 曜日の取得
-            $week = date('w', mktime(0, 0, 0, $month, $idx, $year));
-
-            // 1日の場合
-            if ($idx == 1)
-            {
-                // 1日目の曜日までループ
-                for ($i = 0; $i < $week; $i++)
-                {
-                    // 空文字セット
-                    $calendar[]['day'] = '';
-                }
-            }
-            // 配列に日付セット
-            $calendar[]['day'] = $idx;
-
-            // 月末の場合
-            if ($idx == $lastDay)
-            {
-                // 月末から残りをループ
-                for ($j = 0; $j < 6 - $week ; $j++)
-                {
-                    // 空文字セット
-                    $calendar[]['day'] = '';
-                }
-            }
+            $response = '/?created='.$created;
+            return json_encode($response);
+        } else {
+            exit;
         }
-        return $calendar;
+
+        // // 現在の年月を取得
+        // $year = date('Y');
+        // $month = date('m');
+        // $dateStr = $year . '-' . $month;
+        // $calendar = array($dateStr => array());
+        // // $calendar = array();
+        //
+        // // 月末日の取得
+        // $lastDay = date('t');
+        //
+        // // 月末日までループ
+        // for ($idx = 1; $idx <= $lastDay; $idx++)
+        // {
+        //     // 曜日の取得
+        //     $week = date('w', mktime(0, 0, 0, $month, $idx, $year));
+        //
+        //     // 1日の場合
+        //     if ($idx == 1)
+        //     {
+        //         // 1日目の曜日までループ
+        //         for ($i = 0; $i < $week; $i++)
+        //         {
+        //             // 空文字セット
+        //             $calendar[$dateStr][]['day'] = '';
+        //             // $calendar[]['day'] = '';
+        //         }
+        //     }
+        //     // 配列に日付セット
+        //     $calendar[$dateStr][]['day'] = $idx;
+        //     // $calendar[]['day'] = $idx;
+        //
+        //     // 月末の場合
+        //     if ($idx == $lastDay)
+        //     {
+        //         // 月末から残りをループ
+        //         for ($j = 0; $j < 6 - $week ; $j++)
+        //         {
+        //             // 空文字セット
+        //             $calendar[$dateStr][]['day'] = '';
+        //             // $calendar[]['day'] = '';
+        //         }
+        //     }
+        // }
+        // return $calendar;
     }
 }

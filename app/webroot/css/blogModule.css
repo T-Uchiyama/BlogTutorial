@@ -974,3 +974,18 @@ h1 button span
 {
     color: #f0354b;
 }
+
+#Calendar
+{
+    margin-bottom: 200px;
+}
+
+.ui-datepicker-title
+{
+    color: #000;
+}
+
+.ui-datepicker-calendar
+{
+    width: 150%;
+}

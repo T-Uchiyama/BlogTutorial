@@ -24,7 +24,9 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/i18n/jquery-ui-i18n.min.js"></script>
 <script src="/app/webroot/bootstrap/js/bootstrap.min.js"></script>
+<script src="/app/webroot/datePicker/jquery-ui.min.js"></script>
 </style><html>
 <head>
 
