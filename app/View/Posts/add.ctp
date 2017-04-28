@@ -113,32 +113,28 @@
         var id;
         var columnNum;
 
-        $("[id^=btn_link]").on(
+        $(document).on('click', '[id^=btn_link]', function() 
         {
-            'click' : function()
+            id = $(this).attr('id');
+            columnNum = document.getElementById(id).getAttribute('elementNumber');
+            $('#Attachment' + columnNum  + 'Photo').click();
+
+            $('#Attachment' + columnNum  + 'Photo').change(function()
             {
-                id = $(this).attr('id');
-                columnNum = document.getElementById(id).getAttribute('elementNumber');
-                $('#Attachment' + columnNum  + 'Photo').click();
-
-                $('#Attachment' + columnNum  + 'Photo').change(function()
+                // placeHolderが何も選択されていない状態かで判別
+                if ($('#photoCover' + columnNum).attr('placeholder') == 'select file...')
                 {
-                    // placeHolderが何も選択されていない状態かで判別
-                    if ($('#photoCover' + columnNum).attr('placeholder') == 'select file...')
+                    //TextAreaに名称表示
+                    $('#photoCover' + columnNum).val($(this).val().replace("C:\\fakepath\\", ""));
+
+                } else {
+                    if ($(this).val())
                     {
-                        //TextAreaに名称表示
+                        // 名称を上書きし、TextAreaに名称表示
                         $('#photoCover' + columnNum).val($(this).val().replace("C:\\fakepath\\", ""));
-
-                    } else {
-                        if ($(this).val())
-                        {
-                            // 名称を上書きし、TextAreaに名称表示
-                            $('#photoCover' + columnNum).val($(this).val().replace("C:\\fakepath\\", ""));
-                        }
                     }
-                });
-            },
-
+                }
+            });
         });
     });
 </script>
