@@ -300,54 +300,39 @@ class PostsController extends AppController
     {
         $this->autoRender = false;
 
-        /* 1.リクエストデータより使用しているタグの種類、使用しているタグの個数を計測 */
-        $requestData = $this->request->data;
-
-        foreach ($requestData['tags'] as $tag)
-        {
-            $data[] = array(
-                'title' => $tag['title'],
-            );
-        }
-
+        /* 1.リクエストデータよりカテゴリを取得 */
         $categoryData = $this->Post->Category->find('list',array(
                 'conditions' => array(
-                    'name' => $requestData['category'],
+                    'name' => $this->request->data['category'],
                 ),
                 'fields' => array('name', 'id'),
             )
         );
 
         /* 2.同様のタグを使用している記事がないか検索。 */
-        // 2.1 タグ名よりIDの取得
-        for ($idx=0; $idx < count($data); $idx++)
+        // タグ名よりIDの取得
+        $index = 0;
+        foreach ($this->request->data['tags'] as $tag)
         {
             $tempList[] = $this->Post->PostsTag->Tag->find('list',array(
                 'conditions' => array(
-                    'title' => $data[$idx]['title']
+                    'title' => $tag['title']
                 ),
                  'fields' => array('title', 'id'),
             ));
-
-            if ($data[$idx]['title'] == key($tempList))
+            
+            if ($tag['title'] == key($tempList))
             {
-                $tagTitle = $data[$idx]['title'];
-                $tagId[] = array(
-                    'id' => $tempList[$idx][$tagTitle],
+                // Tag_IDよりPostsTagの関連しているPost_ID全て掃き出し。
+                $postidList[] = $this->Post->PostsTag->find('list',array(
+                        'conditions' => array(
+                            'tag_id' => $tempList[$index][$tag['title']],
+                        ),
+                        'fields' => array('post_id'),
+                    )
                 );
             }
-        }
-
-        // 2.2 Tag_IDよりPostsTagの関連しているPost_ID全て掃き出し。
-        for ($idx=0; $idx < count($tagId); $idx++)
-        {
-            $postidList[] = $this->Post->PostsTag->find('list',array(
-                    'conditions' => array(
-                        'tag_id' => $tagId[$idx]['id'],
-                    ),
-                    'fields' => array('post_id'),
-                )
-            );
+            $index++;
         }
 
         /* タグごとにCountを実施し重みを計測 */
@@ -367,40 +352,18 @@ class PostsController extends AppController
         {
             foreach ($postidList[$idx] as $key => $value)
             {
-                $postTitle = $this->Post->find('list',array(
-                        'conditions' => array(
-                            'id' => $value,
-                        ),
-                        'fields' => array('id', 'title'),
-                    )
-                );
-
-                $postUrl = $this->Post->Attachment->find('first',array(
-                        'conditions' => array(
-                            'foreign_key' => $value,
-                        ),
-                        'fields' => array('dir', 'photo')
-                    )
-                );
-
-                $category_id = $this->Post->find('list',array(
-                        'conditions' => array(
-                            'id' => $value,
-                        ),
-                        'fields' => array('id', 'category_id'),
-                    )
-                );
-
+                $postData = $this->Post->find('first', array('conditions' => array('Post.id' => $value)));
+                
                 foreach ($cnt as $cntKey => $cntValue)
                 {
                     if ($cntKey == $value)
                     {
                         $postDatas[] = array(
                             'post_id' => $value,
-                            'title' => $postTitle[$value],
-                            'url' => $postUrl['Attachment']['dir'] . '/'. $postUrl['Attachment']['photo'],
+                            'title' => $postData['Post']['title'],
+                            'url' => $postData['Attachment'][0]['dir'] . '/'. $postData['Attachment'][0]['photo'],
                             'cnt' => $cntValue,
-                            'category_id' => $category_id[$value],
+                            'category_id' => $postData['Post']['category_id'],
                         );
                     }
                 }

@@ -12,10 +12,7 @@
             $zipNum = $this->request['data']['id'];
 
             // 郵便番号のチェック
-            if (!($this->Zip->find('count', array(
-                'conditions' => array(
-                    'zip' => $zipNum
-                )))))
+            if (!($this->Zip->find('count', array('conditions' => array('zip' => $zipNum)))))
             {
                 echo ('入力された郵便番号は存在しません。');
                 exit();
