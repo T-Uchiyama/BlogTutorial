@@ -358,13 +358,16 @@ class PostsController extends AppController
                 {
                     if ($cntKey == $value)
                     {
-                        $postDatas[] = array(
-                            'post_id' => $value,
-                            'title' => $postData['Post']['title'],
-                            'url' => $postData['Attachment'][0]['dir'] . '/'. $postData['Attachment'][0]['photo'],
-                            'cnt' => $cntValue,
-                            'category_id' => $postData['Post']['category_id'],
-                        );
+                        if(!empty($postData))
+                        {
+                            $postDatas[] = array(
+                                'post_id' => $value,
+                                'title' => $postData['Post']['title'],
+                                'url' => $postData['Attachment'][0]['dir'] . '/'. $postData['Attachment'][0]['photo'],
+                                'cnt' => $cntValue,
+                                'category_id' => $postData['Post']['category_id'],
+                            );
+                        }
                     }
                 }
             }
