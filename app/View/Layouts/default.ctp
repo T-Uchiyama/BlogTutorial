@@ -46,6 +46,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
+        echo $this->Html->script('cakeBlogAction.js');
 	?>
 </head>
 <body>
@@ -251,7 +252,5 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
         .always(function(e) {
             console.log("Ajax is finished");
         });
-
-
     });
 </script>

@@ -59,32 +59,3 @@
 
     echo $this->Form->end(__('Save Post'));
 ?>
-
-<script type="text/javascript">
-    $(function ()
-    {
-        $("#content").on('click', '#photo_link', function(e)
-        {
-            var id = $(this).attr('id');
-            var columnNum = document.getElementById(id).getAttribute('element');
-
-            $.ajax({
-                type: "POST",
-                url: "/posts/imageDelete",
-                data: {'id':columnNum},
-                success: function(msg)
-                {
-                    if(msg)
-                    {
-                        alert('削除しました。');
-                        // 写真とボタンの状態をhiddenに
-                        $(e.target).parent('.image_div').find('img').remove();
-                        $(e.target).parent('.image_div').find('button').remove();
-                    } else {
-                        alert('ajax通信失敗');
-                    }
-                }
-            });
-        });
-    });
-</script>
