@@ -49,6 +49,7 @@
         );
 
         echo $this->Form->button(__('delete'), array(
+            'class' => 'btn btn-default',
             'id' => 'photo_link',
             'element' => $attachment['id'],
             'type' => 'button',

@@ -45,16 +45,17 @@ $(function()
     {
         var id = $(this).attr('id');
         var columnNum = document.getElementById(id).getAttribute('element');
-
+        
         $.ajax({
             type: "POST",
+            dataType: 'json',
             url: "/posts/imageDelete",
             data: {'id':columnNum},
             success: function(msg)
             {
                 if(msg)
                 {
-                    alert('削除しました。');
+                    alert(msg);
                     // 写真とボタンの状態をhiddenに
                     $(e.target).parent('.image_div').find('img').remove();
                     $(e.target).parent('.image_div').find('button').remove();

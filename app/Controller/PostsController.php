@@ -246,12 +246,14 @@ class PostsController extends AppController
 
     public function imageDelete()
     {
-         $this->autoRender = false;
-         $id = $this->request->data;
-
+        $this->autoRender = false;
+        $id = $this->request->data['id'];
+        
         $attachment = $this->Post->Attachment->findById($id);
-
-        echo $this->Post->Attachment->delete($attachment['Attachment']['id'], true);
+        if ($this->Post->Attachment->delete($attachment['Attachment']['id']))
+        {
+            return json_encode('削除しました。');
+        }
         exit();
     }
 
@@ -363,7 +365,8 @@ class PostsController extends AppController
                             $postDatas[] = array(
                                 'post_id' => $value,
                                 'title' => $postData['Post']['title'],
-                                'url' => $postData['Attachment'][0]['dir'] . '/'. $postData['Attachment'][0]['photo'],
+                                $url = !empty($postData['Attachment']) ? $postData['Attachment'][0]['dir'] . '/'. $postData['Attachment'][0]['photo'] : '',
+                                'url' => $url,
                                 'cnt' => $cntValue,
                                 'category_id' => $postData['Post']['category_id'],
                             );
