@@ -299,7 +299,8 @@ $(function()
     /*
      * 画面起動時にタグを取得し、関連記事の表示を実施する。
      */
-    if(flg) 
+    var is_view = $('.heading_view').length ? true : false;
+    if(flg && is_view) 
     {
         $(document).ready(function()
         {
