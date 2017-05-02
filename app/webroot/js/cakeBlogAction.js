@@ -43,27 +43,31 @@ $(function()
     
     $("#content").on('click', '#photo_link', function(e)
     {
-        var id = $(this).attr('id');
-        var columnNum = document.getElementById(id).getAttribute('element');
+        var columnNum = $(this).attr('element');
         
-        $.ajax({
-            type: "POST",
-            dataType: 'json',
-            url: "/posts/imageDelete",
-            data: {'id':columnNum},
-            success: function(msg)
-            {
-                if(msg)
+        if (!confirm('削除してもよろしいですか？')) 
+        {
+            return false;
+        } else {
+            $.ajax({
+                type: "POST",
+                dataType: 'json',
+                url: "/posts/imageDelete",
+                data: {'id':columnNum},
+                success: function(msg)
                 {
-                    alert(msg);
-                    // 写真とボタンの状態をhiddenに
-                    $(e.target).parent('.image_div').find('img').remove();
-                    $(e.target).parent('.image_div').find('button').remove();
-                } else {
-                    alert('ajax通信失敗');
+                    if(msg)
+                    {
+                        alert(msg);
+                        // 写真とボタンの状態をhiddenに
+                        $(e.target).parent('.image_div').find('img').remove();
+                        $(e.target).parent('.image_div').find('button').remove();
+                    } else {
+                        alert('ajax通信失敗');
+                    }
                 }
-            }
-        });
+            });
+        }
     });
     
     // 検索エリアの非表示
