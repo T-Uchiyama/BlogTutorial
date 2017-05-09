@@ -25,6 +25,7 @@
                 $createdArr[] = $data[$idx]['created'];
             }
             $checkArr = array_count_values($createdArr);
+            krsort($checkArr);
 
             // 日付でソートを実施し、日付の最新順に記事を並び替え
             foreach ($data as $key => $value)
