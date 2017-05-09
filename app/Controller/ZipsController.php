@@ -5,6 +5,13 @@
         {
 
         }
+        
+        public function beforeFilter()
+        {
+            parent::beforeFilter();
+            // どのユーザーであっても郵便番号検索は可能に。
+            $this->Auth->allow('searchCity');
+        }
 
         public function searchCity()
         {
