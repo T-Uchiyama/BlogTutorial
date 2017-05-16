@@ -24,7 +24,7 @@ class PostsController extends AppController
     {
         parent::beforeFilter();
         // どの権限であってもindexと記事の閲覧は可能に
-        $this->Auth->allow('index', 'view', 'send', 'searchTag');
+        $this->Auth->allow('index', 'view', 'send', 'searchTag', 'getCalendar');
     }
 
     public function index()
