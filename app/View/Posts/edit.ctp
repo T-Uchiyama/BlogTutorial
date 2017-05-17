@@ -38,8 +38,11 @@
             'required' => false,
             )
     );
-    foreach ($posts['Attachment'] as $attachment):
-        echo '<div class="image_div">';
+?>
+
+<?php foreach ($posts['Attachment'] as $attachment): ?>
+    <div class="image_div">
+    <?php  
         echo $this->Html->image('../files/attachment/photo/'.$attachment['dir'].'/'.$attachment['photo'],
             array(
                 'alt' => 'baz',
@@ -55,8 +58,8 @@
             'type' => 'button',
             )
         );
-        echo '</div>';
-    endforeach;
+    ?>
+    </div>
+<?php endforeach; ?>
 
-    echo $this->Form->end(__('Save Post'));
-?>
+<?php echo $this->Form->end(__('Save Post')); ?>
