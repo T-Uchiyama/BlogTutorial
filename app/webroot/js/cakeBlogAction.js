@@ -753,4 +753,17 @@ $(function()
             });
         },
     });
+    
+    $('#content').on('click', '#AddUploadColumn', function()
+    {
+        // 現在のアップロード欄の個数を取得し、その値を+1に
+        var count = $('.File').length;
+        count++;
+        
+        //テンプレートを取得し、変数をcountの値で置換
+        var template = $('.upload_template');
+        var replaceTemplate = template.html();
+        replaceTemplate = replaceTemplate.replace(/_index_/g, count);
+        $('.input-group').append('<div class=File>' + replaceTemplate + '</div>');
+    });
 });

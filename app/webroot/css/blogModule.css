@@ -1017,3 +1017,9 @@ h1 button span
 {
     font-size: 12px;
 }
+
+.upload_template
+{
+    padding: 0;
+    display: none;
+}

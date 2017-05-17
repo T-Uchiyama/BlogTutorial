@@ -46,6 +46,48 @@
     </div>
 <?php endif; ?>
 
+<div class="upload_template">
+    <?php  
+    echo $this->Form->input('image', array(
+            'label' => false,
+            'div' => false,
+            'type' => 'text',
+            'id' => 'photoCover_index_',
+            'class' => 'form-control',
+            'placeholder' => 'select file...',
+            'readonly' => true,
+            // requiredをfalseに
+        )
+    );
+
+    echo $this->Form->button(__('Choice File'), array(
+            'div' => false,
+            'type' => 'button',
+            'id' => 'btn_link_index_',
+            'class' => 'btn-info',
+            'elementNumber' => '_index_',
+        )
+    );
+    
+    echo $this->Form->input('Attachment_index_photo', array(
+            'type' => 'file',
+            'label' => false,
+            'id' => 'Attachment_index_Photo',
+            'name' => 'data[Attachment][_index_][photo]',
+            'style' => 'display:none',
+            )
+    );
+
+    echo $this->Form->input('Attachment_index_model', array(
+             'type' => 'hidden',
+             'id' => 'Attachment_index_Model',
+             'name' => 'data[Attachment][_index_][model]',
+             'value' => 'Post',
+            )
+    );
+    ?>    
+</div>
+
 <div class="input-group">
     <label><?php echo __('Image'); ?></label>
 
@@ -101,5 +143,13 @@
         </div>
     <?php endfor; ?>
 </div>
-    
+
+<?php echo $this->Form->button(__('画像アップロード欄を追加'), array(
+        'div' => false,
+        'type' => 'button',
+        'id' => 'AddUploadColumn',
+        'class' => 'btn-primary',
+    )
+); ?>
+
 <?php echo $this->Form->end(__('Save Post')); ?>
