@@ -91,24 +91,10 @@ $(function()
         var size = $('.main_wrap').width();
         return size;
     };
-    
-    var postIdCheck = function()
-    {
-        flg = false;
-        url = location.href;
-        var urlSprit = url.split('/');
-        for (var i = 0; i < urlSprit.length; i++)
-        {
-            if(urlSprit[i].match(/^\d+$/))
-            {
-                flg = true;
-            }
-        }
-        return flg;
-    };
 
     var getPostId = function()
     {
+        postId = null;
         url = location.href;
         var urlSprit = url.split('/');
         for (var i = 0; i < urlSprit.length; i++)
@@ -121,8 +107,7 @@ $(function()
         return postId;
     }
     
-    var flg = postIdCheck();
-    var nav = flg ? $('#samepostList') : $('#popularList');
+    var nav = flg = getPostId() ? $('#samepostList') : $('#popularList');
     offset = nav.offset();
 
     $(window).scroll(function ()
